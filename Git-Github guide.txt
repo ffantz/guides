@@ -1,0 +1,287 @@
+Git e Github
+
+-Controle de versão:
+	-Contexto:
+		-Várias cópias do projeto (gasto desnecessário do HD)
+		-Apagar arquivos importantes
+	
+	-Sistema que cria versões dos diferentes arquivos do projeto de acordo com as modificações que eles sofrem
+	-Espécie de backup
+	-Git usa snapshots (fotos dos arquivos), salvando os estados dos arquivos em cada versão, independente de possíveis mudanças
+	-Usa um link simbólico para os arquivos que não foram modificados
+	
+-Github:
+	-Serviço Web compartilhado para projetos que utilizam o Git para versionamento
+	
+-Git:
+	-Guarda informações em 3 locais:
+		-gitconfig								-> Sistema
+		-gitconfig do usuario					-> Usuário
+		-gitconfig do projeto					-> Projeto
+		
+	-Informações que servirão para todo o repositório de certo usuário exige a configuração global do mesmo
+		git config --global user.name "Flavio Caetano"
+		git config --global user.email "flavioluzio22@gmail.com"
+		git config core.editor sub				-> Define o sublime como editor padrão
+
+	-Resgatando informações:
+		git config user.name
+		git config user.email
+		git config --list						-> Lista todas as configurações
+		
+-Inicializando um repositório:
+	mkdir <nome_pasta>							-> Cria uma pasta
+	cd <nome_pasta>								-> Entra na pasta criada
+	git init									-> Inicializa o repositório git na pasta atual, criando uma pasta .git, guardando informações do mesmo
+		-Guarda a configuração, branch padrão, branchs existentes, hooks (gatilhos que executam ações), informações relacionadas a objetos existentes
+		
+-Utilizando o editor do terminal:
+	vi ou vim <nome_arquivo.md>					-> Abre o editor
+	
+	-Dentro:
+		i										-> Inicializa edição do arquivo
+		esc										-> Sai do modo de inserção
+		:										-> Indica que algum comando será iniciado (após ESC)
+		:w										-> Escrever e salvar
+		:wq										-> Escrever e salvar e sair
+		
+		
+-Ciclo de vida dos status dos arquivos:
+	-4 estados:
+		-Untracked
+			-Momento em que o arquivo acabou de ser adicionado no repositório mas ainda não foi contabilizado pelo Git
+		
+		-Unmodified
+			-Momento em que existe no Git mas não houve modificação
+		
+		-Modified
+			-Momento em que ocorre alguma edição no arquivo já reconhecido pelo Git
+		
+		-Staged
+			-Momento em que o arquivo está sob observação para fechamento de versão
+			-Ao fechar todos os arquivos viram unmodified
+			
+	-Comandos Git:
+		git status								-> Exibe o status atual do Git, mostrando o estado dos arquivos
+		git add <nome_arquivo>					-> Adiciona o arquivo para o Git, possibilitando que uma versão dele seja criada
+		git commit -am "Mensagem"				-> "Fecha" a versão e cria um snapshot do arquivo no estado atual; é uma boa prática indicar o que foi feito 
+													(bug fix, atualização, etc) no parâmtro "Mensagem"
+													
+												*am indica que todos os arquivos modificados serão adicionados
+											
+		master: local atual
+		commit -> hash: identificação da versão
+		comentário
+		número de arquivos modificados e inserções
+		
+	-Ao salvar, o repositório é "resetado"
+	
+-Visualizar logs:
+	git log										-> Informações da versão; autor, data e comentário
+	git log	--decorate 							-> Informa de qual branch pra qual branch, tags geradas, etc
+	git log	--author="Flavio"					-> Procura commits de um certo autor
+	git shortlog								-> Mostra em ordem alfabética: autores, número de commits e quais foram
+	git shortlog -sn							-> Quantidade de commits e qual o autor
+	git log --graph								-> Mostra em forma gráfica o que acontece com os branchs e as versões
+	
+	-Através da hash é possível obter informações do que foi modificado com mais detalhes
+	
+	git diff									-> Indica a diferença entre os arquivos (mostra a modificação feita)
+	git diff --name-only						-> Indica o nome dos arquivos que foram modificados
+	
+-Desfazendo coisas:
+	git checkout <nome_arquivo>					-> Retorna o arquivo para antes de alguma edição que não tenha sofrido commit
+	git reset HEAD <nome_arquivo>				-> Retira o arquivo do estado de Staged
+	
+	-Após fazer um commit, existem 3 maneiras de cancelá-la:
+		git reset --soft						-> Desfaz o commit mas deixa os arquivos em Staged, com as modificações prontas para serem comitadas
+		git reset --mixed						-> Desfaz o commit mas deixa os arquivos em Modified, com as informações prontas para serem salvas
+		git reset --hard						-> Desfaz o commit e desfaz todas as modificações
+		
+		*Importante saber a hash do commit anterior, já q o primeiro da fila deixarar de existir
+		
+-Repositório no Github:
+	-Repositório remoto
+	-Rede social para códigos Open Source
+	-Utiliza SSH para identificação dos usuários
+	-A chave privada na máquina local é capaz de "abrir" a chave pública do servidor
+	
+	-No terminal bash do Git:
+		ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+		
+		-Local da chave:
+			cd ~/.ssh							-> Home
+			id_rsa e id_rsa.pub
+			
+			cat id_rsa.pub						-> Pega as informações da chave pública
+		
+		-No Github, aconselhável colocar o nome da máquina como título da chave SSH
+		
+		git remote add origin git@github.com:ffantz/<nome_repositorio>.git				-> Adiciona um repositório remoto de nome origin com o SSH
+		git remote 																		-> Lista os repositórios remotos
+		git remote -v																	-> Mostra informações, como endereço
+		git push -u origin master														-> Envia os arquivos, logs e modificações para o repositório; -u é um tracker; 
+																							para onde vai (origin) e de onde vem (master)\
+	
+	-Enviando mudanças para um repositório remoto:
+		-Sempre ao criar um repositório inicial o branch é o master
+		
+		git push origin master															-> Envia as modificações para o repositório
+		
+	-Clonando repositórios remotos:
+		-É possível clonar repositórios para sua máquina local (somente seus repositórios)
+		-Use o endereço SSH do repositório
+			git clone git@github.com:<user>/<nome_repositorio>.git <nova_pasta_repositorio>
+			
+	-Fork de um projeto:
+		-Faz uma cópia de um projeto que não é seu (permite que envie as modificações nos repositórios que não são seus)
+		
+-Branch:
+	-Ponteiro móvel que leva a um commit
+	-Sempre que um commit é feito é gerado uma hash
+	-Branch aponta para esse commit
+	-O primeiro branch é o master
+	-Vantagens:
+		-Modificar sem alterar o local principal (master)						-> Possibilita uma correção enquanto outra pessoa também trabalha no projeto
+		-Facilmente desligável
+		-Múltiplas pessoas trabalhando
+		-Evita conflitos
+		
+	-Criando um branch:
+		git checkout -b <nome_branch>											-> Cria um branch
+		git branch																-> Exibe os branchs existentes e indica com um * qual você está trabalhando no momento
+		git checkout <nome_branch>												-> Escolhe o branch para trabalhar
+		git branch -D <nome_branch>												-> Deleta o branch escolhido
+		
+	-Unir branches:
+		-Merge:
+			-Une o fim de modificações nos branchs e commits (cria um commit extra com o original linear e as ramificações)
+			-Vantagens: 
+				-Operação não destrutiva
+				
+			-Contras:
+				-Cria um commit extra
+				-Histórico poluída
+	
+		-Rebase:
+			-Move o commit da ramificação para frente do commit linear, colocando no início da fila (sendo um commit de mesmo nome mas não necessariamente o mesmo)
+			-Permanece linear
+			-Vantagens:
+				-Evita commits extras
+				-Histórico linear
+				
+			-Contra:
+				-Perde a ordem cronológica
+				
+		-Na prática (merge):
+			-Criar um novo repositório
+				cd ..
+				mkdir <nome_repositorio>
+				cd <nome_repositorio>
+				git init
+				
+			-Criar um arquivo
+				vim <nome_arquivo>
+				git add <nome_arquivo>
+				git commit -m "Mensagem"
+				
+			-Criar um novo branch
+				git checkout -b <nome_branch>
+				
+			-Criar um arquivo
+				vim <nome_arquivo>
+				git add <nome_arquivo>
+				git commit -m "Mensagem"
+			
+			-Retornar para o branch inicial e inserir um arquivo
+				git checkout master
+				vim <nome_arquivo>
+				git add <nome_arquivo>
+				git commit -m "Mensagem"
+				
+			-Executar o merge com o novo branch
+				git merge <nome branch>									-> Une os branchs
+				
+				git log													-> Exibirá a ordem cronológica dos branchs e indicará o merge no fim
+				git log	--graph											-> Mostra a ramificação e a junção no fim
+				
+		-Para o rebase:
+			-Criar um arquivo
+				vim <nome_arquivo>
+				git add <nome_arquivo>
+				git commit -m "Mensagem"
+				
+			-Criar um novo branch
+				git checkout -b <nome_branch>
+				
+			-Criar um arquivo
+				vim <nome_arquivo>
+				git add <nome_arquivo>
+				git commit -m "Mensagem"		
+			
+			-Retornar para o branch inicial e inserir um arquivo
+				git checkout master
+				vim <nome_arquivo>
+				git add <nome_arquivo>
+				git commit -m "Mensagem"
+				
+			-Executar o rebase com o novo branch
+				git rebase <nome_branch> 									-> Aplica a modificação para o início da lista
+				
+-Criando o .gitignore:
+	-Possibilita especificar um arquivo ou listas de arquivos que não serão inseridos nos repositórios
+		vi .gitignore
+			*.json								-> Ignora todos os arquivos JSON
+			arquivo.db
+			//arquivo							-> Um arquivo por linha
+			
+-Stash:
+	-Caso você esteja fazendo uma modificação e precise mudar o branch, mas não tenha terminado 
+		- ou seja, ainda não é a hora de fazer um commit - 
+		utilizar o stash, que salva a modificação e cria um status de WIP
+		
+	-O arquivo fica temporariamente indisponível
+		git stash
+		git stash apply							-> Aplica as mudanças que haviam sido guardadas
+		git stash list							-> Lista de todas as modificações que estavam sendo feitas
+		git stash clear							-> Limpa as modificações
+		
+-Alias:
+	-Atalhos dos comandos
+		git config --global alias.<tecla> <comando>
+		git config --global alias.s status
+		
+-Versionando com tags:
+	git tag -a 1.0.0 -m "Readme finalizado"		-> Gera um release da versão
+	git push origin master --tags
+	
+-Git revert:
+	-Através do log, busque o commit que gerou o problema
+	-Usa o git revert no hash dele
+	-Não deleta o commit anterior (gerador de problema), apenas gera um novo revertendo as alterações
+	
+-Apagando tags e branchs remotos:
+	-Localmente:
+		git tag/branch -D <tag/branch>
+		git tag -d 1.0.1
+		
+	-No server remoto:
+		git push origin :1.0.0					-> Deleta a tag
+		git push origin :branch					-> Deleta o branch
+		
+		
+# Add git branch if its present to PS1
+parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+# if [ "$color_prompt" = yes ]; then
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]$(parse_git_branch)\[\033[00m\]\$ '
+# else
+#  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$(parse_git_branch)\$ '
+# fi
+unset color_prompt force_color_prompt
+
+CDPATH=.:/var/www/html:/var/www/html/sites
+
+alias errorLog="echo {senha} | sudo -S -k gedit /var/www/html/portal/errorLogs/errorLog.log"
+		

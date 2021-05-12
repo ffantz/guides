@@ -1,0 +1,25 @@
+*C - notas sobre funçoes e utilidades para SDL*
+-Funções do tipo "bool": necessitam da biblioteca "stdbool.h", retornam 1 quando verdadeiro (true) e 0 quando falso (false)
+	-Declaração: "bool a,b,c;"
+	-Utilidade: "b = true; a = false;"
+	-Imprimir na tela: "printf("%d\n%d",a,b);"
+	-Saída: "0
+			 1"
+-Rand e srand:
+	-Necessita biblioteca "time.h"
+	-"srand((unsigned)time(NULL))" antes de usar o "rand()"
+	-"rand()%100" ou "1 + (rand()%100)"
+
+SDL_Init(SDL_INIT_EVERYTHING): inicializa sons, imagens, tudo disponível
+SDL_Delay(n): n = milisegundos que a janela fica aberta
+(var de janela) = SDL_CreateWindow("Hello World!",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,768, 484,SDL_WINDOW_OPENGL);
+SDL_Destroywindow(var de janela): fecha a janela
+windowSurface:
+SDL_Surface: recorte
+	-IMG_Load: carega imagem
+SDL_FreeSurface: libera a interface
+SDL_RenderPresent: atualiza a tela
+SDL_QUIT: sair do programa
+SDL_PollEvent: retorna uma ação do usuário
+SDL_Rect: 4 inteiros (retangulo, x, y, w, h)
+Mix_Chunk: variáveis para som

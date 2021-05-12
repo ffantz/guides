@@ -1,0 +1,653 @@
+Tecnologia da informação e comunicação
+
+*TIC: tecnologia da informação e comunicação
+O ganho de espaço da TIC dentro das empresas deve-se essencialmente a dois motivos:
+	-Avanço da utilização de tecnologias dentro das empresas;
+	-Gestores perceberam que a Tecnologia da Informação é algo de extrema importância para os negócios da instituição
+	
+-Corresponde a todas as tecnologias que são utilizadas para que um processo computacional seja realizado
+
+Sistemas operacionais (SO):
+	-Software (conjunto deles) que gerencia os recursos presentes em um computador
+	-Gerenciamento atuante nos hardwares e outros softwares
+	-Tarefas complexas:
+		-Gerenciar processos;
+		-Gerenciar memória;
+		-Gerenciar recursos;
+		-Gerenciar hardware;
+		
+		usuário <-> software <-> sistema operacional <-> hardware
+		
+	-Tipos de sistemas operacionais:
+		-Grande porte: 
+			-Utilizados em grandes computadores, conhecidos como mainframe
+			-Exemplo: z/OS, OS/390
+			
+		-Servidores: 
+			-Trabalham em rede fornecendo um serviço para os usuários
+			-Exemplo: Windows Server, Debian, BSD, Slackware
+			
+		-Pessoais:
+			-Utilizados por usuários comuns e fáceis de manusear
+			-Exemplo: Windows, MacOS, Ubuntu, Fedora
+			
+		-Portáteis:
+			-Sistemas desenvolvidos para dispositivos móveis
+			-Exemplo: IOS, Android, Windows Phone, Firefox IOS
+			
+		-Embarcados:
+			-Desenvolvidos para atender uma necessidade específica, como sistemas de micro-ondas, geladeira, etc
+			-Exemplo: QNX, VxWorks
+			
+		-Tempo real:
+			-Necessitam de um tempo de resposta muito rápido para não comprometer suas tarefas, como controle de tráfego aéreo, sistema de freio ABS
+			-Exemplo: FreeRTOS, AIX, CMX
+			
+		-Smart cards:
+			-Sistemas em pequenos cartões, como cartões de crédito, telefonia móvel, cartões de fidelidade
+			-Exemplos: JavaCard, MS Windows Card, ZeitControl Basic Card
+			
+		-Multiprocessadores:
+			-Capacidade de trabalhar com vários processadores simultaneamente
+			-Exemplos: K42
+			
+	-O SO tem a capacidade de gerenciar diversos recursos simultaneamente
+	-Vários processos precisam ser executados para que o SO se mantenha em funcionamento
+	-Ctrl + Alt + Delete abrem um Gerenciador de Tarefas (Ctrl + Shift + Esc)
+		-Mostra a porcentagem da CPU usada pelos programas
+		-RAM utilizada
+		-Utilização da placa de rede
+		-Espaço em disco disponível
+		
+	-Drives:
+		-O SO utiliza um driver para identificar e gerenciar os hardwares instalados no computador
+		-Há situações em que o SO já tem o driver necessário, sem precisar instalar nada extra, como é o caso de equipamentos "Plug and Play" ("plugar e usar")
+			-A partir da conexão do hardware na máquina, o sistema reconhece e deixa pronto para uso
+			
+	-Escolha do sistema operacional:
+		-A escolha do sistema operacional deve partir da necessidade que ele deve satisfazer
+		-Após o levantamento das funcionalidades e compatibilidades do SO, deve-se levantar quais sistemas atendem a demanda atual
+		-É importante que o SO escolhido seja um sistema atualizado (sistemas antigos tem maior tendência a falhas de segurança)
+		-W3C gera relatórios mensais com características dos computadores que acessam os mais de 27 mil sites analisados pela empresa
+		
+Software e seu licenciamento:
+	-Software: parte lógica de um computador, desenvolvidos por uma linguagem de programação
+	-Quando um software é desenvolvido, ele deve atender um tipo de licenciamento
+	-O licenciamento informa os direitos e deveres que o usuário deve ter com o programa
+	-Esse tipo de licenciamento permite que o usuário copie, modifique e redistribua o programa
+	-Software livre:
+		-As 4 liberdades de um software para ser considerado livre:
+			1. Liberdade de executar o programa independente do propósito
+			2. Liberdade de acessar o código fonte, estudar e modificar de acordo com suas necessidades
+			3. Liberdade de redistribuir cópias com a intenção de ajudar o próximo
+			4. Liberdade de aperfeiçoar o programa e disponibilizá-lo para que toda a comunidade se beneficie dele
+		
+	-Software proprietário:
+		-Possui direitos autorais
+		-Qualquer alteração necessária deve ser solicitada e autorizada pelo desenvolvedor
+		-Pode ser adquirida de forma gratuita ou paga
+		
+	-Software comercial:
+		-Deve ser comprado para ser utilizado; a depender do termo, o código fonte pode ser alterado para atender às necessidades do usuário
+		
+	-Software gratuito:
+		-O usuário não precisa pagar pra utilizar
+		-É importante verificar se o programa pode ser utilizado em determinado contexto
+		-Alguns são permitidos em algumas situações mas proibidos comercialmente, por exemplo
+		-A instalação de softwares comerciais ou proprietários, sem a devida aquisição ou autorização da empresa desenvolvedora, encaixa-se em um crime de pirataria
+		
+Hardware:
+	-Hardware é definido como qualquer equipamento capaz de exercer alguma função computacional específica
+	-Parte física dos aparelhos
+	-Processador:
+		-Responsável por executar tarefas e instruções solicitadas ao computador
+		-Esquenta muito devido sua alta taxa de processamento, geralmente encontrado com um cooler em sua parte superior
+		-Intel trabalha com modelo XEON e a AMD trabalha com Opteron
+		
+	-Hard Disk (HD):
+		-Armazena dados de forma permanente, diferente da memória RAM
+		-Parte interna:
+			-Pratos: locais onde os discos são armazenados, feitos de alumínio recoberto com material magnético e uma camada de material protetor
+			-Motor: responsável por fazer o disco girar, de 5400rpm 10000rpm
+			-Cabeça: contém uma bobina que 	utiliza impulsos magnéticos para manipular as moléculas da superfície do disco e gravar os dados. Não toca o disco
+			-Braço: posiciona os cabeçotes sob a superfície dos pratos
+	
+	-RAM:
+		-Armazena informações necessárias para o processador realizar sua função
+		-Memória de acesso randômico, com os dados perdidos caso o computador seja desligado
+		
+	-Placa mãe:
+		-Responsável por interligar todos os dispostivos - hardwares - do computador
+		-Composta por diferentes conectores, slots e portas utilizadas para ligar cada dispositivo
+		
+	-Drive de CD/DVD:
+		-Lê CDs e DVDs
+		-Alguns drives realiza gravações
+		-Tipos:
+			-CD-ROM: lê CDs apenas
+			-CD-RW: lê e grava CDs
+			-CD-RW + DVD: lê CDs e DVDs e grava CDs
+			-DVD-RW: lê e grava CDs e DVDs
+			
+	-Placa de vídeo:
+		-Gera imagem e envia para o monitor
+		-Acopladas na placa-mãe chama-se de placa onboard
+		-Placas adquiridas separadamente são chamadas de offboard, conectadas em um slot PCI-Express
+		-Placas offboards possuem maior desempenho comparado a uma onboard
+		
+	-Periféricos:
+		-Dispositivos conectados na parte externa do gabinete
+		-Conexões geralmente via portas PS/2 (mouse e teclado) e USB (interface de conexão com a placa mãe)
+		
+	-Fonte de alimentação:
+		-Fornece energia para todo o computador
+		-Utiliza conectores para fornecer energia à placa-mãe, drives e processador
+		-Fontes chaveadas, convertem a corrente alternada para corrente contínua
+		
+Ativos de rede:
+	-Principais equipamentos dentro de uma infraestrutura de Tecnologia da Informação
+	-Por meio desses equipamentos, conseguimos ter conectividade com outros dispositivos em uma rede
+	-Funcionalidades:
+		-Regenera e retransmite sinais de dados
+		-Direciona os pacotes para que tomem o melhor caminho até o destino
+		-Proporciona segurança para a rede
+		
+	-Precisam ter a garantia de funcionamento aliada à segurança e desempenho
+	-Administradores de rede precisam ter conhecimento do que ocorre com esses equipamentos em tempo real
+	-Utilização de softwares de monitoramento de todos os ativos de rede
+		-Nagios, Cacti, Zabbix, MRTG
+		
+	-Tipos de ativos:
+		-Switch:
+			-Equipamento multiportas - também chamado de computador - utilizado para conectar dispositivos finais em uma rede local
+			-O dispositivo trabalha na camada 2 do modelo OSI, utilizando endereço MAC para entregar os dados ao destinatário
+			-Tipos:
+				-Não gerenciáveis: 
+					-Equipamentos que não permitem a realização de nenhuma configuração
+				
+				-Gerenciáveis: 
+					-Permitem a realização de configuração e ativação de novos recursos
+					-Recursos suportados dependem do modelo escolhido
+					-Alguns recursos:
+						-Link, Power over Ethernet, segunraça de portas, VLANs, QOS
+		
+		-Roteador:
+			-Trabalha na camada 3 do modelo OSI
+			-Conecta redes diferentes
+			-O roteador utiliza endereço IP para alcançar a rede de destino
+			-Suporta fibras ópticas, 3G, ethernet, seriais, wireless
+			-Tipos de roteadores:
+				-Domésticos:
+					-Possuem uma limitação em relação a recursos suportados, quantidade de memória RAM e processador
+					-São dispositivos para trabalhar com baixas quantidades de pacotes
+					-Ideais para ambientes domésticos ou escritórios pequenos
+					
+				-Empresariais:
+					-Suportam uma quantidade grande de recursos e funcionalidades
+					-Desenvolvidos para trabalhar com uma alta taxa de dados
+					-Suportam protocolo de roteamento dinâmico, void, firewall, vpn, etc
+					
+		-HUB:
+			-Dispositivo multiporta utilizado para conectar dispostivos finais em uma rede local de computadores
+			-Equipamento anterior ao switch, com seu uso caindo em ambientes empresariais
+			-Seu desuso se deve a:
+				-Baixo desempenho
+				-Falta de segurança
+				
+			-Em ambientes domésticos ainda é usado, devido melhor preço em relação ao switch
+			
+		-É importante considerar a velocidade que as portas operam ao escolher um ativo de rede
+		-A velocidade é a capacidade máxima de dados de uma determinada interface pode trafegar por segundo
+		-Tipo de porta / velocidade
+			Ethernet			10 Mbit/s
+			Fast Ethernet		100 Mbit/s
+			Giga Ethernet		1 Gbit/s(1000 Mbit/s)
+			10 Giga Ethernet	10Gbit/s(10000 Mbit/s)
+		
+		-Um mesmo equipamento pode oferecer diferentes tipos de portas
+		-Por exemplo, um switch pode ter, por exemplo 24 portas Fast Ethernet e mais quatro portas Giga Ethernet
+		
+	-Conformidade entre ativo e cabeamento:
+		-Para utilizar o máximo de largura de banda disponível em cada interface, uma conformidade entre o cabeamento e a interface deve existir
+		-Não adianta usar uma porta no nível de Gigabit e um cabeamento no nível de megabit, já que os dados trafegam na velocidade do cabo
+		
+	-Roteador wireless ou Access point:
+		-Equipamento responsável em fornecer conexão a dispositivos finais através da rede sem fio
+		-Trabalha na camada 2 do modelo OSI, assim como o switch
+		-Quando um dispositivo que possui uma placa de rede sem fio se conecta a uma rede wireless, ele se associa a um Access point (AP) e através dele,
+		o cliente conseguirá obter acesso aos serviços de rede
+		
+Cabeamento estruturado:
+	-Atualmente existe uma grande variaedade de cabos utilizados na interligação dos equipamentos em uma rede computacional
+	-A variedade de cabos existe para atender à diferentes necessidades, como velocidade, alcance e ambiente
+	-Para padronizar, órgãos como TIA (Telecommunications Industry Association), ISO (International Organization for Standardization), IEEE (Institute of Electrical and 
+	Electronics Engineers) e ANSI (American National Standards Institute) cuidam dessa tarefa e de toda parte de padronização, inovaçào e testes de cabeamentos
+	-Cabeamento UTP:
+		-Cabo de par trançado não blindado (UTP) consiste em quatro pares de fios coloridos codificados que são trançados juntos e envolvidos em um revestimento de plástico
+		flexível
+		-O trançado dos fios visa cancelar sinais indesejados (ruídos)
+		-Ajuda a evitar diafonia (interferências de fontes internas - linha cruzada)
+		
+		-Os cabos são colocados em categorias de acordo com suas características técnicas, por exemplo, capacidade de trasnportar taxas mais elevadas de largura de banda
+			-Categoria 5:
+				-Características de desempenho para cabeamento e conexões em transmissões de dados e voz na velocidade de até 100Mbps
+				
+			-Categoria 5e:
+				-Melhora nas características dos materiais utilizados na categoria anterior, permitindo melhor desempenho, sendo específica até 100Mhz e velocidade de 1Gps
+		
+			-Categoria 6a:
+				-Desempenho especificado de até 250Mhz e velocidades de 1Gps até 10Gps
+				
+		-Todas essas categorias suportam distância máxima de 100 metros, ocorrendo atenuação no sinal
+		-Um dispositivo intermediário (switch, HUB, roteador) pode ser inserido afim de regenerar o sinal
+		-A utilização de fibra ótica é fortemente recomendada
+		-Cabeamento de par trançado blindado (STP) possui uma malha blindada global que proporciona uma maior imunidade às interferências externas eletromagnética e de 
+		radiofrequência
+		-Sua blindagem interna que envolve cada par trançado do cabo tem objetivo de reduzir a diafonia
+		-Se a blindagem não for aterrada em uma das extremidades do cabo STP, ela se transformará em uma antena, multiplicando as interferências
+		
+	-Cabeamento direto e crossover:
+		-para realizar a conexão entre dispositivos podemos utilizar cabos UTP ou STP, direto ou crossover
+		-Dependendo da sequência que foi utilizada nas extremidades vamos ter um cabo direto ou crossover
+		-As extremidades devem estar no padrão TIA 568A ou 568B
+		
+		-Cabo direto: ambas as extremidades no padrão T568A ou T568B; cabo UTP de cobre para conectar dispositivos de rede não semelhantes (exceto computador e roteador)
+		-Cabo crossover: uma extremidade no padrão T568A e outra T568B; cabo UTP de cobre para conectar dispositivos similiares de rede
+	
+	-Segurança no cabeamento:
+		-O cabeamento de cobre é propenso à influência de sinal externo e isso prejudica o desempenho do cabo
+		-Sinais externos podem distorcer e corromper os dados transportados pelo meio físico de cobre
+		-As ondas de de rádio e os dispositivos eletromagnéticos, como luzes fluorescentes, motores elétricos e outros dispositivos são fontes de ruído em potencial
+		-Sofre riscos de fogo, em que o isolamento e o revestimento dos cabos podem ser inflamáveis ou produzir fumaça tóxica quando aquecidos ou queimados
+		
+		-TIA 568: especificação geral sobre cabeamento estruturado em instalações comerciais
+		-TIA 569: especificações gerais para encaminhamento de cabos (infra-estrutura, canaletas, bandejas, eletrodutos, calhas)
+		-TIA 570: especificação geral sobre cabeamento estruturado em instalações residenciais
+		-TIA 606: administração da documentação
+		-TIA 607: especificação de aterramento
+		
+Serviços de rede:
+	-São aplicações existentes entre servidores de redes
+	-Possuem características distintas dependendo do protocolo que foi escolhido
+	-Por meio desses serviços podemos disponibilizar algum recurso a um usuário, proporcionar segurança, monitorar e automatizar tarefas
+	-Protocolos:
+		-DHCP (Dynamic Host Configuration Protocol): disponibiliza informações sobre a rede para os dispositivos finais
+		-LDAP (Lightweight Directory Access Protocol): pesquisa dados de usuários em diretórios
+		-HTTPS (HyperText Transfer Protocol Secur)e: mesma função do http porém mais seguro, pois criptografa as informações
+		-IMAP (Internet Message Access Protocol): outro protocolo para recebimento de correio eletrônico
+		-HTTP (HyperText Transfer Protocol): usado para navegar em páginas web
+		-FTP (File Transfer Protocol): para localizar e capturar arquivos
+		-Telnet: terminal de acesso remoto em modo texto
+		-SSH (Secure Shell Terminal): terminal de acesso remoto, porém com mais segurança, pois criptografa os dados
+		-VNC: acesso remoto por interface gráfica
+		-NFS (Network File System): compartilha arquivos em redes UNIX
+		-SMB (Server Message Block): compartilha arquivos e impressoras
+		-SMTP (Simple Mail Transfer Protocol): para envio de correio eletrônico
+		-IPP (Internet Printing Protocol): serve para acessar impressoras
+		-POP3 (Post Office Protocol v3): para recebimento de correio eletrônico
+		-DNS (Domain Name System): converte nome em endereços endereços IP e vice-versa
+		
+	-HTTP e HTTPS: 
+		-Sigla necessária ao acessar um site
+		-HTTP utiliza texto claro para trafegar seus dados, gerando problema de segurança, já que caso tenha um invasor, este consegue ver todos os dados de forma compreensível
+		-HTTPS criptografa as informações, resolvendo o problema da segurança, além de garantir a legitimidade de um site
+		-Garantia do HTTPS fornecida com a utilização de certificado digital, em que uma empresa certificadora garante a autenticidade do site
+		
+	-Telnet e SSH:
+		-São protocolos utilizados para acessar máquinas remotamente
+		-Através do Telnet é possível realizar manutenção em qualquer máquina da rede a partir de qualquer dispositivo que aceite o serviço
+		-Telnet utiliza texto claro na na transmissão dos dados
+		-SSH possui a mesma finalidade, mas criptografando as informações
+		
+	-FTP e SMB:
+		-FTP é um dos protocolos mais antigos e utilizados para transferência de arquivos
+		-A transferência acontece entre um dispositivo cliente (solicita conexão) e um dispositivo servidor (recebe a solicitação)
+		-Através do cliente, o usuário consegue realizar download e upload para o servidor
+		-O FTP é muito utilizado em páginas web para disponibilizar downloads
+		-SMB também compartilha arquivos, compartilhando também impressoras, além de definir níveis de acesso e autenticações
+		-SMB é uma das formas mais utilizadas quando é preciso compartilhar arquivos entre equipamentos que possuem diferentes sistemas operacionais (como Linux e Windows)
+		
+	DNS e DHCP:
+		-DNS traduz os nomes em endereços IP, possibilitando o acesso por um nome ao invés do IP do site
+		-DHCP é o protocolo utilizado para disponibilizar a configuração de rede para os computadores que solicitam esse tipo de informação
+		-Se um dispositivo configurado para utilizar DHCP em toda a rede, o servidor disponibilizará informações do endereço IP, máscara, gateway padrão, DNS, etc
+		
+	SMTP e POP3:
+		-SMTP é o protocolo padrão utilizado para envio de e-mail por meio de internet
+		-Após o cliente ter montado o e-mail e inserido o destinatário, o protocolo SMTP entra em ação levando a mensagem até o servidor de destino
+		-SMTP é considerado relativamente simples
+		-SMTP só envia mensagem, necessitando de outro protocolo para o entrega ao destinatário
+		-POP é responsável pela entrega
+		-POP permite que as mensagens na caixa do correio eletrônico possam ser baixadas para a máquina local
+		-O envio do e-mail acontece com a utilização dos dois protocolos
+		-IMAP possui funcionalidades extras além das mesmas do POP, podendo substituir ele desde que o servidor aceite
+		
+	LDAP:
+		-Utilizado para pesquisa em diretórios, um banco de dados utilizados principalmente para consultas de autenticação
+		-Com o LDAP, a empresa tem o benefício de uma autenticação centralizada, em que clientes podem utilizar o mesmo login e senha para acessar diferentes tipos de sistema
+		-Traz a comodidade de não precisar de várias credenciais para acessar sistemas diferentes
+		-Os diretórios seguem uma hierarquia formando uma árvore
+									dc=org
+									dc=acme
+					ou=people							ou=groups
+(user)uid=bob 	uid=alice	(admin)uid=bill			cm=user		cn=admin
+
+	-Portas utilizadas na camada de transporte dos protocolos abordados
+	HTTP		80 TCP
+	HTTPS		443 TCP
+	Telnet		23 TCP
+	SSH			22 TCP
+	FTP			20,21 TCP
+	SMB			445 UDP
+	DNS			53 TCP/UDP
+	DHCP		67 UDP - servidor/ 68 UDP - cliente
+	SMTP		25 TCP/UDP
+	POP			110 UDP
+	IMAP		143 TCP/UDP
+	LDAP		389 TCP/UDP
+	
+Segurança:
+	-Pilares da segurança:
+		-Em TI, a garantia da segurança se dá por meio da garantia da confiabilidade, integridade e disponibilidade da informação, definindo os pilares da segurança da 
+		informação
+		-Confidenciabilidade é uma propriedade que visa disponibilizar uma informação somente a pessoas autorizadas
+		-Para alcançar esse objetivo geralmente a técnica da autenticação é utilizada
+		-Integridade é uma propriedade que visa garantir determinada informação não seja alterada por pessoas não autorizadas
+		-Para alcançar esse objetivo geralmente a técnica de permissão é utilizada; somente pessoas com determinada permissão podem realizar a alteração de uma informação
+		-A disponibilidade visa garantir que determinada informação sempre estará disponível para que as pessoas com autorização acessem
+		-Para alcançar esse objetivo geralmente a técnica de redundância é utilizada, em que caso algum equipamento passe por problemas, outro assume, fazendo com que o
+		serviço não se torne indisponível
+		
+	-Algumas bibliografias sobre a segurança da informação trazem outros pilares:
+		-Autenticidade: garantia que a informação é autêntica, atesta a origem da mesma
+		-Legalidade: garante a legalidade jurídica da informação
+		-Auditoria: possibilidade de rastrear a informação; por meio da auditoria é possível identificar participantes, locais e horários
+		-Não repúdio: a impossibilidade de negar que determinada informação ou serviço foi criada ou alterada
+		
+	-A implantação da segurança da informação é uma tarefa complexa em um ambiente empresarial, apesar de trazer vários benefícios à instituição
+	-Para padronizar as práticas que devem ser adotadas, a ISO 27002 foi desenvolvida
+	-Essa norma engloba requisitos, boas práticas, organização de processos e ferramentas que devem ser implementadas pela empresa para alcançar uma boa gestão da segurança
+	-SGSI: sistema de gestão de segurança da informação
+		-Política de segurança
+		-Segurança patrimonial-recursos humanos
+		-Segurança do controle de acesso
+		-Gerenciamento continuidade do negócio
+		-Segurança da informação organizacional
+		-Segurança física e do ambiente
+		-Aquisição, desenvolvimento e manutenção de SI
+		-Compliance
+		-Gerenciamento de ativos
+		-Gerenciamento dos processos de comunicação e operação
+		-Gerenciamento de incidentes de segurança da informação
+		
+	-Boas práticas da segurança:
+		-Elaboração de senhas:
+			-Mude sua senha frequentemente, no mínimo três vezes por ano
+			-Utilize senhas com no mínimo oito caracteres e com a combinação de letras (maiúsculas e minúsculas), caracteres especiais e números
+			-Memorize sua senha, não a deixe salva em um arquivo do seu computador, não envie por e-mail e nem deixe ela anotada em qualquer local
+			-Não compartilhe suas senhas com ninguém.
+			-Não use senhas simples, como data de nascimento, seu nome ou de familiares, endereço, número de telefone ou qualquer outra informação pessoal
+			-Não repita sequências conhecidas como 111, abc, qwert, 123 em qualquer parte da sua senha
+			-Não digite sua senha em computadores públicos, pois esses computadores podem estar infectados por algum spyware (programa espião) ou keyloggers (programa que 
+			captura o que é digitado)
+			-Não utilize a mesma senha para sites diferentes
+		
+		-Acesso a sites e spam:
+			-Termo utilizado para emails recebidos sem a solicitação, enviados a grande quantidade de pessoas
+			-A utilização dessa técnica está diretamente ligada a ataques à segurança, sendo um dos métodos preferidos dos invasores para propagar códigos maliciosos, 
+			disseminação de golpes e roubo de informações
+			-Cuidado quando o campo "assunto" traz textos alarmantes, atraentes ou vagos demais
+			-Observe sempre o remetente do e-mail, hackers costumam tentar enganar as pessoas mudando o endereço, como: @caixa.com ao invés de @caixa.gov.br
+			-Não clique em links e nem baixe anexos de e-mails enviados por remetentes que você desconhece
+			-Diariamente acessamos diversos sites e às vezes nem percebemos se o endereço que está sendo acessado é um endereço verdadeiro
+				-Invasores utilizam a técnica de phishing para realizar a falsificação de sites
+				-O phishing de site é uma cópia fiel de determinado site, só que com um endereço inválido
+				-A maneira de prevenir esse tipo de ataque é sempre observar a URL que está sendo acessada
+				-Através do phishing o site falsificado pode capturar login, senha, informações pessoais e até o número do cartão de crédito
+				
+		-Download de programas:
+			-Junto com arquivos de download podem vir adwares (programas usados para capturar informações pessoais) ou até mesmo um vírus que comprometa o funcionamento da
+			máquina
+				-Baixe arquivos, apenas de sites confiáveis. Quando possível, baixe o programa diretamente do site do fabricante
+				-Utilize o antivírus antes de realizar a instalação. Caso o antivírus detecte algum problema de segurança, um alerta será emitido
+				-Cuidado com programas de compartilhamento de arquivos, como Torrent, Ares, Emule etc. Dependendo da configuração esses programas podem compartilhar arquivos 
+				-que você não queira publicar, ou até mesmo seu hd inteiro
+	
+	-Mitigando ataques:
+		-Mitigar ataques é um conceito que trata de evitar ao máximo que algum ataque seja bem sucedido
+		-Ataques à confidenciabilidade e integridade:
+			-Uma forma de ter acesso às informações sem a devida permissão é interceptar tudo que passa pela rede sem que o usuário perceba
+			-Ataques como Man-in-the-Middle-Attack(Ataque Homem no Meio) e DNS poisoning(Envenenamento DNS) utilizam esse conceito para capturar informações sem que o usuário 
+			saiba
+			-Dependendo do objetivo do atacante, as informações que chegam até ele podem ser alteradas, prejudicando a integridade das informações
+			
+		-Ataques à disponibilidade:
+			-Medidas para evitar esse tipo de ataque:
+				-Sempre que possível, acesse sites que utilizem o protocolo HTTPS, principalmente quando trata-se de transações financeiras
+				-Monitore seu servidor DNS, caso a quantidade de requisições esteja baixa, pode ser um sinal de tentativa de ataque
+				-Não utilize hub na sua rede, dê preferência à utilização de switchs
+				-Não se conecte em rede Wireless que você não conheça
+				-Caso um invasor queira deixar algum servidor indisponível ele pode gerar uma sobrecarga no sistema, fazendo com que o servidor fique inoperante devido à alta 
+				taxa de requisições
+				-O atacante, por exemplo, pode sobrecarregar a largura de banda e o processamento do servidor, deixando o servidor indisponível para o acesso
+				-Ataques do tipo DOS (Ataque de negação de serviços) e DDOS(Ataque de negação de serviços distribuídos) afetam a disponibilidade do servidor ou de algum 
+				serviço específico
+		
+		
+		-Disponibilização de serviços:
+			-Os ataques DDOS e DOS são os mais temidos e difíceis de prevenir, mas algumas ações podem ser tomadas para dificultar esse ataque:
+				-Monitore os serviços e pacotes que trafegam pela rede em que o servidor está instalado
+				-Quando possível, permita apenas que determinadas faixas de IPs realizem Ping no servidor
+				-Utilize ferramentas IDS(Sistema de Identificação de Intrusos) e IPS (Sistemas de Prevenção de Intrusões) para analisar ações incomuns na rede e no servidor
+				-Conheça o serviço que você está instalando e disponibilizando para os clientes e verifique se o mesmo não possui atualizações ou configurações extras para 
+				evitar esse tipo de ataque
+				
+			-Hoje um mesmo servidor pode ser utilizado para disponibilizar vários serviços simultaneamente, como FTP, HTTP, HTTPS, DHCP, etc
+			-Uma boa forma de mitigar ataques é deixar somente ativos os serviços que realmente vão ser utilizados
+			-Quando um serviço é instalado ele abre uma porta no sistema operacional, essa porta pode ser utilizada como fonte de entrada para o atacante
+			-Podemos fazer uma analogia de um servidor com uma casa domiciliar, onde quanto mais portas uma casa tiver, mais chances de encontrar alguma vulnerabilidade ela 
+			terá
+			
+Governança:
+	-Boas práticas de segurança:
+		-Metodologias foram desenvolvidas a fim de criar uma padronização na utilização da tecnologia da informação dentro da instituição
+		-Atualmente Cobit e ITIL são ferramentas essenciais que auxiliam os gestores no controle da tecnologia da informação dentro da empresa
+		-Cobit:
+			-É um framework de muito sucesso na área de gestão de TI e, em 2012, sofreu mais uma atualização indo agora para sua versão 5
+			-Auxilia a GRC (Governança, Riscos e Compliance) e tem a proposta de alinhar a TI com as regras de negócio da Instituição
+			-Auxilia a empresa a criar valor para a TI, equilibrando o investimento em recursos e os riscos organizacionais
+			-Para garantir todas essas funcionalidades, esse novo framework se baseia em cinco princípios:
+				-Reunir as necessidades dos stakeholders (parte interessada, ex.: gestores, gerentes, proprietários, fornecedores)
+				-Cobrir a empresa fim-a-fim
+				-Aplicar um framework único e integrado
+				-Aplicar uma abordagem holística
+				-Separar a governança da gestão
+				
+			-Através desses princípios o Cobit 5 consegue gerar vários benefícios à empresa, como:
+				-Manter informações de alta qualidade para apoiar decisões de negócios
+				-Alcançar objetivos estratégicos e benefícios por meio da utilização eficaz e inovadora de TI
+				-Alcançar a excelência operacional por meio da aplicação confiável e eficiente da tecnologia	
+				-Manter riscos relacionados à TI a um nível aceitável
+				-Otimizar o custo dos serviços de TI e de tecnologia
+				-Suporte à conformidade com leis, regulamentos, acordos contratuais e políticas
+				
+		-ITIL:
+			-O ITIL(Information Technology Infrastructure Library, Biblioteca de Infraestrutura de TI) é um framework que engloba as melhores práticas para a gestão da TI
+			-Atualmente o ITIL está na sua terceira versão e foi criado pelo governo britânico
+			-As práticas que o ITIL une são testadas e comprovadas na prática e são resultados de anos de observações e estudos
+			-A utilização do ITIL dentro da empresa consegue trazer vantagens para a instituição
+			-A própria literatura do ITIL organiza seus benefícios em quatro categorias:
+				-Benefício para o negócio:
+					-O negócio da empresa se torna mais estável se houver um acordo de níveis de serviço (SLA) segmentado por cliente, serviço, setor etc. Nesse contrato SLA, 
+					é estipulado tempo para resolução de problemas, atendimento ao cliente, tempo mínimo de funcionamento da estrutura de TI
+					-Com o monitoramento dos níveis de serviços é possível analisar se as metas foram alcançadas e se existe sustentabilidade no negócio
+					
+				-Benefício financeiro:
+					-Por meio do gerenciamento de problemas, menos incidentes ocorrem e, consequentemente, o tempo de serviço parado é menor e isso reflete uma maior 
+					produtividade
+					-Com o gerenciamento de continuidade, a empresa planeja quanto tempo a estrutura de retorno entra em ação após uma parada, fazendo com que os serviços não 
+					fiquem indisponíveis
+					
+				-Benefício para inovação:
+					-Cada serviço está em constante avaliação, o que abre a oportunidade para a realização de melhorias na estrutura implantada
+					-O ITIL aborda o gerenciamento de mudança em que é realizado um ciclo de atividades que pode acarretar uma revisão. O processo de revisão garante que a 
+					gestão passe por inovações a fim de melhorar cada vez mais os processos
+					
+				-Benefício para funcionários:
+					-Os funcionários ficam motivados quando percebem que a estrutura proposta funciona bem e auxilia o seu trabalho
+					-O ITIL tem como premissa a transparência nos processos, deixando o colaborador satisfeito, pois o mesmo compreende o método que é utilizado pela empresa
+					
+		-Situação de aprendizagem:
+			-Antes de disponibilizar um serviço, um bom planejamento da infraestrutura deve ser realizado para garantir qualidade do serviço oferecido
+			-Benefício para o negócio:
+				-A empresa SC Tecnologia recebeu um investimento para a construção de uma sala de telecomunicações, onde estarão localizados os principais ativos da rede
+				-Sua tarefa é decidir quais equipamentos e softwares devem ser utilizados nesse ambiente, para que se proporcione uma melhor qualidade para os colaboradores e 
+				clientes							
+			
+Revisão:
+	-Sistema operacional:
+		-É um software, geralmente um conjunto de softwares, que gerencia todos os recursos presentes em um computador
+		-Tarefas complexas:
+			-Gerenciar processos;
+			-Gerenciar memória;
+			-Gerenciar recursos;
+			-Gerenciar hardware;
+			
+		-Um papel de extrema importância que o SO realiza é fazer a interação com o hardware
+		-Para realizar essa interação o SO utiliza um driver para conseguir identificar e gerenciar os hardwares instalados no computador
+		-Há situações em que o próprio SO já tem o driver necessário, fazendo com que o usuário não precise instalar nada extra para que o hardware funcione
+		-Um profissional de TI tem que ter o conhecimento de qual sistema operacional utilizar em determinada situação
+		-A escolha do sistema operacional deve partir da necessidade que ele deve satisfazer
+		-Após o levantamento das funcionalidades e compatibilidades que SO tem, devemos realizar o levantamento de quais sistemas atendem essa demanda atualmente
+		
+	-Softwares e seu licenciamento:
+		-Podemos definir como software toda parte lógica de um computador
+		-Através do software conseguimos realizar nossas tarefas como editar um texto, escutar música, navegar na Internet, etc
+		-O software é desenvolvido utilizando uma linguagem de programação, atualmente existem centenas de linguagens que são utilizadas para finalidades específicas
+		-Algumas linguagens utilizadas no mercado são Java, PHP, Visual Basic, ASP, Phyton, Perl, etc
+		-Quando um software é desenvolvido ele deve atender um tipo de licenciamento
+		-Atualmente os seguintes tipos de softwares são os mais encontrados no mercado:
+			-Software Livre
+			-Software Proprietário
+			-Software Comercial
+			-Software Gratuito
+			
+		-Antes de instalar um software é preciso saber qual licença ele utiliza
+		-A instalação de softwares comerciais ou proprietários, sem a devida aquisição ou autorização da empresa desenvolvedora, encaixa-se em um crime de pirataria
+		
+	-Hardware:
+		-No mundo da informática hardware é definido como qualquer equipamento que pode exercer alguma função computacional específica
+		-De forma resumida hardware é toda parte física de um computador, notebook, celular, tablet entre outros
+		-O computador é um conjunto de hardware, em que cada peça realiza uma função específica
+		-Todas as peças de um computador devem estar funcionando perfeitamente para que o mesmo consiga realizar suas atividades
+		-Mesmo determinados hardwares possuindo funções mais complexas que outros, eles não conseguem trabalhar sozinhos
+		-É muito importante realizar manutenções periódicas em todos os componentes, evitando que o PC (Computador Pessoal) não venha a falhar e comprometer o serviço
+		
+	-Ativos de rede:
+		-Ativos de redes são considerados os principais equipamentos dentro de uma infraestrutura de TI
+		-Através desses equipamentos conseguimos ter conectividade com outros dispositivos em uma rede
+		-Os ativos de redes também possuem as seguintes funcionalidades:
+			-Rregenerar e retransmitir sinais de dados;
+			-Direcionar os pacotes para que tomem o melhor caminho até o destino;
+			-Proporcionar segurança para a rede
+			
+		-Principais ativos de redes atualmente:
+			-Switch
+			-Roteador
+			-HUB
+			-Access Point
+			
+	-Cabeamento estruturado:
+		-Atualmente existe uma grande quantidade de tipos de cabos utilizados para interligação de equipamentos em uma rede computacional
+		-Essa variedade de cabeamento vem para atender as diferentes necessidades, velocidades, alcance e ambiente
+		-Os seguintes cabeamentos são utilizados para a realização de conexão em uma rede de dados:
+			-Cabeamento UTP (direto e crossover)
+			-Cabeamento STP
+			
+		-O órgão TIA fornece uma série de normas que padronizam todo cabeamento estruturado de uma empresa, ambiente comercial ou doméstico
+		-A seguir, algumas normas e o que elas especificam:
+			-TIA 568: Especificação geral sobre cabeamento estruturado em instalações comerciais
+			-TIA 569: Especificações gerais para encaminhamento de cabos (infra-estrutura, canaletas, bandejas, eletrodutos, calhas)
+			-TIA 570: Especificação geral sobre cabeamento estruturado em instalações residenciais
+			-TIA 606: Administração da documentação
+			-TIA 607: Especificação de aterramento
+			
+	-Pilares da segurança:
+		-Atualmente uma empresa contém muitas informações importantes, como dados sigilosos de clientes, informações particulares de colaboradores, documentos internos 
+		restritos, etc
+		-Perca, roubo ou divulgação dessas informações podem causar um impacto negativo à empresa
+		-Em TI a garantia de segurança se dá através da garantia de confiabilidade, integridade e disponibilidade da informação
+		-Esses três termos definem os pilares da segurança da informação
+		-A implantação da segurança da informação é uma tarefa complexa em um ambiente empresarial, mas traz muitos benefícios à instituição
+		-Para padronizar as práticas que devem ser adotadas em relação à segurança da informação, a ISO 27002 foi desenvolvida
+		-Essa norma engloba requisitos, boas práticas, organização de processos e ferramentas que devem ser implementadas pela empresa para alcançar uma boa gestão da 
+		segurança da informação
+		
+	-Boas práticas em segurança:
+		-Hoje o mercado oferece uma série de soluções voltadas para a segurança da informação
+		-Essas soluções estão cada vez mais robustas e versáteis, conseguindo atender a necessidade de cada empresa
+		-Com certeza as empresas devem realizar um estudo sobre as soluções presentes no mercado e aderir a que mais atenda a sua necessidade, mas confiar nessa solução como 
+		única forma de prevenir problemas de segurança é um grande erro
+		-Todo gestor de TI deve ter em mente que não existe uma rede ou um servidor 100% seguro, todos eles estão vulneráveis a algum tipo de ataque, mas nem por isso medidas 
+		de segurança devem ser deixadas de lado
+		-Mitigar ataques é um conceito muito utilizado na área da segurança da informação, que trata de tentar evitar ao máximo que algum ataque seja bem sucedido
+		
+	-Boas práticas em governança TI:
+		-Durante vários anos a TI foi considerada uma área responsável apenas por deixar os computadores e serviços tecnológicos funcionando
+		-Com o passar dos anos, gestores perceberam a importância da TI para os negócios e surgiu a necessidade de dar mais atenção a esse setor
+		-A partir dessa necessidade, metodologias foram desenvolvidas a fim de criar uma padronização na utilização da tecnologia da informação dentro da instituição
+		-Atualmente Cobit e ITIL são ferramentas essenciais que auxiliam os gestores no controle da tecnologia da informação dentro da empresa
+		-A utilização do Cobit 5 auxilia a empresa a criar valor para TI, equilibrando o investimento em recursos e os riscos organizacionais
+		-O Cobit 5 atende as áreas funcionais de TI, os negócios da empresa e as partes interessadas
+		-Empresas de todos os tamanhos, privadas ou públicas, podem utilizar o Cobit como framework para governança de TI
+		-Atualmente o ITIL está na sua terceira versão e foi criado pelo governo britânico
+		-As práticas que o ITIL une são testadas e comprovadas na prática e são resultados de anos de observações e estudos
+		-O ITIL sugere que a área de TI seja vista como uma prestadora de serviços e que esses serviços tenham um ciclo de vida
+		-Utilizando esse ciclo de vida é possível mensurar e gerenciar o valor que estes serviços podem agregar ao negócio da empresa
+		
+Conteúdo extra:
+	-Modelo OSI:
+		-Modelo de referência desenvolvido pela ISO
+		-Foi desenvolvido com o objetivo de facilitar o entendimento e a comunicação em uma rede de computadores acontece
+		-Esse modelo é dividido em sete camadas:
+			7: Aplicação	Camada em que estão os serviços e protocolos que compõem os aplicativos.							Http, https, ssh, telnet, pop, snmp, smtp, ftp.
+			6: Apresentação	Formata os dados para serem apresentados à camada de aplicação.												ASCII, jpg, tls
+			5: Sessão	Responsável por iniciar e encerrar as conexões de rede.															Rpc, sql, nfs,
+			4: Transporte	Proporciona comunicação fim-a-fim entre os dispositivos finais												Tcp, udp, sctp, dccp
+			3: Redes	Fornece o roteamento dos pacotes entre o dispositivo de origem e o destino										Ipv4, arp, ipv6, icmp, arp
+			2: Enlace de Dados	Responsável por controlar como os dados vão acessar o meio físico.									Ethernet, 802.11, hdlc, frame relay, ppp
+			1: Física	Responsável pelos meios de conexão(interfaces) utilizados para trafegar os dados pelas redes de computadores.	Modem, 1000base-TX, hub, RS-232, Rj45
+			
+	-Portas TCP/UDP:
+		-Todo protocolo que trabalha na camada de aplicação possui uma porta padrão em que recebe as requisições de outros dispositivos
+		-A IANA(Internet Assigned Numbers Authority) é o órgão responsável por esse controle de portas utilizadas pelas aplicações
+		
+	-Segurança:
+		-O mundo da segurança da informação está sempre em constante evolução, novos ataques surgem a cada momento e, consequentemente, trazem uma preocupação extra para quem 
+		trabalha na área
+		-Atualmente existem vários tipos de ataques, cada ataque se beneficia de alguma vulnerabilidade na rede ou no protocolo
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			
+		
+			
+			
+			
+			
+			

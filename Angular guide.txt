@@ -1,0 +1,17 @@
+Angular
+
+npm install -g @angular/cli
+ng						-> Exibe informações
+ng new nome_projeto		-> Cria um novo projeto Angular
+ng serve -o				-> Abre o servidor
+
+-Components:
+	-html
+	-css
+	-ts
+	
+	ng generate component nome_componente
+	ng g c nome_componente
+	
+	-Nos componentes, é possível declarar variáveis usando javascript ou typescript
+		appTitle: string = "myapp";

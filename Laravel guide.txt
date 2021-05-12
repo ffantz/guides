@@ -1,0 +1,250 @@
+composer create-project laravel/laravel <nome_projeto> --prefer-dist
+
+composer update: atualiza dependências (executar ao importar projeto)
+
+php artisan make:auth
+php artisan make:migration create_<nome_tabela>_table: gera o arquivo para a criação da tabela
+	public function up()	-> criação da tabela
+    {
+        Schema::create('estado', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('uf', 2);
+            $table->string('nome', 50);
+            $table->timestamps();	-> insere a data de criação e a data de atualização dos dados
+        });
+    }
+
+-Chave estrangeira em tabelas:
+	public function up()
+    {
+        Schema::create('municipio', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nome', 100);
+            $table->integer('id_estado')->unsigned(); ou $table->unsignedInteger('id_estado');
+            $table->foreign('id_estado')->references('id')->on('estado');
+            $table->timestamps();
+        });
+    }
+	
+	
+php artisan make:model <tabela>: cria a classe modelo para a tabela criada
+	class estado extends Model
+	{
+		protected $table = 'estado';		-> define qual tabela usa como parâmetro
+		protected $primaryKey = 'variavel';	-> define qual variável será usada como chave primária (padrão como ID)
+		protected $fillable = [				-> campos da tabela a serem inseridos
+			'uf', 'nome'
+		];		
+
+		public $rules=[					-> regras para inserção
+			'nome' => 'required|min:3|max:50',
+			'uf' => 'required|min:2|max:2',
+		];
+	}
+	
+php artisan migrate: 				cria as tabelas
+php artisan migrate:refresh: 		atualiza tabelas
+php artisan migrate:rollback: 		rollback das tabelas
+php artisan migrate --seed:			gera as seeds
+
+php artisan make:factory <nomeFactory>:						cria um recurso que define padrões para geração de dados
+<?php
+
+use Faker\Generator as Faker;
+
+$factory->define(App\Estado::class, function (Faker $faker) {
+    return [
+        'uf' => $faker->stateAbbr,
+        'nome' => $faker->state,
+    ];
+});
+
+
+php artisan make:seeder <nomeSeeder>:						cria um gerador que usa o padrão criado
+<?php
+
+use Illuminate\Database\Seeder;
+
+class EstadoSeeder extends Seeder
+{
+    public function run()
+    {
+        factory(App\Estado::class,30)->create();
+    }
+}
+
+
+php artisan make:controller <nomeController> --resource: 	cria um controller para listagem de dados
+
+use App\Estado;
+use DB;				-> import para tabelas com chave estrangeira
+
+class EstadoController extends Controller
+{
+    private $estado;
+
+    public function __construct(Estado $estado){
+        $this->estado = $estado;
+    }
+   
+    public function index()
+    {
+        
+        $estados = Estado::all()->sortBy('nome');
+        return view('estado.index',compact('estados'));
+
+    }
+	
+	//Presença de chave estrangeira
+	public function index()
+    {
+        $municipios = DB::table('municipio')
+            -> select('municipio.id', 'municipio.nome', 'estado.uf')
+            -> join('estado', 'estado.id', '=', 'municipio.id_estado')
+            -> get()->sortBy('nome');
+        return view('municipio.index',compact('municipios'));
+    }
+	
+	//Requisições tipo GET
+	public function create()
+	{
+		return view('estado.criar');
+	}
+
+	//Requisições tipo POST
+	public function store(Request $request)
+	{
+        $this->validate($request, $this->estado->rules);	-> verificação das regras para validação
+		$estado = Estado::create($request->all());
+		return redirect('estado');
+	}
+	
+	//Atualiza informações de uma linha
+	public function update(Request $request, $id)
+	{
+		$estado = Estado::find($id);
+		$estado->fill($request->all());
+		$estado->update();
+		return redirect('estado');
+	}
+	
+}
+
+-Dentro de views, criar pasta "estado"
+	-Dentro, criar arquivo "index.blade.php" contendo:
+		@extends('layouts.app')
+
+		@section('content')
+			div class="container">
+				<div class="card">
+					<div class="card-header">
+						Estados
+						<a href="{{ url('estado/add')}}" 
+						class="btn btn-primary btn-sm float-right"> Novo </a>
+					</div>
+					<div class="card-body p-0">
+						<div class="table-responsive border-0">
+							<table class="table table-hover">
+								<tbody>
+									@foreach ($estados as $estado)
+									<tr>
+										<td>
+											<a class='a-line' href="{{ url('estado/'.$estado->id) }}">
+												{{$estado->nome}}
+											</a>
+										</td>
+										<td>
+											<a class='a-line' href="{{ url('estado/'.$estado->id) }}">
+												{{$estado->uf}}
+											</a>
+										</td>							
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		@endsection
+		
+	-Arquivo "criar.blade.php"
+		@extends('layouts.app')
+
+		@section('content')
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">Estado</div>
+							<form action="{{ url('estado') }}" method="post" enctype="multipart/form-data">
+								<div class="card-body">
+									{{ csrf_field() }}
+
+									<div class="form-group">
+										<label for="nome">Nome Estado</label>
+										<input type="text" required class="form-control{{$errors->has('nome') ? ' is-invalid':''}}" value="{{ old('nome') }}" id="nome" name="nome">
+										<div class="invalid-feedback">{{ $errors->first('nome') }}</div>
+									</div>
+									<div class="form-group">
+										<label for="nome">UF Estado</label>
+										<input type="text" required class="form-control{{$errors->has('uf') ? ' is-invalid':''}}" value="{{ old('uf') }}" id="uf" name="uf">
+										<div class="invalid-feedback">{{ $errors->first('uf') }}</div>
+									</div>                        
+								</div>
+								<div class="card-footer text-right">
+									<a href="#" onclick="history.back()" class="btn btn-secondary">Voltar</a>
+									<button type="submit" class="btn btn-primary">Salvar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		@endsection
+		
+	-Modificar arquivo "web", dentro de routes:
+		Route::get('/home', 'HomeController@index')->name('home');
+		Route::get('/estado', 'EstadoController@index');
+
+		//Adicionar novos
+		Route::get('/estado/add', 'EstadoController@create');
+		Route::post('/estado', 'EstadoController@store');
+
+
+composer dump-autoload: atualiza as dependências
+
+php artisan view:clear: limpa o cache das views
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

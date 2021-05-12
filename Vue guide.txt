@@ -1,0 +1,207 @@
+Vue JS 2
+
+-Aplicação dinâmica:
+	-HTML:
+	
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<div id="app">
+			<input type="text" v-on:input="alterarTitulo">		-> v-on: indica evento (input, nesse caso)
+			<p>{{ titulo }}</p>
+		</div>
+
+	-JS:
+		new Vue({
+			el: "#app",
+			data: {
+				titulo: "Usando VueJS"
+			},
+			methods: {											-> Capaz de adicionar métodos dentro da instancia do Vue
+				alterarTitulo(event){
+					this.titulo = event.target.value			-> Redefine o valor do título à medida em que o evento de input (keyup) acontece
+				},
+				alterarTitulo: function(event){
+					this.titulo = event.target.value
+				}
+			}
+		});
+
+-VueJS Templates:
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<p>{{ titulo }}</p>
+			<p>{{ saudacao() }}</p>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: "#app",
+			data: {
+				titulo: "VueJS"
+			},
+			methods: {
+				saudacao: function(){
+					return 'Boa semana!';						-> O conteúdo retornado é convertido para string
+				}
+			}
+
+		});
+	</script>
+	</html>
+	
+	-Os dados escritos em data e methods são jogados para a raiz do objeto Vue, impedindo, portanto, que existam métodos e atributos com o mesmo nome, mesmo em contextos diferentes
+	- v-bind: ligação entre a instância do Vue e o atributo HTML
+		
+		<a v-bind:href="link" target="_blank">Google</a>
+		data: {
+			titulo: "VueJS",
+			link: 'http://google.com.br'
+		},
+		
+	-Diretivas:
+		-Normalmente, iniciam-se por v
+		-Propriedades personalizadas inseridas no HTML interpretadas pelo Vue (ou simplesmente javascript puro)
+		
+		- v-once: indica que ocorrerá uma única renderização, parando de monitorar por mudanças
+		
+			<p v-once>{{ titulo }}</p>						// VueJS
+			<p>{{ saudacao() }}</p>							// Bom Dia!			-> Atualiza a qualquer mudança
+			
+			data: {
+				titulo: "VueJS",
+				link: 'http://google.com.br'
+			},
+			methods: {
+				saudacao: function(){
+					this.titulo = "Bom dia!";				-> Mesmo que redefina o valor de título, v-once garante que passada a primeira renderização o valor não será mais atualizado
+					return this.titulo;
+				}
+			}
+			
+		v-html: interpreta uma diretiva incluindo um HTML
+		
+			<p v-html="linkHTML"></p>
+			
+			data: {
+				titulo: "VueJS",
+				link: 'http://google.com.br',
+				linkHTML: '<a href="http://google.com.br">Google</a>'
+			}
+			
+	-Eventos:
+		- v-on:event: listernet para eventos (click, keyup, etc)
+			
+			<p>{{ contador }}</p>
+			<button v-on:click="somar">Somar 1</button>	
+
+			data: {
+				contador: 0
+			},
+			methods: {
+				somar(){										-> Por padrão, event é passado somar(e) ou somar(event)
+					this.contador++;
+				}
+			}
+			
+		- v-on:mousemove: identifica movimento do mouse
+			
+			<p v-on:mousemove="atualizarXeY">Mouse: {{ x }} e {{ y }}</p>
+			
+			atualizarXeY(event){
+				this.x = event.clientX;
+				this.y = event.clientY;
+			}
+			
+	-Utilizando parâmetros e event:
+		-Para utilizar parâmetros específicos juntamente com o event, basta usasr $event para acessar o evento disparado
+			
+			<button v-on:click="somar(5, $event)">Somar 1</button>			-> $ é usado para palavras reservadas pelo Vue
+			
+			somar(passo, event){
+				console.log(event);
+				this.contador += passo;
+			}
+			
+	-Modificadores de evento:
+		event.stopPropagation();				-> Interrompe a propagação de um evento, geralmente herdada de pai pra filho
+		v-on:mousemove.stop						-> Funciona de forma semelhante, especificando no elemento filho que o evento será interrompido
+		v-on:click.prevent						-> Previne que um link, por exemplo, seja ativo e funcione
+		
+		-É possível usar os elementos combinados:
+			v-on:mousemove.stop.prevent=""
+			
+			event.preventDefault();
+			
+	-Eventos de teclado:
+		-keyup: quando uma tecla é pressionada e levantada
+		v-on:keyup.enter			-> Especifica o evento para uma tecla
+		v-on:keyup.enter.alt		-> Especifica o evento para uma combinação de teclas
+		
+	-Interpolação:
+		-O Vue é capaz de interpretar dentro das duplas chaves {{ }} alguns testes simples (ternários, por exemplo):
+			{{ contador * 2 }}
+			{{ contador > 10 > 'Maior do que 10' : 'Menor do que 10' }}
+			
+	-Two-Way-Binding:
+		-Atualizar em duas vias um elemento significa usar v-bind:value="titulo" e v-on:input="titulo = $event.target.value"
+		-É possível simplificar isso com v-model="titulo"
+		
+	-Propriedades computadas:
+		-Propriedades que só são chamadas quando necessárias, sem ser ativas por interferência externa	
+		-São síncronas, devendo retornar um valor
+		
+			computed: {
+				resultado(){															-> É chamado como atributo (sem parênteses como ocorre em função)
+					return this.contador >= 5 ? "Maior que 5" : "Menor que 5";
+				}
+			},
+			
+	-Monitorando mudanças (watch):
+		-Ações assíncronas
+		-Monitora alterações de atributos
+		
+			watch: {
+				contador(newValue, oldValue){					-> Deve haver um atributo declarado em data; os parâmetros são os valores novo e antigo
+					setTimeout(() => {							-> Usando arrow function, o this fica disponível. Caso função tradicional,
+						this.contador = 0;						   criar uma const instancia = this; 
+					}, 2000);
+				}
+			},
+			
+	-Shorthands:
+		- v-on pode ser substituido por @:  v-on:click -> @click
+		- v-bind: pode ser utilizado somente com os 2 pontos e a propriedade:		v-bind:value -> :value=""
+		
+		
+		
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

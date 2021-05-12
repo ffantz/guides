@@ -1,0 +1,682 @@
+JavaScript
+
+JavaScript puro:
+	-Características gerais:
+		-Imperatividade e estruturada:
+			-Suporta elementos de sintaxe de programação estruturada, como loops de controle
+			-Não suporta escopo em blocos, utilizando escopo à nível de função
+
+		-Tipagem dinâmica:
+			-Tipos associados a valores, não a variáveis, com o "tipo" de uma mesma variável podendo mudar ao lonogo do código
+			-Suporta vários tipos de testar o tipo de um objeto, incluindo ducktyping
+
+		-Baseada em objetos:
+			-Objetos são arrays associativos, aumentados com protótipos
+			-Os nomes da propriedade são strings:
+				obj.x = 10 e obj["x"] = 10 são equivalentes
+
+		-Baseada em prototypes:
+			-Usa prototypes no lugar de classes para heranças
+
+		-Case sensitive
+
+	-Função rodando quando a página carrega:
+		window.onload = function_name
+
+
+	document.write(variável):
+		-Escreve no documento
+		-A utilização de "." seguidas de termos especifica onde será escrito, como tag, função ou parte específica da página.
+
+	-Incorporado:
+		<script>
+			-Tudo aqui dentro é JS
+		</script>
+
+	-Externo:
+		<script src="arquivo.js" type="text/JavaScript"></script>
+		-type escreve o conteúdo do arquivo, sendo opcional
+
+	-O script deve ser escrito no início do arquivo, no meta, ou no final, após todo o conteúdo
+		-No fim só deve ser colocado se for necessário entender todo o documento primeiro antes de ler o script
+		-No início é colocado para melhor navegação
+
+	-Variáveis:
+		-Container onde guardamos informação, guardada na memória do computador
+		-Declaração:
+			var nome = valor;
+
+	alert: cria um "aviso" em pop-up na tela; um diálogo
+
+	-Sinais de comparação:
+		-Atribuição: determina valor de algo: =
+		-Comparação de igualdade: ==
+		-Comparação de diferença: !=
+		-Comparação de igualdade entre tipos e valores: ===
+
+	-Incremento e decremento:
+		+=
+		-=
+		*=
+		/=
+		++
+		--
+
+	-Estruturas de repetição:
+		while(condition){
+			comands
+			condição de saída
+		}
+
+		do{
+			executado pelo menos uma vez
+			comandos
+		}while(condição);
+
+		for(variável; controle; incremento/decremento){
+			comandos
+		}
+
+	console.log("teste");	-> escreve no console da página, podendo ser visualizada com a tecla f12 ou pedindo para inspecionar
+	console.log(array[n]);	-> escreve no console da página o índice n do array
+
+	-Funções de execução:
+		function nome(parametro){
+			parametro += 2;
+		}
+
+	-Funções de retorno:
+		function nome(parametro){
+			variavel = parametro;
+			return variavel;
+		}
+
+	-Chamar uma função:
+		nome(parametro);
+
+	Math.round(number): arredonda o number para o número mais próximo, .5 arredonda pra cima e até .49 arredonda pra baixo
+	Math.ceil(number): arredonda o number cima sempre
+	Math.floor(number): arredonda o number baixo sempre
+	(number).toFixed(n): define que o number terá n casas decimais, arredondando a última
+
+	-Escopo de variáveis:
+		-Variáveis são limitadas ao escopo/contexto que são criadas
+
+	-Array:
+		var nome = new Array();
+		nome[n] = ""; ou nome = new Array("", ""); ou nome = ["", ""];
+		-É possível armazenar tipos diferentes no mesmo array
+		-É possível printar um elementos específico no console ou o array inteiro
+		nome.push(""); 		-> adiciona elemento no array
+		nome.unshift("");	-> adiciona no início do array
+		nome.length 		-> retorna o tamanho
+		nome.shift()		-> exclui o primeiro elemento
+		nome.pop();			-> exclui o último elemento do array
+		nome.indexOf("");	-> retorna o índice caso haja o elemento no array ou -1 se não houver
+		nome.sort();		-> ordena em ordem alfabética
+			-Ordenar números com sort ordena por string, fazendo com que o 10 fique na frente de 2, por exemplo
+			function ordenar(a,b){
+				return a-b;
+			}
+
+			nome.sort(ordenar);	-> ordena em ordem numérica, crescente
+
+	-Somar strings gera concatenação
+
+	Math.max(a,b,c);		-> retorna o maior número entre a, b e c
+	Math.min(a,b,c);		-> retorna o menor número entre a, b e c
+	Number(string);			-> transforma a string em número (presumindo que a string já seja um numeral, por exemplo, "2")
+
+	-Trabalhando com strings:
+		nome.charAt(n);				-> pega o caractere da posição n da string nome
+		nome.substr(i,f);			-> pega todos os caracteres do índice i ao f
+		nome.split(caracter)		-> considera o caracter como separador e gera um array contendo os itens separados pelo caracter
+		nome.split(caracter)[n]		-> seleciona o conteúdo do índice n do array gerado pela separação da string
+		nome.toUpperCase();			-> transforma a string em letras maiúsculas
+		nome.toLowerCase();			-> transforma a string em letras minúsculas
+
+	-Date:
+		var agora = new Date();
+		agora.getFullYear();		-> retorna o ano atual
+		agora.getMonth();			-> retorna o mês atual - 1, devido iniciar no 0 e ir até 11
+		agora.getDate();			-> retorna o dia do mês
+		agora.getDay();				-> retorna um intervalo entre 0 e 6, de domingo a sábado
+		agora.getHours();			-> retorna um intervalo de 0 a 23 horas
+		agora.getMinutes();			-> retorna um intervalo de 0 a 59 minutos
+		agora.getSeconds();			-> retorna um intervalo de 0 a 59 segundos
+		agora = new Date(ano,mes,dia,horas,minutos,segundos)
+
+	-Object:
+		var produto = new Object(); ou produto = {};
+		produto.nome = "Caneta"; ou produto = {nome:"Caneta", preco:1.99};
+		produto.preco = 1.99
+
+		-A propriedade this refere-se a "este" objeto, ao objeto que chamou tal função
+
+	Conceito de variáveis locais e globais:
+		-Variáveis locais recebem o nome "var" antes de sua declaração. Elas estão disponíveis somente no escopo do local que foi declarada
+		+Ex:
+			function teste(variavel1){	//Tanto "variavel1" quanto "local" são variáveis locais e disponíveis somente na função "teste"
+				var local = 'teste';
+			}
+		-Variáveis globais são declaradas já sendo definidas, sem receber alguma informação antes.
+		+Ex: global = 'variavelGlobal'; //A variável "global" é disponível no código inteiro
+
+	typeof operando:
+		-retorna uma string indicando o tipo do operando
+		+Ex: typeof gvisor
+		-"operando" pode ser string, variável, keyword, ou objeto para que o tipo seja retornado.
+		+Tipos possíveis retornados:
+			Undefined														"undefined"
+			Null															"object"
+			Boolean															"boolean"
+			Number															"number"
+			String															"string"
+			Host object (provided by the JS environment)					Implementation-dependent
+			Function object (implements [[Call]] in ECMA-262 terms)			"function"
+			E4X XML object													"xml"
+			E4X XMLList object												"xml"
+			Any other object												"object"
+
+	parseFloat(string):
+		-É uma função não-associada a nenhum tipo de objeto. Analisa um argumento e retorna um número de ponto flutuante.
+		-Caso encontre um caractere diferente de sinal (+-), numeral (0-9), ponto decimal ou expoente, retorna o valor até esse ponto e ignora os outros caracteres
+		-Espaços à direita e esquerda são permitidos.
+		-Retorna "NaN" se o primeiro caractere não puder ser convertido.
+		-A função "isNaN" analisa o resultado da "parseFloat()" e também retorna "NaN" caso o resultado seja "NaN".
+		-Parâmetro "string": uma string que representa o valor a ser analisado.
+		+Ex:
+			parseFloat("3.14");			//Os exemplos retornam 3.14
+			parseFloat("314e-2");
+			parseFloat("0.0314E+2");
+			parseFloat("3.14more non-digit characters");
+		+Ex:
+			parseFloat("FF2");  		//Retorna "NaN"
+
+	-Carregando o DOM:
+		const computerScore_span = document.getElementById("computer-score");			-> Busca por um ID
+		const scoreBoard_div = document.querySelector(".score-board");					-> Query Selector busca por uma class
+
+	-Adicionando listener:
+		rock_div.addEventListener('click', function(){									-> Adiciona um evento de clique para o elemento carregado previamente
+			console.log("rock click");
+		});
+
+	-Random:
+		Math.random() 					-> Sempre entre 0 e 1
+		Math.random() * 3				-> Sempre entre 0 e 3
+
+	-Converter a primeira letra de uma string para maiúscula:
+		word.charAt(0).toUpperCase() + word.substr(1);
+		result_div.innerHTML = `${format(userChoice)} beats ${format(computerChoice)}. You win!`;
+
+	-Modifica o tamanho da fonta e mantém superescrito
+		string.fontsize(n).sup()
+
+	-Timeout:
+		setTimeout(function, time)		-> Executa a função passada após time milisegundos
+
+	-Adicionar e remover classes CSS pelo javascript:
+		document.getElementById(userChoice).classList.add('green-glow');
+		document.getElementById(userChoice).classList.remove('green-glow');
+
+JQuery:
+	-Funções:
+		-Acessar e manipular o DOM - document object model
+		-Efeitos visuais e animações
+		-Alterar o conteúdo
+		-Alterar a apresentação
+		-Buscar informações no servidor sem recarregar a página
+
+	-Como usar:
+		-Arquivo local, baixando a biblioteca e colocando no seu servidor, hospedando junto com seus arquivos
+			-Garante mais velocidade
+
+		-Link externo, com diferentes versões públicas da Microsoft e Google
+			-Garante que a última versão será utilizada
+
+		-Link:
+			<script src="jquery-3.2.1.min.js"></script>
+			<script>
+				código
+			</script>
+
+		-Benefícios:
+			-Funciona em todos os navegadores modernos
+			-Simplifica a criação de sites para todas as mídias
+			-Foco no design ao invés das saídas e limitações de cada navegador
+			-Utiliza seu conhecimento de CSS
+			-Extensivo - possível usar e criar plugins direcionados para fins específicos
+
+		-Diferença entre JavaScript e JQuery:
+			-Selecionar todos os elementos de uma tag - <p>, por exemplo:
+
+			-JS:
+				document.getElementByTagName("p")
+
+			-JQuery:
+				$("p")
+
+				-Possibilita encadeamento:
+				$("p").instrução1.instrução2.etc;
+
+			"onload":
+				jQuery(document).ready(function(e){	-> resumido a $(function(e){ alert(""); });
+					alert("frase");
+				});
+
+				jQuery(document).ready -> $
+
+	$(function(e){		-> determina que o DOM deve ser carregado sempre antes de executar quaisquer funções existentes dentro desse escopo
+		funções
+	});
+
+	-Selecionar elementos via seletores:
+		$("elemento").length: usando isso em um alert, funciona como contador do "elemento", mostrndo quantas vezes ele aparece na página
+		$("tag elemento").length: considera os "elementos" que estão dentro da "tag", especificando onde contar
+		$("tag elemento").css("propriedade","valor"): aplica um css no "elemento" dentro da "tag"
+		$("tag elemento").css("propriedade","valor").css("propriedade","valor").css("propriedade","valor"): aplica várias propriedades css
+		$("elemento:first").css()...	-> altera o primeiro elemento
+		-> ":even"						-> elementos pares
+		-> ":odd"						-> elementos ímpares
+		-> ":nth(2)"					-> elementos 2, começando a conta do 0 (0, 1, 2...)
+		-> ":contains("conteudo")"		-> aplica em um elemento que contém o termo como conteúdo	<a> Conteudo </a>
+
+	-Selecionar elementos via atributos:
+		$("li").css(...)						-> seleciona todos os elementos li
+		$("li[atributo]").css(...)				-> seleciona todos os elementos li que possuam tal atributo
+		$("li[id]").css(...)					-> seleciona todos os elementos li que possuam id
+		$("li[id][atributo]").css(...)			-> seleciona todos os elementos li que possuam id e tal atributo
+		$("li[id='a'][atributo]").css(...)		-> seleciona todos os elementos li que possuam id = "a" e tal atributo
+		$("li[class='a']").css(...)				-> seleciona todos os elementos li que possuam classe = "a"
+		$("li.a").css(...)						-> seleciona todos os elementos li que possuam classe = "a"
+		$("li#a").css(...)						-> seleciona todos os elementos li que possuam id = "a"
+		$("li a[href$='.pdf']").css(...)		-> seleciona todos os elementos a dentro de um li que possuam o atributo href terminado em ".pdf" no "link"
+		$("li a[href$='.pdf']").after("*")		-> adiciona um * após o elemento, depois de selecionar ele
+		$("li a[href$='.pdf']").before("*")		-> adiciona um * antes do elemento, após selecionar ele
+		$("li a[href$='.pdf']").before("<img src='imagens/estrela.gif'>")		-> adiciona uma imagem antes do elemento, após selecionar ele
+		$("li a[href$='.pdf']").parent()		-> afeta o elemento pai (selecionando o elemento ul, já que o atual é um li)
+
+	-Inserir conteúdo:
+		$("<li><img src='imagem/foto4.jpg'></li>").insertAfter("li:last-child");	-> insere o elemento li img após o último filho do li
+		$("<li><img src='imagem/foto4.jpg'></li>").insertBefore("li:last-child");	-> insere o elemento li img antes do último filho do li
+		$("ul#listacursos").append("<li>Curso Bootstrap Fundamental</li>");			-> adiciona dentro do ul especificado um elemento li no fim da lista
+		$("ul#listacursos").prepend("<li>Curso Bootstrap Fundamental</li>");		-> adiciona dentro do ul especificado um elemento li no início da lista
+			-Vale ressaltar que esses criam o elemento no local especificado no início, o comando abaixo apenas modifica o conteúdo em uma tag já existente
+
+		$("h1").html("Formação Desenvolvimento Web");								-> adiciona o conteúdo ao elemento h1, por ele já existir
+
+			-Ao colocar apenas um elemento após o $, sem especificar atributo, classe ou id, todos os elementos serão afetados
+
+		$("a").attr("title","Alpes Suíços");				-> adiciona um atributo especificado na primeira aspas e um valor na segunda, inserindo na tag especificada
+		$("a").removeAttr("target");						-> remove o atributo selecionado da tag especificada
+		$("li:last").remove();								-> remove o elemento especificado
+			- :last determina que é o último elemento a ser excluído
+
+		$("li:last").replaceWith("<li>Curso PHP Fundamental</li>");		-> substitui o último li pelo li especificado
+		$("ul").wrapAll()					-> "embrulha" por fora do elemento, afetando tudo fora dele
+		$("ul").wrapInner()					-> "embrulha" dentro do elemento, afetando tudo dentro dele
+
+	-Identificar tamanho da janela:
+		$(window).width();					-> retorna o tamanho da largura da janela
+		$(window).height();					-> retorna o tamanho da altura da janela
+		$(document).width();				-> retorna o tamanho da altura do documento
+		$(document).height();				-> retorna o tamanho da altura do documento
+			-A janela é mais etável. O tamanho do documento varia se houver uma barra de rolagem na página, por exemplo, sendo do início até o fim da página, enquanto a janela
+			possui tamanho do "monitor", sendo o espaço disponível para exibição do conteúdo da página (nem sempre é o mesmo do monitor devido as barras de navegação que são
+			exibidas junto da página)
+
+	-Posicionamento de um elemento em relação a uma página:
+		console.log("Posição top: " + $('#janela').position().top);		-> exibe informação sobre a distância do elemento ao elemento anterior, pai
+			-Caso o position fosse static, por exemplo, mantém nenhuma modificação no posicionamento, apenas mantendo o padding do body
+
+		console.log("Posição top: " + $('#janelinha').offset().top);	-> offset retorna informação em relação à um elemento avô, pai do pai
+		$("elemento").offsetParent()									-> relaciona com o elemento pai de um determinado elemento
+
+	-Alterar o scroll:
+		$("elemento1, elemento2")			-> altera mais de um elemento
+		:nth-child(2)						-> seleciona o segundo filho
+		.click								-> determina o "onclick"
+			.click( função )				-> determina a execução da função ao clicar em um elemento específico
+
+		$( function(e) {
+			$('nav li:nth-child(2)').click( function(e){		-> onclick gera uma função
+				$('html, body').animate( { scrollTop: 4300 }, 1000);	-> seleciona os elementos e define a ação de animar, fazendo um scroll para cima (abaixando a tela)
+			});															em 4300 pixels, durante 1 segundo (1s = 1000) - tempo que leva até concluir a animação
+
+		});														-> atribuir um valor negativo para os pixels funciona para subir a tela, como se fosse um scroll para baixo
+
+		$('html, body').animate( { scrollTop: $('#terceira').offset().top } , 1000 );	-> definir a id do elemento relacionado ao scroll funciona para ir e voltar no scroll
+													-> Ex: ir da primeira para a terceira parte e vice-versa fica mais fácil mudando somente a ID no comando
+
+		$(window).resize( function(e){			-> evento disparado quando o navegador é redimensionado
+
+		});
+
+	-Eventos:
+		.bind("click",function(e){})			-> ligação com um elemento que o programador determina; determina que quando acontecer um evento click, uma certa função é
+													chamada
+
+		.bind("evento", {}, função)				-> os {} representam os parâmetros, devem ser passados entre o evento e a função
+
+		.bind("evento", {variavel: "valor"}, função)	-> define um parâmetro chamado "variável" e passa "valor" como seu valor
+		{parametro1: "valor1", parametro2: "valor2", etc} -> chamada com mais de um parâmetro (tudo dentro das chaves, entre o evento e a função)
+
+			-A função que recebe o parâmetro deve ser organizada da seguinte forma:
+
+			function nome(nome_qualquer){						-> nome_qualquer representa o nome do parâmetro
+				$Variavel = nome_qualquer.data.variavel 		-> $Variavel é só um nome comum para uma variável, enquanto o .variavel após o .data deve ser o mesmo nome
+			}													que foi passado pelo bind, o mesmo nome da variavel de parâmetro
+
+			-Caso mais de um parâmetro seja passado, não é necessário determinar na declaração da função duas variáveis ou dois nomes. Os parâmetros diferentes são acessados
+			da seguinte forma:
+
+			function funcao(nome){
+				$var1 = nome.data.parametro1;		-> ambos o sparâmetros são acessados com o mesmo "nome", a diferença é especificada após o data
+				$var2 = nome.data.parametro2;
+			}
+
+		.unbind("evento", função)				-> retira a ligação entre o evento e uma certa função
+
+		.hover(função1, função2)				-> evento enquanto o mouse está sobre um certo elemento
+				- enquanto está sobre, executa a função1, ao retirar, chama a função2
+
+		.hide(n)	-> esconde minimizando em n milisegundos (1000 = 1 segundo); pode não ter nenhum n como parâmetro
+			.fadeOut()		-> esconde desaparecendo
+			.slideUp()		-> esconde subindo
+
+		.show(n)	-> exibe maximizando em n milisegundos (1000 = 1 segundo); pode não nenhum n como parâmetro
+			.fadeIn()		-> exibe aparecendo
+			.slideDown()	-> exibe descendo
+
+		.toggle(n)	-> varia entre uma e outra função
+			fadeToggle()	-> varia na exibição e desaparecimento
+			slideToggle()	-> varia
+
+			-Todas essas funções são capazes de disparar uma função após terminar a animação, com o function declarado após o tempo, separado por vírgula
+
+		.animate( {direction: distance}, time, effect, function )	-> realiza uma animação
+		$('#janela').animate( {left: 300}, 1000, "swing" );	-> move a janela para 300px a direita, em 1 segundo, com um efeito de swing
+			-Function no fim realiza uma ação após a animação
+
+		$('#janela').animate( {left: '+=300px'}, 1000, "swing" );	-> move +300px sempre que executado
+
+		setInterval(function, time)		-> realiza uma determinada função (function), em um período time de tempo
+
+	-Alterações no carrossel feito com bootstrap:
+		-No .js, iniciar a function(){}
+		-Dentro, fazer menção à classe carousel.carousel
+		-Interval define o tempo em milisegundos
+		-As configurações devem ser separadas por vírgulas, não ponto e vírgula
+		$(function(){
+			$('carousel').carousel({
+				interval: 2000,				-> tempo em milisegundos da animação
+				pause: "null",				-> indica se há pausa ou não ao passar o mouse por cima
+				wrap: true/false			-> determina se ao chegar na última, voltará ou não para a primeira
+			});
+		)};
+
+-ECMAScript 6:
+	-Como usar:
+		-Basta apontar o código para o compilador Babel e em seguida escrever em ECMAScript 6, onde o compilador converte seu código em tempo real para ECMAScript 5
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser.min.js"></script>
+		<script>
+			//Seu código
+		</script>
+
+	-Teste para rodar o ECMA:
+		-Basta definir uma função com parâmetro padrão; caso não haja erro, o navegador está apto
+		function(primeiroNome="Matheus", ultimoNome="Alves")
+
+		-Para garantir o uso (mudar o tipo para text/babel):
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser.min.js"></script>
+        <script type="text/babel" >
+            function(primeiroNome="Matheus", ultimoNome="Alves")
+		</script>
+
+	-Hoisting: define quando uma variável é acessível
+		-Ciclo de vida de uma variável:
+			-Declaração				var a;
+			-Inicialização			a = 10;
+			-Uso					console.log(a);
+
+		-Ciclo de vida de uma função:
+			-Declaração				function...
+			-Uso
+
+		-É possível usar a função antes da sua declaração com o hoisting
+		-Em JS as função são "hoisted" ao topo, ou seja, independente de ter chamado antes de sua declaração, a linguagem leva a declaração para o topo do código
+		-O hoisting afeta de forma diferente:
+			-Variáveis declaradas com var, let ou const.
+			-Funções declaradas usando function <nome> {...}
+			-Classes declaradas usando a class keyword
+
+	-Diferença entre let e var:
+		-var mantém o escopo da variável global, enquanto o let respeita o escopo local da variável, impedindo o hoisting
+		let nome = "Flávio";
+
+	-Criar elementos via JS:
+		var div = document.createElement('elemento');
+		document.getElementsByTagName('elemento_onde_será_inserido')[0].appendChild(div);
+
+		-A posição indicada no comando anterior determina qual elemento será afetado, no caso de mais de um na mesma página, por exemplo
+		-A variável criada possuí métodos disponíveis, como o "onclick", por exemplo, executado ao clicar no elemento
+
+		div.onclick = function(){}
+
+	-Variáveis constantes:
+		const VARIAVEL = 1980;	-> o nome deve ser em letras maiúsculas e deve ser atribuído um valor
+		-Podem ser criadas outras variáveis (var) com o mesmo nome mas em escopos diferentes
+
+	-Template String:
+		-É possível usar variáveis dentro de strings sem ser necessária a concatenação
+		-De modo geral, ao imprimir strings junto de uma informação de variável, é feito o uso de aspas duplas e o sinal +
+		-Mudando as aspas duplas para crase, a variável passa a vir dentro dessa string mas de outra maneira:
+
+		var nome = "Flávio";
+
+		console.log("Bom dia, " + nome);		-> concatenação
+		console.log(`Bom dia, ${nome}`);		-> usando o template
+
+	-Operador Spread:
+		-Funciona ao imprimir um array que pode conter outros arrays
+		-Para usá-lo, basta adicionar ... antes do nome do array que está dentro de outro
+
+		var citricas = ["Laranja", "Tangerina", "Limao"];
+		var rosaceae = ["Maçã", "Pêra"];
+		var salada = ["Banana", "Uva", "Mamão", ...citricas, "Abacate", ...rosaceae];
+
+		-Isso faz com que os dados sejam impressos todos juntos em um log, por exemplo, sem a separação de especificação de qual array cada elemento pertence
+
+	-Valores padrões para parâmetros:
+		-Para usar, basta atribuir um valor para o parâmetro na declaração da função
+
+		function nome(parametro1 = 10, parametro2 = 20){}
+
+		-Caso nenhum valor seja passado na chamada da função, os valores anteriores serão usados
+
+	-Repetir strings:
+		console.log(nome.repeat(n));	-> imprime o conteúdo da variável nome n vezes
+
+	-Declaração de um objeto:
+		var nome_objeto = {					-> var nome = {metodo1(){},metodo2(){}}
+			metodo1(parametro){
+				//
+			},								-> note o uso de vírgula separando os métodos, funcionando como a criação de um array
+			metodo2(parametro){
+			},
+			nome1: function(){},			-> funções podem ser declaradas assim
+			atributo1: valor
+
+		}
+
+	-Arrow function:
+		-Forma abreviada de trabalhar com funções
+			() => console.log
+			var salada = function(frutas){
+				console.log(frutas);
+			}
+
+			salada(["Uva", "mamao", "banana"]);
+
+			-Como há somente uma linha na função e somente um parâmetro, ela pode ser resumida à seguinte maneira:
+
+			var salada = frutas => console.log(frutas);
+
+		*Mais de um parâmetro obriga o uso de parênteses envolvendo eles:
+			var salada = (frutas, fruto) => console.log(frutas + fruto);
+
+		*Mais de uma linha obriga o uso de chaves entre os comandos:
+			var salada = (frutas, fruto) => {
+				console.log(frutas + " " + fruto);
+				console.log(frutas + " " + fruto);
+			}
+
+	-This:
+		-Maioria dos casos, valor determinado por quem chamou a função
+		-Refere-se à atributos específicos daquele objeto
+
+		var pessoa = {
+			nome: "Flávio",
+			habilidades: ["guitarra", "violão", "programação", "levar foras"],
+			escreverHabiidades: function(){
+				var _this = this;											-> define que o _this se refere ao this a partir daquele escopo
+				this.habilidades.forEach(function(skill){
+					console.log(`${_this.nome} é foda em ${skill}`);		-> é necessário usar o this no escopo anterior, sem a definição daria erro, pois funciona como um
+				});															this dentro do outro
+			}
+		}																	-> forEach é um loop que passa por cada elemento de um array, sendo este transferido para o
+																			parâmetro skill
+		pessoa.escreverHabiidades();
+
+	-Bind:
+		-Substitui a linha vat _this = this; por um .bind(this) entre o fechamento das chaves da função e o fechamento do parênteses, podendo mudar o _this por apenas this
+		-Modificando o código acima para arrow function:
+			var pessoa = {
+				nome: "Flávio",
+				habilidades: ["guitarra", "violão", "programação", "levar foras"],
+				escreverHabiidades(){
+					this.habilidades.forEach(skill =>
+						console.log(`${this.nome} é foda em ${skill}`)		-> sem ponto e vírgula por ter somente um comando
+					);
+				}
+			}
+
+	-Destructuring Assignment:
+		-Permite extrair dados de array ou objetos direto para variáveis
+		-Arrays:
+			var salada = ["uva", "pera", "mamao", "maca", "abacate", "morango"];
+			console.log(salada[0]);
+			console.log(salada[1]);
+
+			-Para pegar apenas os dois primeiros, como feito no código acima, poderia ser feito da seguinte maneira:
+			var [primeiro, segundo] = ["uva", "pera", "mamao", "maca", "abacate", "morango"];
+			console.log(primeiro);
+			console.log(segundo);
+
+			-Basicamente, a ordem dos elementos do array declarado em var equivale aos elementos do array original
+			-É possível "saltar" posições sem declarar algo para ele:
+			var [primeiro, segundo, , quarto] = ["uva", "pera", "mamao", "maca", "abacate", "morango"];
+
+			-O uso de duas vírgulas juntas indicam que possui aquela posição mas não está sendo atribuída a nenhuma variável específica
+			-É possível pegar o restante do array em uma única variável usando os 3 pontos:
+			var [primeiro, segundo, ...resto] = ["uva", "pera", "mamao", "maca", "abacate", "morango"];
+
+			-Primeiro e segundo contém estes elementos, respectivamente, enquanto a variável resto possui o restante do array
+
+		-Objetos:
+			-Da mesma forma para arrays, após o var colocar o conjunto de chaves e declarar as variáveis correspondentes
+			-Vale ressaltar que nos objetos não são relacionados às posições que as variáveis são declaradas e sim aos nomes iguais
+			var {tipo, marca} = {	-> no caso de array, marca seria correspondente à cor devido vir na mesma posição, mas em objeto não devido o nome, marca pega o valor de
+				tipo: "Caneta", 	marca mesmo
+				cor: "Azul",
+				marca: "Bic",
+				preco: 2
+			}
+
+	-Generator:
+		-Objeto que retorna função geradora
+		-Retorna 2 tipos de protocolos: Interable Protocol e Interator Protocol
+		-Interable: permite objetos definir ou personalizar seu comportamento
+		-Interator: define padrão para produzir sequência de valores
+
+			done(boolean) 	-> true (sequência chegou ao fim)
+			value( valor )	-> retorna qualquer valor dependendo da função quando a sequência chega ao fim
+
+		-É necessária outra biblioteca para o uso:
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser-polyfill.js"></script>
+
+		-Função Interator:
+			function* gen(){
+				yield 1;
+				yield 2;
+				yield 3;
+			}
+
+			var g = gen();
+
+			console.log(g.next());		-> retorna o valor do primeiro yield, além de false para o done
+			console.log(g.next());		-> retorna o valor do segundo yield, além de false para o done
+			console.log(g.next());		-> retorna o valor do terceiro yield, além de false para o done
+			console.log(g.next());		-> retorna undefined, além de true para o done
+
+		-Função Interable:
+			function* idCreator(){
+				var i = 0;
+				while(true)
+					yield i++;
+
+			}
+
+			var g = idCreator();
+
+			console.log(g.next().value);		-> .value imprime somente o valor, sem o done
+			console.log(g.next().value);
+			console.log(g.next().value);
+			console.log(g.next().value);		-> Gera enquanto o comando next() for chamado
+
+	-Class:
+		class Produto{
+			//Construtor
+			constructor(nome, preco){
+				this.nome = nome;
+				this.preco = preco;
+			}
+
+			//Método
+			escreverDados(){
+				console.log(`Minha ${this.nome} custa ${this.preco} reais.`)
+			}
+
+		}
+
+		var caneta = new Produto("Caneta", 3);
+
+	-Herança:
+		-Basta usar a keyword extends, como em Java
+		-Usar o método contrutor da classe pai:
+
+		class Poligono{
+			constructor(lados, altura, largura, tipo){
+				this.lados = lados;
+				this.altura = altura;
+				this.largura = largura;
+				this.tipo = tipo;
+			}
+		}
+
+		class Quadrado extends Poligono{
+			constructor(altura, largura){
+				super(4, altura, largura, "Quadrado");
+			}
+		}
+
+-Identificar e alterar elementos HTML dentro do javascript:
+	var elemento = document.getElementById('id');			-> ID do elemento a ser alterado
+	elemento.innerHTML = "Teste";							-> Conteúdo do elemento
+
+	var titulo = document.getElementsByTagName('h1');		-> Busca as tags h1 - podem existir mais de uma
+	titulo[0].innerHTML = "Teste";							-> A posição 0 indica que é a primeira tag h1 do código
+
+-Executar funções javascript a partir de um evento no HTML:
+	-Adicionar o atributo onclick="function()" no elemento em questão, para que quando seja clicado, executar a função function()

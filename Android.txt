@@ -1,0 +1,2538 @@
+Android
+
+-Gerar APK:
+	-Buld
+		-Build APK(s)
+		
+	-Android (ou app)
+		-Builds
+			-Outputs
+				-apk
+					-Debug
+						Android-debug.apk	
+
+-Criar um tema:
+	-Composição da tela:
+		colorPrimaryDark
+		colorPrimary
+		textColorPrimary
+		windowBackground
+		navigationBarColor
+
+-Aplicativos são feitos de activitys, onde cada uma representa uma "tela"
+	-Activity é a classe Java que permite interação com o usuário
+	-Bundle: objeto que armazena os estados das activitys
+	-Ciclo de vida de uma activity:
+		-Ao abrir o aplicativo, é chamado o método onCreate() e o estado passa a ser created
+		-Em seguida, método onStart() e o estado é starded, sendo ele visível
+		-onResume(), estado é resumed e continua visível
+		-Ao passar para outra aplicação, método onPause() e o estado é paused, sendo parcialmente visível
+		-Passando para outra, pode também ser chamado o método onStop e o estado stopped, sendo escondido
+		-Ao fechar, método onDestroy() e o estado é destroyed
+		
+	-Navegar entre activitys
+		-O método startActivity é usado para mudar de uma activity a outra, tendo como parâmetros:
+			startActivity(new Intent(NomeActivityAtual.this, ActivityParaSerExibida.class))		-> Intent vem de intenção, é possível enviar uma ação para o dispositivo
+			
+	-Passar dados entre as activitys:
+		-Instanciar a class Intent e usar o método putExtra, que recebe como parâmetro um par de strings sendo um identificador e um valor
+			Intent intent = new Intent(MainActivity.this, SegundaActivity.class);
+			intent.putExtra("nome", "Flávio");
+			
+			startActivity(intent);
+			
+		-Para recuperar a informação na seguinte activity:
+			Bundle extra = getIntent().getExtras();
+			
+			-Recupera todos os extras que foram passados pelo intent na activity anterior
+			
+			if(extra != null){
+				String textoPassado = extra.getString( "nome" );	-> recupera a string passada pelo extra através do identificador, sendo a chave que leva ao valor
+			
+			}
+			
+		-Intents explícitas:
+			-Especifica o componente do aplicativo a iniciar
+			
+		-Intents implícitas:
+			-Não especifica o componente, mas sim o serviço (foto, email, etc)
+			-Serviço: abrir uma página web
+			-Aplicativo: qualquer um com navegador
+			
+			startActivity() ou startActivityForResult()
+			
+			-O sistema resolve o Intent para um aplicativo que possa processá-lo e inicia a Activity correspondente
+			-Caso haja mais de um aplicativo que possa processar, o sistema apresenta uma caixa de diálogo para escolha do app
+			-Caso nenhum aplicativo seja capaz de processar o Intent, um erro ocorre
+			
+		-Intent que chama um app de email:
+			public void composeEmail(){
+				Intent intent = new Intent(Intent.ACTION_SENDTO);	-> Cria Intent com action de envio de email
+				intent.setData(Uri.parse("mailto:")); 				-> Indica que apenas aplicativos de e-mail podem receber essa solicitação
+				
+				//String[] addresses = {"seu_email@gmail.com",”backup@gmail.com”};
+				intent.putExtra(Intent.EXTRA_EMAIL, addresses); 	-> "addresses" é um array de String de destinatários
+				
+				//String nome = ((EditText)findViewById(R.id.nome_editText)).getText().toString();	-> Nome do usuário digitado no app
+				//String subject = "Pão de Queijo Delivery - " + nome;
+				intent.putExtra(Intent.EXTRA_SUBJECT, subject); 	-> "subject" é uma String que contém o assunto
+				
+				//String texto = montaTexto();						-> montaTexto() é um método que prepara o texto do email, verificando as escolhas do cliente nesse caso
+				intent.putExtra(Intent.EXTRA_TEXT,texto); 			-> "texto" é uma String que contém o conteúdo do email
+				
+				if(intent.resolveActivity(getPackageManager()) != null){	-> Verifica se existe um app para executar a requisição, gerando erro se não houver
+					//startActivity(intent);							-> Inicia o app de email
+					void startActivityForResult (Intent intent, int REQUEST_CODE_MAIL)	-> Inicia o app de email capaz de monitorar o retorno (REQUEST_CODE_MAIL)
+					
+					//REQUEST_CODE_MAIL é uma constante definida pelo programador, contendo qualquer valor
+					//public static final int REQUEST_CODE_MAIL = 1000; -> Declarada no início da classe
+					
+				}
+			} 
+			
+			-Verificar o retorno de uma Activity (email, nesse caso):
+				-É necessário utilizar o método onActivityResult() para monitorar o código de retorno enviado pela activity (comparar com REQUEST_CODE_MAIL)
+				
+					//requestCode: 	identifica qual activity está retornando
+					//resultCode: 	código enviado pela activity secundária
+					//data: 		pode retornar dados da activity secundária
+					@Override
+					protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+					
+						super.onActivityResult(requestCode, resultCode, data);
+					
+						if (requestCode == REQUEST_CODE_MAIL) {		-> Chama a próxima Activity e monitora seu retorno, se houver retorno do app de email
+						
+							Intent agradecimento = new Intent(this, AgradecimentoActivity.class);	-> Cria o Intent
+							startActivityForResult(agradecimento,REQUEST_CODE_AGRADECIMENTO);		-> Chama a intent e monitora o retorno
+							
+							//public static final int REQUEST_CODE_AGRADECIMENTO = 1001;	-> Declarada no início da classe
+						}
+						
+						if(requestCode == REQUEST_CODE_AGRADECIMENTO){						-> Verifica o retorno da activity secundária
+							((Button)findViewById(R.id.clean_button)).performClick();		-> Executa uma ação 
+						
+						}					
+					}
+					
+			-Fechamento na nova activity:
+				public void fechar(View v){
+					setResult(RESULT_OK, new Intent()); 	-> Envia um resultado positivo para a Activity que a chamou
+					finish(); 								-> Finaliza a Activity
+				}
+			
+-Views:
+	-Basicamente, o conteúdo da tela, onde cada view representa um elemento mostrado
+	((TextView)findViewById(R.id.agradecimento_textView)).setVisibility(View.INVISIBLE);	-> no código Java, deixa a view especificada pelo ID oculta
+	((TextView)findViewById(R.id.agradecimento_textView)).setVisibility(View.VISIBLE);		-> torna visível uma view oculta
+	
+	((Button)findViewById(R.id. addSimples_button)).setEnabled(true/false);					-> Torna o botão habilitado ou não para clique	
+	
+	-Modificar background via código:
+		-Instanciar um objeto do tipo do layout
+		private RelativeLayout layout;
+		findViewById...
+		layout.setBackgroundColor();
+	
+-Linguagem XML, baseada em tags
+-Pasta values contém arquivos XML que determinam parâmetros específicos para nomes específicos, tornando uma espécie de template ou define
+-O arquivo dimens.xml contém as dimensões do app e seus recursos
+-Para determinar dimensões de um texto, por exemplo, basta inserir dentro do arquivo dimens.xml:
+	<dimen name="nome"> 25sp </dimen>		-> define um tamanho padrão de 25sp para todos os elementos que levarem aquele nome em seu valor
+	
+	-Para acessar essa dimen, basta usar @dimen/nome
+	
+-O mesmo pode ser feito para strings, desenvolvendo valores padrões para nomes definidos
+	<string name="app_name"> Nome </string>
+	
+-AndroidManifest.xml
+	-O package determina o identificador único do aplicativo
+	-A tag application determina propriedades do aplicativo
+		-allowBackup permite backup
+		-label contém o nome
+		-theme define o tema, relacionado com o arquivo style.xml
+		
+	-A tag activity, junto com a tag intent-filter, determina qual será a tela inicial, onde o valor ".MainActivity" é relacionado ao arquivo principal Java
+	-É no manifest que são definidas as permissões, através da tag uses-permission
+	
+-No arquivo principal .xml, geralmente o activity_main.xml, geralmente é necessário modificar o layout para Relative, a fim de que os elementos não fiquem sobrepostos
+	-Basta editar a primeira tag, que normalmente possui um "valor grande" para RelativeLayout apenas, sendo necessário redimensionar os elementos novamente na visualização
+	
+-Layouts:
+	-Layout relativo:
+		RelativeLayout 	-> alinha os componentes baseado nos outros da tela, organizando um relativo ao outro
+		
+	-Layout linear:
+		LinearLayout	-> possui orientação horizontal ou vertical, organizando os elementos um após o outro
+		-Horizontal: 	elementos um ao lado do outro
+		-Vertical: 		elementos um embaixo do outro
+	
+-Na parte de Java, é possível associar os elementos e trabalhá-los no cógido. Acessando um botão, por exemplo:
+	-Definir uma ID para o botão
+	-No código da activity em Java, determinar:
+		private Button nomeBotao;
+		nomeBotao = (Button) findViewById(R.id.botaoID);
+		
+		-O comando "(Button)" determina uma conversão do valor retornado pelo método para o tipo especificado dentro dos parênteses
+		-O método pega os id's de dentro do arquivo "R", arquivo localizado na visualização "Project", em:
+			app/build/generated/source/r/debug	R.java
+			
+			-O arquivo R contém uma união de todos os arquivos da pasta com os arquivos Java, ligando todos entre si; as id's definidas nos xml são possíveis de serem usadas 
+			no Java graças a essa relação
+			
+	-Trabalhar com um elemento do tipo texto:
+		private TextView texto;
+		texto = (TextView) findViewById(R.id.textoID);
+		texto.setTexto("Novo texto a ser exibido no elemento");
+		
+	-Definir qual activity será mostrada ao carregar o app - como uma criação de menu, por exemplo:
+		-O método onCreate é chamado quando o aplicativo é iniciado, sendo definido então qual tela será exibida naquele momento
+		-Defina a tela inicial da seguinte maneira:
+		setContentView(R.layout.activity_nome);		-> modifique esse comando para determinar qual activity será mostrada
+		
+	-Trabalhar com interações de botões:
+		-Acessar o método setOnClickListener da variável de botão, inserindo como parâmetro new View.OnClickListener -> mais dinâmico
+		-Um novo método é gerado dentro dele, é onde será definida a ação ao clicar nesse botão
+		-É possível também indicar qual função será chamada no arquivo .xml, indicando na tag Button o parâmetro android:onClick = "nome do método"
+		
+	-Definir tamanhos personalizados para elementos:
+		-Editar a tag android:layout_width do arquivo xml e colocar o tamanho escolhido
+		android:layout_width="350dp"
+		
+-Centralizar um elemento na tela:
+	-É possível centralizar todo o conteúdo adicionando um parâmetro na tag principal, que é a RelativeLayout:
+		android:gravity="center | center_horizontal | center_vertical", sendo centralizados na vertical e horizontal, só na horizontal ou só na vertical, respectivamente
+		
+	-Definir centralizações específicas nos elementos:
+		android:layout_centerHorizontal="true" para centralizar na horizontal
+		android:layout_centerVertical="true" para centralizar na vertical
+		
+-Editar cor de background via rgb:
+	-Editar a propriedade android:background="#FFFFFF" para escolher a cor 
+	
+-Adicionar imagens:
+	-Adicionar os arquivos no seguinte caminho:
+	\app\src\main\res\drawable
+	
+	-As imagens só podem conter letras minúsculas	
+	-Determinar a imagem, basta editar a tag ImageView e colocar o seguinte atributo:
+	app:srcCompat="@drawable/nome_arquivo" ou android:background="@drawable/nome_arquivo"
+	
+	-A primeira maneira não respeita os limites do elemento, além de um arquivo .png não ficar sem seu fundo	
+	
+-Tags e atributos importantes:
+	android:text="@string/texto"					-> texto padrão do elemento
+	android:textSize="@dimen/tamanho"				-> tamanho do texto
+	android:padding="@dimen/tamanho"				-> margem interna (sem especificar um lado, afeta todos eles)
+	android:layout_marginLeft="@dimen/tamanho"		-> margem esquerda do elemento em relação à outro ou à tela
+	android:layout_marginTop="@dimen/tamanho"		-> margem superior do elemento em relação à outro ou à tela
+	android:layout_marginRight="@dimen/tamanho"		-> margem direita do elemento em relação à outro ou à tela
+	android:textColor="#ffffff"						-> cor do texto
+	android:layout_width="@dimen/tamanho"			-> largura do elemento
+	android:layout_height="@dimen/tamanho"			-> altura do elemento
+	android:layout_centerHorizontal="true"			-> centraliza o elemento na horizontal
+	android:layout_centerVertical="false"			-> centraliza o elemento na vertical
+	android:gravity="center_horizontal"				-> centraliza texto
+	android:gravity="start"							-> posiciona o texto no início da tela
+	android:scaleType="center"						-> centraliza o conteúdo, sem respeitar bordas (muito grande)
+	android:scaleType="centerCrop"					-> centraliza o conteúdo, dimensionando para o tamanho da view
+	android:weight="1"								-> define peso para a view (necessita de 0dp para width e height), dividindo o espaço da view paiigualmente com todos os 
+													// elementos que também possuem peso 1; elementos com peso 0 ocupam somente seu espaço como se tivesse wrap_content
+													//Pesos diferentes criam a ideia de proporção
+	android:layout_alignParentTop="true"			-> Alinha para cima do elemento anterior (direção cima, posiciona-se embaixo do elemento)
+	android:layout_alignParentBottom="true"			-> Alinha para baixo do elemento anterior (direção baixo, posiciona-se acima do elemento)
+	android:layout_alignParentLeft="true"			-> Alinha para a esquerda do elemento anterior (direção esquerda, posiciona-se à direita do elemento)
+	android:layout_alignParentRight="true"			-> Alinha para a direita do elemento anterior (direção direita, posiciona-se à esquerda do elemento)
+	android:layout_centerVertical="true"			-> Centraliza na direção vertical
+	android:layout_centerHorizontal="true"			-> Centraliza na direção horizontal
+	android:layout_toLeftOf="@id_elemento"			-> Alinha à esquerda do elemento com aquela id
+	android:layout_toRightOf="@id_elemento"			-> Alinha à direita do elemento com aquela id
+	android:layout_below="@id_elemento"				-> Alinha abaixo do elemento com aquela id
+	android:layout_above="@id_elemento"				-> Alinha acima do elemento com aquela id
+	android:onClick="nomedometodo"					-> Define um método a ser executado, declarado no arquivo .java daquela activity, ao clicar no elemento com esse atributo
+	android:textAllCaps="true"						-> Mantém o texto inteiro em letras maiúsculas
+	android:textStyle="bold/italic" 				-> Define o estilo do texto
+	android:hint="texto"							-> Funciona como placeholder do HTML (plain text)
+	android:textColorHint="@android:color/black"	-> Cor do hint
+    android:inputType="textCapWords"				-> Mantém a primeira letra maiúscula
+	android:elevation="5dp"							-> Cria uma sombra
+	android:theme="@style/"							-> Define o tema de um item
+	
+	//AndroidManifest:
+	android:screenOrientation="landscape/portrait"	-> Orientação da tela (horizontal/vertical)
+	//Exemplo
+	<activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_main" >
+        </activity>
+	
+-Tamanhos para texto:
+	-Pequeno:	14sp
+	-Médio:		18sp
+	-Grande:	22sp
+	
+-Adquirindo informação inserida pelo usuário:
+	-Método getText() junto com o método toString()
+	-Verificar se a pessoa realmente digitou algo com o método isEmpty da string
+	-Converter o valor, se necessário, para inteiro através do método parseInt da classe Integer	-> existe também a classe Double e o método parseDouble()
+	
+	private EditText texto;
+	texto = (EditText) findViewById(R.id.texto);
+	String textoDigitado = texto.getText().toString();
+	
+	if(textoDigitado.isEmpty()){
+		textoTela.setText("Digite um valor válido.");
+	
+	}else{
+		int valor = Integer.parseInt(textoDigitado);
+	}
+	
+-Mensagens Toast:
+	Toast.makeText(contexto, texto, duracao), onde o contexto indica onde o texto será feito
+	-contexto é substituido pelo método getApplicationContext() -> constantemente verificado com MainActivity.this, porém, dessa forma é dinâmica
+	-texto é a mensagem a ser exibida
+	-duracao é o tempo que sua mensagem será exibida, utilizando Toast.LENGTH_LONG para um tempo maior e Toast.LENGTH_SHORT para tempo menor  
+	
+		Toast.makeText(getApplicationContext(), "Teste", Toast.LENGTH_LONG).show();
+		
+	-Use os atributos static final tipo nome_variavel = valor; para criar atributos estáticos imutáveis, sendo acessados por NomeClasse.nome_variavel
+
+-Muadr cores de fundo padrão:
+	-Modificar o arquivo colors.xml
+	-Cores colorPrimary e colorPrimaryDark
+	
+-Inserindo ou modificando imagens via código:
+	-Verificar as strings por meio de:
+		String nome;
+		nome.equals("valor");		-> compara se o conteúdo da string nome é igual a "valor"
+		
+		imagem.setImageDrawable(ContextCompat.getDrawable( contexto, id_drawable))
+		imagem.setImageResource(int id);	-> Parâmetro inteiro que funciona como o id da imagem (R.id.drawable/imagem)
+		
+		-O contexto deve ser passado como this, enquanto o Id drawable é basicamente R.drawable.nome_arquivo
+
+-Voltar de uma activity:
+	-Ao invés de usar novamente o startActivity para a activity anterior, é possível usar o método finish(), terminando a activity atual
+	
+-Listview:
+	-Componente de interface que permite criar uma lista de itens
+	private ListView lista;
+	
+	Adapter 	-> Cria um adaptador de um array de strings para utilizar na lista
+				-> Gerencia e adapta os dados nas views ou no layout; responsável por criar uma View para cada item do conjunto de dados
+				-> Infla o layout de cada linha em seu método getView() e atribui os dados para as Views individuais
+				-> Tipos de Adapter: ArrayAdapter, SimpleCursorAdapter e CursorAdapter
+				-> ArrayAdapter manipula os dados com base em Arrays ou java.util.List
+				-> SimpleCursorAdapter e CursorAdapter manipulam dados vindos por SQLite
+	
+	-Recebe parâmetros:
+		ArrayAdapter<String>( contexto (getApplicationContext()), 
+										layout (android.R.layout.simple_list_item_1), 
+										referência ao layout anterior (android.R.id.text1),
+										lista (string)
+		)
+		
+		lista.setAdapter(adaptador);
+		
+		list.setOnItemClickListener(new AdapterView.OnItemClickListerner)
+		
+	-Acesso ao valor clicado:
+		int codigo = i;		-> i equivale a um dos parâmetros gerados pelo comando anterior, sendo a posição do item clicado
+        String valor = lista.getItemAtPosition(codigo).toString();	-> pega o elemento na posição informada e converte para string
+        Toast.makeText(getApplicationContext(), valor, Toast.LENGTH_SHORT).show();
+		
+	-Lista de filmes:
+		-Criar um layout para definir como cada item é organizado (somente um item da lista, servindo de molde)
+		
+			//A classe Serializable permite que o objeto seja transmitido entre Activities
+			public class Filme implements Serializable{					-> Criar uma classe para representar os itens (filmes, no caso)
+				private String nome;									-> Definir os atributos da classe, correspondente ao conteúdo de cada item da lista
+				private String genero;
+				private int duracao;
+				private int imgResourceId;		
+				
+				//Insntanciar os itens no construtor
+				public Filme(String nome, String genero, int duracao, int imgResourceId){
+					this.nome = nome;
+					this.genero = genero;
+					this.duracao = duracao;
+					this.imgResourceId = imgResourceId;
+				}
+				
+				//Métodos get para os atributos
+				public int getImgResourceId() {		-> Fazer o mesmo para todos os outros
+					return imgResourceId;
+				}
+			
+			}
+			
+		-No .java principal (MainActivity.java), criar uma lista:	
+			ArrayList<Filme> listaFilme = new ArrayList<Filme>();	-> Define a lista do tipo de item (Filme)
+			
+			//Inserir os itens na lista:
+			ListView listview = (ListView) findViewById(R.id.list_filme);
+			listaFilme.add(new Filme("nome", "genero", int_duracao, R.drawable.nome_imagem));	-> Fazer isso até os itens acabarem (inserir todos)
+			
+			final FilmeAdapter adapter = new FilmeAdapter(this,listaFilme);
+			listview.setAdapter(adapter);	-> Define o Adapter à ListView
+			
+		-Criar uma nova classe para o ArrayAdapter:
+			public class FilmeAdapter extends ArrayAdapter<Filme>{		-> Especifica o objeto que representa um item da lista
+				public FilmeAdapter(Context context, ArrayList<Filme> listaFilmes) {	-> Recebe o contexto (Activity que possui a List e o Array de filmes)
+					super(context, 0, listaFilmes);
+					
+				}
+				
+				@Override
+				public View getView(int position, View convertView, ViewGroup parent) {	-> Método responsável pela construção de cada item da lista
+					
+					View listFilmeView = convertView;
+					
+					//Verifica se já existe uma view criada e que pode ser reutilizada					
+					if(listFilmeView == null) {
+						
+						//Cria a nova view, associando ao layout do item criado - parent é o layout pai em que o item está inserido
+						listFilmeView = LayoutInflater.from(getContext()).inflate(R.layout.item_filme, parent, false);	-> Inflater indica que os itens são inseridos sem serem
+																														// criados sempre, somente quando visíveis
+					
+					}
+					
+					Filme filmeAtual = getItem(position);		-> Cria um objeto do filme com as informações de cada posição da lista
+					
+					//Define os campos da lista a partir das informações inseridas
+					TextView nomeTextView = (TextView) listFilmeView.findViewById(R.id.nome_filme);	
+					nomeTextView.setText(filmeAtual.getNome());				-> Utiliza os métodos get() da classe Filme para recuperar o conteúdo do objeto daquela posição
+
+					//Repete para cada atributo que compõe o layout do item
+					
+					return listFilmeView;		
+					
+				}
+				
+			}
+			
+		-Adicionando clique ao item e passagem dos dados para uma outra Activity:
+			listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+					Filme atual = (Filme) adapter.getItem(position);							-> Pega o conteúdo do objeto na posição que foi clicada
+
+					Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+					intent.putExtra("dadosFilme", atual);										-> Envia o objeto para a próxima tela
+					startActivity(intent);														// Necessita de implements Serializable na classe Filme
+
+				}
+
+			});
+		
+-Alert dialogs:
+	-Criar e carregar um botão e evento de clique
+	-Instanciar um objeto da classe AlertDialog.Builder dialog = new AlertDialog.Builder( contexto (MainActivity.this));
+	-Usar os métodos setTitle() e setMessage() para configurar os títulos e mensagens
+	
+	-Configurar os botões:
+		-O primeiro é através do método setNegativeButton("mensagem", ação)
+		-O segundo é através do método setPositiveButton("mensagem", ação)
+		-Ação:
+			new DialogInterface.OnClickListener(){
+				...
+			}
+	
+	-Botão apenas de confirmação (neutro):
+		setNeutralButton("string", ação);	-> Todos os botões são compostos por essa estrutura
+	
+	-Criar e exibir:
+		dialog.create();
+		dialog.show();
+		
+	-Impedir que cliques fora da caixa cancelem o diálogo:
+		dialog.setCancelable(false);
+	
+	-Definir ícone que aparece junto ao título:
+		dialog.setIcon(android.R.drawable.nome_arquivo);
+		
+-Recuperar dados de checkbox:
+	-Criar os devidos objetos do tipo
+	-Criar uma string que receberá a informação
+	
+		objeto.getText() retorna o texto do checkbox (valor)
+		
+	-Para recuperar o status (marcado ou não):
+		objeto.isChecked()
+		
+-Seekbar:
+	-Barra com níveis de escala (clicar e arrastar)
+	-Recuperar dados dela:
+		-Instanciar objeto da classe SeekBar
+		-Método setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener ), criando 3 métodos
+			onProgressChanged é chamando enquanto a barra é movimentada; o segundo parâmetro dessa função exibe o progresso da barra
+			
+		-Método onStartTrackingTouch() é chamado enquanto a seekbar é pressionada
+		
+		-Método onStopTrackingTouch() é chamado quando a seekbar não é mais pressionada
+			-Aqui é onde o valor poderia ser salvo
+			
+		-Método getMax() do objeto SeekBar exibe o valor máximo
+		
+-RadioButton:
+	-Recuperar ID do RadioButton de forma dinâmica:
+		radioGroup = (RadioGroup) findViewById(R.id.radioGroupID);		-> Agrupar as opções dentro de um RadioGroup
+        botao = (Button) findViewById(R.id.button);
+        texto = (TextView) findViewById(R.id.textView3);
+
+        botao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int idRadio = radioGroup.getCheckedRadioButtonId();		-> Pega o id numérico (todos os ID's são números internamente) do item marcado
+                if(idRadio > 0){
+                    radio = (RadioButton) findViewById(idRadio);		-> Pega o elemento marcado
+                    texto.setText(radio.getText());						-> Pega o texto do elemento marcado
+                }
+            }
+        });	
+		
+		((RadioButton)findViewById(R.id.simples_radio)).setChecked(true); -> define qual opção começa selecionada
+	
+-Toggle Button:
+	-Valores possíveis:
+        android:textOff="Desligado"
+        android:textOn="Ligado"
+		
+	toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {	-> associa um evento ao toggle
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {		-> chamado ao clicar no botão
+			texto.setText=("");
+			if(b){																		-> boolean b armazena se o item está checado ou não
+				texto.setText=("Ativo");
+			}	
+        }
+    });
+		
+		
+-Trabalhando com mídias:
+	-Na pasta "res", criar um diretório chamado "raw", pasta onde serão colocadas as mídias - ou uma música, por exemplo
+	private MediaPlayer mediaPlayer;	-> cria um objeto do tipo MediaPlayer
+        
+		media = MediaPlayer.create(MainActivity.this, R.raw.musica); 	-> cria o player de música, recebendo o contexto como atributo e o ID da música a ser executada
+		
+        if(media != null)		-> verifica se foi criado o player
+            media.start();		-> inicia a música
+            media.stop();		-> para a música
+            media.pause();		-> pausa a música
+
+		if(media.isPlaying())	-> verifica se a música está tocando - player ativo
+		
+	-Sobrescrever o método onDestroy, já que player de vídeo e áudio consomem muita memória
+		if(media != null && media.isPlaying()){	-> se o player existe e está ativo
+			media.stop();
+			media.release();	-> libera os recursos
+			media = null;
+		}
+	
+-Trabalhar com várias mídias:
+	-Ao invés de escrever métodos de clique particulares - para várias imagens, por exemplo, é possível fazer de forma dinâmica:
+	
+		public class MainActivity extends Activity implements View.OnClickListener	-> implementar o método OnClickListener
+		
+	-Isso obriga a sobrescrita do método onClick(View view)
+		view.getId(); -> recupera o id do objeto que foi clicado
+		
+	-Utilizar:
+	
+		@Override
+		public void onClick(View view) {	
+			switch(view.getId()){
+				case R.id.cao:		-> verifica as possibilidades de ID
+			}
+		
+-Armazenamento:
+	-Classe SharedPreferences: armazena pequenas informações, como um score de um jogo
+	-Armazenamento interno: criar um arquivo e colocar os dados nele
+	-SQLite: banco de dados
+	
+	-Shared:
+		-Criar uma variável estática que indica o nome do arquivo que serão armazenadas as informações
+		private static final String ARQUIVO_PREFERENCIA = "ArquivoPreferencia";
+		
+		SharedPreferences sharedPreferences = getSharedPreferences(ARQUIVO_PREFERENCIA, 0);	-> 0 indica um modo privado, só pode ser lido por essa aplicação
+		SharedPreferences.Editor editor = sharedPreferences.edit(); -> permite editar o arquivo
+		
+		if(textoNome.getText().toString().equals("")){	-> verifica se o texto foi preenchido
+            Toast.makeText(getApplicationContext(), "Favor preencher o nome", Toast.LENGTH_SHORT);
+
+        }else{
+            editor.putString("nome", textoNome.getText().toString());	-> insere uma string, com o primeiro parâmetro sendo a chave dele e o segundo um valor
+            editor.commit();	-> confirma que a informação pode ser salva
+
+        }
+		
+		-Recuperar informação:
+			SharedPreferences sharedPreferences = getSharedPreferences(ARQUIVO_PREFERENCIA, 0);
+			if(sharedPreferences.contains("nome")){	-> verifica se o arquivo possui alguma informação com essa chave
+			
+				String nome = sharedPreferences.getString("nome", "usuário não definido");	-> atribui o valor da chave "nome" ou um valor default - segundo parâmetro
+				texto.setText("nome");
+				
+			}else{	-> caso não exista essa chave no arquivo
+			
+				texto.setText("Olá, usuário não definido.");
+
+			}
+			
+	-Armazenamento interno:
+		String textoDigitado = texto.getText().toString();	-> recuperado de um EditText
+		private void gravarNoArquivo(String textoDigitado){	-> string recuperada da view de texto do app
+			try{
+				OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("Anotacao.txt", Context.MODE_PRIVATE)); -> atributos: arquivo a ser gravado
+				pelo método openFileOutput, com os parâmetros: nome do arquivo e contexto - privado, nesse caso, indicando que só esse app pode ler o arquivo
+				-Classe grava no arquivo
+					
+			}catch(IOException e){	-> erro de entrada/saída de dados
+				Log.v("MainActivity", e.toString());	-> identificador do erro e conversão para string
+
+			}
+		}
+		
+		private String lerArquivo(){
+			String resultado = "";	-> texto lido
+			try{
+				InputStream arquivo = openFileInput(NOME_ARQUIVO);	-> abre o arquivo
+				if(arquivo != null){
+					InputStreamReader inputStreamReader = new InputStreamReader(arquivo);
+
+					BufferedReader bufferedReader = new BufferedReader(inputStreamReader);	-> leitor 
+
+					String linhaArquivo = "";
+					while((linhaArquivo = bufferedReader.readLine()) != null){	-> lê linha por linha
+						resultado += linhaArquivo + "\n";
+
+					}
+
+				}
+
+				arquivo.close();
+
+			}catch(IOException e){
+				Log.v("MainActivity", e.toString());
+
+			}
+
+			return resultado;
+		}
+		
+	-SQLite:
+		-É uma boa prática criar uma classe de "contrato", que possui a estrutura do banco e suas tabelas
+		public class DatabaseContract{
+			private DatabaseContract(){};		-> Manter o construtor privado previne que a classe seja instanciada por acidente
+			
+			//Define o conteúdo da tabela
+			public static class DataEntry implements BaseColumns {
+				public static final String TABLE_NAME = "pets";				-> Variáveis estáticas públicas para serem usadas fora da classe
+				public static final String _ID = BaseColumns._ID;
+				public static final String COLUMN_NAME = "name";
+				public static final String COLUMN_BREED = "breed";
+				public static final String COLUMN_GENDER = "gender";
+				public static final String COLUMN_WEIGHT = "weight";
+
+				/**
+				 * Possible values for the gender.
+				 */
+				public static final int UNKNOW = 0;
+				public static final int MALE = 1;
+				public static final int FEMALE = 2;
+
+			}
+		
+		}
+		
+		//SQLiteOpenHelper: criação e recuperação do banco
+		-Utilizar a classe SQLiteOpenHelper com métodos para criar e alterar as tabelas:
+			import PetContract.PetEntry;	-> Importar a classe anterior
+
+			public class PetDbHelper extends SQLiteOpenHelper {
+
+				public static final String LOG_TAG = PetDbHelper.class.getSimpleName();
+
+				// If you change the database schema, you must increment the database version.
+				public static final int DATABASE_VERSION = 1;
+				public static final String DATABASE_NAME = "pets.db";
+
+				public PetDbHelper(Context context) {
+					super(context, DATABASE_NAME, null, DATABASE_VERSION);
+				}
+
+				@Override
+				public void onCreate(SQLiteDatabase db) {
+					//String com o comando capaz de criar a tabela do banco, utilizando as constantes criadas
+					String SQL_CREATE_PETS_TABLE =  "CREATE TABLE " + PetEntry.TABLE_NAME + " ("
+							+ PetEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+							+ PetEntry.COLUMN_NAME + " TEXT NOT NULL, "
+							+ PetEntry.COLUMN_BREED + " TEXT, "
+							+ PetEntry.COLUMN_GENDER + " INTEGER NOT NULL, "
+							+ PetEntry.COLUMN_WEIGHT + " INTEGER NOT NULL DEFAULT 0);";
+
+					// Execute the SQL statement
+					db.execSQL(SQL_CREATE_PETS_TABLE);
+
+				}
+
+				@Override
+				public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+
+
+				}
+			}
+			
+		-Para inserção de dados:
+			-Objeto do tipo SQLiteOpenHelper 
+			-Objeto do tipo SQLiteDatabase, recebendo o banco no modo de escrita com o método getWritableDatabase()
+				// Create database helper
+				PetDbHelper mDbHelper = new PetDbHelper(this);
+
+				// Create and/or open a database to write from it
+				SQLiteDatabase db = mDbHelper.getWritableDatabase();
+				
+			-Objeto do tipo ContentValues, armazenando os valores de cada campo da tabela:
+				//Pegando informação do usuário
+				String name = mNameEditText.getText().toString().trim();		-> Método trim() remove espaços em branco
+				ContentValues values = new ContentValues();
+				values.put(PetEntry.COLUMN_NAME, name);
+				values.put(PetEntry.COLUMN_BREED, breed);
+				values.put(PetEntry.COLUMN_GENDER, mGender);
+				values.put(PetEntry.COLUMN_WEIGHT, weight);
+				
+			-Método insert() da classe SQLiteDatabase
+				long newRowId = db.insert(PetEntry.TABLE_NAME, null, values);
+				
+				if (newRowId==-1){			-> Verifica retorno da inserção para tratamento de erro
+					Toast.makeText(this, "Error with saving pet", Toast.LENGTH_SHORT).show();
+					
+				}else{
+					Toast.makeText(this, "Pet saved", Toast.LENGTH_SHORT).show();
+
+				}
+				
+		-Leitura dos dados:
+			-Objeto do tipo SQLiteOpenHelper
+			-Objeto do tipo SQLiteDatabase, recebendo o banco no modo de leitura com o método getReadableDatabase()		
+			-String com a cláusula WHERE:
+				String whereClause =  PetEntry._ID + "="+ id; -> id é recebido como parâmetro da função de carregamento
+				
+			-Objeto do tipo Cursor rebendo o retorno do método query() da classe SQLiteDatabase:
+				Cursor cursor = db.query(PetEntry.TABLE_NAME, null, whereClause, null, null, null, null);
+				
+				if(cursor != null){
+					cursor.moveToFirst();			-> Move o cursor para o início
+					name = cursor.getString(cursor.getColumnIndex(PetEntry.COLUMN_NAME));
+					mNameEditText.setText(name);	-> Define o layout respectivo com a informação resgatada da tabela
+					
+					//Outros campos tratados
+					
+				}
+				
+		-Atualização dos dados:
+			-Objeto do tipo SQLiteOpenHelper
+			-Objeto do tipo SQLiteDatabase, recebendo o banco no modo de escrita com o método getWritableDatabase()
+			-Objeto do tipo ContentValues, armazenando os valores de cada campo da tabela
+			-String com a cláusula WHERE
+			-Método update() da classe SQLiteDatabase
+				SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+				//create the object to be included
+				ContentValues values = new ContentValues();
+				values.put(PetEntry.COLUMN_NAME, name);
+				values.put(PetEntry.COLUMN_BREED, breed);
+				values.put(PetEntry.COLUMN_GENDER, mGender);
+				values.put(PetEntry.COLUMN_WEIGHT, weight);
+
+				String whereClause =  PetEntry._ID + "="+ id;
+
+				long newRowId = db.update(PetEntry.TABLE_NAME,values,whereClause,null);
+				
+		-Exclusão de dados:
+			-Objeto do tipo SQLiteOpenHelper
+			-Objeto do tipo SQLiteDatabase, recebendo o banco no modo de escrita com o método getWritableDatabase()
+			-String com a cláusula WHERE
+			-Método delete() da classe SQLiteDatabase
+				// Create and/or open a database to write from it
+				SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+				String whereClause =  PetEntry._ID + "="+ id;
+
+				long newRowId = db.delete(PetEntry.TABLE_NAME,whereClause,null);
+				
+		-Listar todos os registros:
+			-Objeto do tipo SQLiteOpenHelper
+			-Objeto do tipo SQLiteDatabase, recebendo o banco no modo de leitura com o método getReadableDatabase()	
+			-String de projeção (consulta de seleção)
+			-Objeto do tipo Cursor rebendo o retorno do método query() da classe SQLiteDatabase
+			-Criar um CursorAdapter
+			-Adicionar o CursorAdapter na ListView
+			-Implementar o método setOnItemClickListener() se necessário
+				
+				PetDbHelper mDbHelper = new PetDbHelper(this);
+				SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+				//String equivalente a "SELECT * FROM COLUMN_NAME"
+				String[] projection = {
+						PetEntry._ID,
+						PetEntry.COLUMN_NAME,
+						PetEntry.COLUMN_BREED };
+
+				cursor = db.query(PetEntry.TABLE_NAME,projection,null,null,null,null,null);	-> Comando de consulta
+				
+				final ListView lvItems = (ListView) findViewById(R.id.list);
+				final PetCursorAdapter petCursorAdapter = new PetCursorAdapter(this,cursor,0);
+
+				// Attach cursor adapter to the ListView
+				lvItems.setAdapter(petCursorAdapter);		-> Semelhante ao método do cinema
+				
+		-Adquirir o total de registros inseridos na tabela:
+			Cursor cursor = db.query(TABLE_NAME,null,null,null,null,null,null);
+			int qtFilmes = cursor.getCount();	-> Retorna a quantidade de registros da tabela
+
+		
+		-Dentro do método onCreate:
+			//Classe que contém os métodos de manipulação dos dados do banco: insert, udate, delete, execSQL
+			SQLiteDatabase bancoDados = openOrCreateDatabase("app", MODE_PRIVATE, null); 			-> nome do banco, modo, null; MODE_PRIVATE indica que somente essa aplicação
+																									// usará o banco
+			bancoDados.execSQL("CREATE TABLE IF NOT EXISTS pessoas (nome VARCHAR, idade INT(3))");	-> cria uma tabela caso não exista
+			bancoDados.execSQL("INSERT INTO pessoas (nome, idade) VALUES ('Marcos', 30)");			-> insere valores
+			bancoDados.execSQL("INSERT INTO pessoas (nome, idade) VALUES ('Ana', 20)");				-> insere valores
+
+			Cursor cursor = bancoDados.rawQuery("SELECT nome, idade FROM pessoas", null);			-> posiciona um cursor, que percorre as tabelas
+
+			int indiceColunaNome = cursor.getColumnIndex("nome");									-> contém o índice de cada tabela, dos registros
+			int indiceColunaIdade = cursor.getColumnIndex("idade");
+
+			cursor.moveToFirst();																	-> move o cursor para o início da tabela (com a consulta ele está no fim 
+																									// dos registros)
+
+			while (cursor != null) {
+				Log.i("Resultado - nome: ", cursor.getString(indiceColunaNome));					-> imprime um log do conteúdo (logcat)
+				Log.i("Resultado - idade: ", cursor.getString(indiceColunaIdade));
+				cursor.moveToNext();																-> move o cursor para o próximo dado
+
+			}
+			
+		-A consulta ocorre de forma semelhante a um banco comum
+		Cursor cursor = bancoDados.rawQuery("SELECT nome, idade FROM pessoas WHERE idade > 20 AND nome = 'Marcos' ", null);	-> Aspas simples para consulta de string
+		Cursor cursor = bancoDados.rawQuery("SELECT nome, idade FROM pessoas WHERE idade > 20 AND nome LIKE '%a%' ", null);	-> Nomes que possuem a letra a no meio
+		
+		-Atualizando informações:
+			bancoDados.execSQL("UPDATE pessoas SET idade = 150 WHERE nome = 'claudin'");			-> Atualiza valores com condições
+			bancoDados.execSQL("UPDATE pessoas SET nome = 'F4ntz', idade = 20 WHERE id = 1");		-> Atualiza múltiplos valores separados por vírgula
+		
+		-Deletando informações:
+			bancoDados.execSQL("DELETE FROM pessoas WHERE nome = 'claudin'");						-> Deleta valores com condições
+           
+		-Criação de tabela com código ID:
+			bancoDados.execSQL("CREATE TABLE IF NOT EXISTS pessoas (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, idade INTEGER(3))");
+			
+		-Adicionar valores ao banco através de entrada do usuário:
+			botaoAdicionar.setOnClickListener(new View.OnClickListener() {		-> Clique do botão
+				@Override			
+				public void onClick(View v) {
+					String textoDigitado = textoTarefa.getText().toString();	-> Recuperação da informação
+					bancoDados.execSQL("INSERT INTO tarefas(tarefa) VALUES('" + textoDigitado + "')");	-> Inserção no banco
+
+				}
+			});
+			
+-Introdução à LibGDX (Android):
+	-Caminho SDK:
+		-Tools
+			-SDK Manager
+			
+	-Configurar:
+		androidTest no lugar de InstrumentTest (gradle android)
+		implementation no lugar de certos comandos implementation (gradle app)
+		
+		distributionUrl=https\://services.gradle.org/distributions/gradle-4.4-all.zip (gradle-wrapper.properties)
+		
+		buildscript {
+			repositories {
+				jcenter()
+				mavenCentral()
+				maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+				maven {
+					url 'https://maven.google.com/'
+					name 'Google'
+				}
+				google()
+			}
+			dependencies {
+				classpath 'com.android.tools.build:gradle:3.1.2'
+			}
+		}
+	
+	-Estrutura do projeto:
+		-Métodos iniciais: create e render
+		-create() é semelhante ao método onCreate do ciclo de vida das activities
+			-Configurar e inicializar o jogo
+			Gdx.app.log("create", "Inicializado o jogo");	-> Log semelhante ao Log.i do android
+			
+		-render() é chamado de tempos em tempos para atualizar o jogo
+	
+	-Inserindo imagens:
+		-Atributo SpriteBatch para criar animações
+		private SpriteBatch batch;
+		private Texture passaro;
+		
+		@Override
+		public void create () {
+			batch = new SpriteBatch();
+			passaro = new Texture("passaro1.png");	-> Para inserir a textura é necessária a classe Batch
+
+		}
+		
+		@Override
+		public void render () {
+			batch.begin();		-> Inicia a exibição das imagens
+			
+			batch.draw(passaro, 0, 0);		-> Insere a imagem na posição x, y (respectivamente)
+			
+			batch.end();		-> Finaliza a exibição das imagens
+
+		}
+		
+		-Altura e largura de cada imagem:
+			passaro.getWidth();		-> Largura da imagem
+			passaro.getHeight();	-> Altura da imagem
+		
+		-Criar animações com as imagens:
+			-A ordem que os objetos são desenhados na tela fazem diferença, definindo o que fica em cima do que
+			
+			//Os outros 2 parâmetros adicionais no fim definem largura e altura da imagem
+			batch.draw(imagem, posicao_x, posicao_y, largura, altura);
+			
+			//Gdx.graphics.getWidth()/getHeight() recupera altura e largura da tela
+			batch.draw(imagem, posicao_x, posicao_y, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());		
+			
+			-É interessante criar variáveis que armazenem essas dimensões do dispositivo, já que serão usadas inúmeras vezes:
+				//Atributos de configuração
+				private int movimento = 0;
+				private int larguraDispositivo;
+				private int alturaDispositivo;
+				
+				@Override
+				public void render () {
+					movimento++;		-> Incrementa a variável para ser usada na nova posição da imagem, criando o movimento através das renderizações
+					batch.begin();
+
+					batch.draw(fundo, 0, 0, larguraDispositivo, alturaDispositivo);
+					batch.draw(passaro, movimento, alturaDispositivo/2);
+
+					batch.end();
+
+				}
+				
+			-Animações com diferentes imagens (criando ideia de movimento):
+				-Modificar a variável do tipo Texture para um array de Texture, com cada posição contendo um estado de movimento da imagem
+					private Texture[] passaro;
+					passaro = new Texture[3];
+					passaro[0] = new Texture("passaro1.png");
+					passaro[1] = new Texture("passaro2.png");
+					passaro[2] = new Texture("passaro3.png");
+					
+				-Criar uma variável que controle as animações (transição entre as posições do array):
+					private float variacao = 0;		-> Float para ser incrementado com uma velocidade menor, dando uma movimentação mais realista
+					
+					-Método render:
+						variacao += 0.1;
+						if(variacao > 3) variacao = 0;		-> Garante que a variável de controle não irá passar da quantidade de imagens do array
+						batch.draw(passaros[(int)variacao], 30, alturaDispositivo/2);	-> Desenha a imagem com a posição da variável de controle, convertida pra int
+						
+					-Uma outra maneira de incrementar é com o método Gdx.graphics.getDeltaTime(), retornando a dirença de tempo entre cada renderização (0.001 aproximadamente)
+						variacao += Gdx.graphics.getDeltaTime();
+						
+			-Tratar repetição da imagem (encostar em um lado da tela e aparecer novamente em outro):
+				-Fazer verificações de posicionamento
+				-Exemplo:
+					if(posicaoInicialVertical > 0)				-> Verifica se a posição atual é maior que 0
+						posicaoInicialVertical = 500;			-> Define uma nova posição para "retornar" a imagem
+						
+					if(posicaoMovimentoCanoHorizontal > larguraDispositivo)				-> Verifica se a posição atual é maior que a largura (saindo da tela)
+						posicaoMovimentoCanoHorizontal = 0 - canoBaixo.getWidth();		-> Retorna a imagem para "trás" da tela, fazendo-a surgir
+						
+					if(posicaoMovimentoCanoHorizontal < (canoBaixo.getWidth() * (-1)))	-> Verifica se a posição atual é menor do que a largura e a imagem (saindo para esquerda)
+						posicaoMovimentoCanoHorizontal = larguraDispositivo - 100;		-> Define a posição inicial da tela
+						
+	-Tratar eventos de Touch:
+		Gdx.input.justTouched();	-> Verifica se a tela foi tocada
+		
+	-Texto na tela:
+		-Atributo do tipo BitmapFont
+			private BitmapFont fonte;
+			fonte = new BitmapFont();
+			fonte.setColor(Color.WHITE);	-> Define a cor do texto
+			fonte.getData().setScale(6);	-> Define o tamanho da fonte
+			
+		-Definir pontuação:
+			//Estrutura de desenho da tela, conversão de inteiro para String, posição x e posição y
+			fonte.draw(batch, String.valueOf(pontuacao), larguraDispositivo/2, alturaDispositivo - 50);
+			
+	-Sistema de colisão:
+		-Não são feitas com as texturas, mas com formas que ficam em cima das texturas
+		-Utiliza as classes Circle e Rectangle para criar as formas e ShapeRenderer para desenhá-las, semelhante ao Batch (shape somente para ilustrar, tornar visível; não 
+		é necessário)
+		-Método render:
+			//Desenhar formas:
+			
+			//Define a forma do pássaro: posição x, posição y e raio
+			passaroCirculo.set(
+				120 + passaros[0].getWidth()/2, 
+				posicaoInicialVertical + passaros[0].getHeight()/2, 
+				passaros[0].getWidth()/2
+			);
+			
+			//Define a forma do retângulo: posição x, posição y, largura e altura
+			retanguloCanoBaixo = new Rectangle(		
+                posicaoMovimentoCanoHorizontal, 
+                alturaDispositivo/2 - canoBaixo.getHeight() - espacoEntreCanos/2 + alturaEntreCanosRandomica, 
+                canoBaixo.getWidth(), 
+                canoBaixo.getHeight()
+			);			
+			
+			//Bloco necessário apenas para ilustração
+			shape.begin(ShapeRenderer.ShapeType.Filled);	-> Forma preenchida
+			shape.circle(passaroCirculo.x, passaroCirculo.y, passaroCirculo.radius);	-> Cria a forma de círculo com as dimensões e posição do pássaro
+			shape.rect(retanguloCanoBaixo.x, retanguloCanoBaixo.y, retanguloCanoBaixo.width, retanguloCanoBaixo.height);	-> Cria a forma
+			shape.setColor(Color.BLUE);			-> Define uma cor para a forma (ilustração)
+			shape.end();
+			
+			//Verificar interseção:
+			//Teste de colisão:
+			//Classe que verifica se houve interseção entre um círculo e um retângulo (o mesmo método é usado para outras formas)
+			if(Intersector.overlaps(passaroCirculo, retanguloCanoBaixo) || Intersector.overlaps(passaroCirculo, retanguloCanoTopo)){
+				//Estado de jogo = game over
+				estadoJogo = 2;
+
+			}
+			
+			if(estadoJogo == 2){
+				batch.draw(gameOver, larguraDispositivo/2 - gameOver.getWidth()/2, alturaDispositivo/2);
+				mensagem.draw(batch, "Toque para reiniciar!", larguraDispositivo/2 - 200, alturaDispositivo/2 - gameOver.getHeight()/2);
+				
+				//Reiniciar (dentro do loop != 0) consiste em redefinar variáveis aos valores iniciais
+				if(Gdx.input.justTouched()){
+                    estadoJogo = 0;
+                    pontuacao = 0;
+                    velocidadeQueda = 0;
+                    posicaoInicialVertical = alturaDispositivo/2;
+                    posicaoMovimentoCanoHorizontal = larguraDispositivo;
+
+                }
+
+			}
+			
+		-Trabalhando com ícones para diferentes dispositivos:
+			-Pastas:
+				-Android
+					-Res
+						-Diferentes pastas drawable:
+							-mdpi 		(pequeno)						48x48
+							-hdpi		(médio)							72x72
+							-xdpi		(grande)						96x96
+							-xxdpi		(muito grande)					144x144
+							-xxxdpi		(maior ainda - LibGDX)			192x192
+			
+			-Modificar o ícone inicial do jogo:
+				-AndroidManifest:
+					android:icon="@drawable/ic_flappybird" -> Após copiar os ícones de cada resolução para sua respectiva pasta
+					
+	-Ajustar para diferentes resoluções:
+		-Camera:
+		-Viewport: área disponível para visualização da tela
+		
+		-Atributos para controle:
+			private OrthographicCamera camera;
+			private Viewport viewport;				-> Criar um viewport com tamanho fixo; a LibGDX cuida do restante
+			
+			//Constantes para a resolução (adaptar para aplicações diferentes)
+			private final float VIRTUAL_WIDTH = 768;
+			private final float VIRTUAL_HEIGHT = 1024;
+			
+			-Instanciar a camera normalmente, mas viewport recebe classes diferentes
+			camera = new OrthographicCamera();
+			
+			//Recebe 3 parâmetros: largura, altura e a camera
+			viewport = new StretchViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
+			//FitViewport corta parte da tela para ocupar todo o espaço, como algumas TV's cortam partes do filme para encaixar a resolução sem partes preta
+			viewport = new StretchViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
+			
+			//Sobrescrever o método resize() -> Chamado após o método create()
+			@Override
+			public void resize(int width, int height) {
+				viewport.update(width, height);
+			}
+					
+			//Modificar atributos larguraDispositivo e alturaDispositivo para receber as constantes (modificar elas para float)
+			private float larguraDispositivo;
+			private float alturaDispositivo;
+			
+			larguraDispositivo = VIRTUAL_WIDTH;
+			alturaDispositivo = VIRTUAL_HEIGHT;
+			
+		-Configurar projeção da câmera no batch:
+			-Antes do batch.begin():
+				batch.setProjectionMatrix(camera.combined);	-> Recupera os dados de projeção
+				
+			-Posicionar a câmera (logo após instanciar):
+				camera = new OrthographicCamera();
+				camera.position.set(VIRTUAL_WIDTH/2, VIRTUAL_HEIGHT/2, 0);	-> Recebe os valores x, y e z (caso de aplicação 3D)
+				
+			-No método render, é necessário atualizar a câmera e limpar os frames anteriores, para ocupar e gastar menos memória
+				camera.update();
+				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+		
+-Firebase:
+	-Backend
+	-Servidores
+	-Banco de dados NoSQL
+	-Código de servidor
+	-Códigos de redes
+	-Adicionar o Firebase a um projeto:
+		-Adicionar o package do seu projeto Android no projeto Firebase
+		-Gerar o código SHA-1:
+			-Grade (atualizar)
+				-App
+					-Tasks
+						-SigningReport
+							-Copiar o código SHA-1
+							
+		-Baixar e adicionar o arquivo google-services.json na pasta app do projeto
+		-Adicionar o classpath como dependência no arquivo build.gradle
+			-Gradle Scripts
+				-build.gradle (Project)
+					dependencies{
+						//Outras classpaths
+						classpath 'com.google.gms:google-services:3.2.0'
+					
+					}
+					
+					repositories{
+						//Outros
+						maven {
+							url "https://maven.google.com" // Google's Maven repository
+						}
+					
+					}
+				-build.gradle (Module)
+					dependencies{
+						//Outras classpaths
+						implementation 'com.google.firebase:firebase-core:15.0.1'
+						implementation 'com.google.firebase:firebase-database:15.0.0'	-> Para utilizar o database
+					
+					}
+					
+					//Final do arquivo:
+					apply plugin: 'com.google.gms.google-services'
+					
+		-Sincronizar arquivos
+		
+	-A cada serviço necessário (database, storage, etc) é necessário adicionar a biblioteca no dependencies do gradle: https://firebase.google.com/docs/android/setup?authuser=0
+	-MainActivity.java:
+		private DatabaseReference firebaseReferencia = FirebaseDatabase.getInstance().getReference();	-> Recupera a instância do bando de dados do Firebase e volta para a raiz
+		
+		-getReference("no");										-> Recupera um nó específico (semelhante à tabela no SQL tradicional)
+		-firebaseReferencia.child("no");							-> Define um nó
+		-firebaseReferencia.child("pontos").setValue("100");		-> Define um nó e um valor para ele
+		
+	-Modificar regras removendo "auth != null", para não exigir um usuário logado
+		{
+			"rules": {
+				".read": true,
+				".write": true		-> Define permições de escrita públicas (não recomendado, somente para testes)
+			}
+		}
+		
+	-Salvando dados:
+		private DatabaseReference databaseReferencia = FirebaseDatabase.getInstance().getReference();	-> Instância do banco na parte raiz
+		private DatabaseReference usuarioReferencia = databaseReferencia.child("usuarios");				-> Define o nó "usuarios" a ser criado
+		
+		-onCreate()
+			//A cada vez que o aplicativo é lançado, os valores não são duplicados. No entanto, alterações funcionam como atualizações (mudar o conteúdo de setValue, por exemplo)
+			//Sobrescreve ou cria a informação no nó
+			usuarioReferencia.child("001").child("nome").setValue("Flávio");			-> Define novos nós e um valor
+			
+		-Aconselhável criar uma classe contendo os campos a serem inseridos
+			public class Usuario{
+				private String nome;
+				private String sobrenome;
+				private String sexo;
+				private int idade;
+				
+				//Necessário construtor vazio
+				Usuario(){
+				}
+				
+				//Métodos get and set
+			
+			}
+			
+			Usuario usuario = new Usuario();
+			usuario.setNome("Flávio");
+			usuario.setSobrenome("Caetano");
+			usuario.setSexo("Masculino");
+			usuario.setIdade(18);
+
+			usuarioReferencia.child("001").setValue(usuario);	-> Não é necessário mais utilizar o child com campos específicos, passando o objeto, serão criados automaticamente
+			
+	-Recuperando dados:
+		-Necessita as referências ao banco
+		-Listener para os valores
+			produtoReferencia.addValueEventListener(new ValueEventListener() {
+				//Chamado quando os dados no banco são modificados
+				@Override
+				public void onDataChange(DataSnapshot dataSnapshot) {
+					//dataSnapshot contém informações sobre o item no nó atual
+					Log.i("Firebase", dataSnapshot.getValue().toString());
+				}
+
+				//Caso haja erro
+				@Override
+				public void onCancelled(DatabaseError databaseError) {
+
+				}
+			});
+
+		-Caso não seja especificado um nó ao criar a referência (nível mais acima), é criado o listener para todos os itens do nó no nível atual
+		-Sempre que os dados são modificados, o método é chamado e é capaz de apresentar os dados atualizados
+		
+	-Serviço de autenticação:
+		-Configurar o projeto, como o anterior
+		-build.gradle (Module):
+			dependencies{
+				//Outras
+				implementation 'com.google.firebase:firebase-auth:15.0.0'
+				implementation 'com.google.firebase:firebase-database:15.0.0'
+	
+			}
+			
+		-Criar um objeto do tipo FirebaseAuth
+			private FirebaseAuth firebaseAuth;
+			
+			-onCreate():
+				firebaseAuth = FirebaseAuth.getInstance(); -> Pega a instância da autenticação
+				
+				//Cadastro:
+				firebaseAuth.createUserWithEmailAndPassword("flavioluzio22@gmail.com", "flavio123")
+					.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+						//Testa se a autenticação foi executada com sucesso
+						@Override
+						public void onComplete(@NonNull Task<AuthResult> task) {
+							if(task.isSuccessful()){	-> Retorna true se o cadastro do usuário foi sucesso
+								
+
+							}
+
+						}
+					});
+					
+				//Login
+				firebaseAuth.signInWithEmailAndPassword("flavioluzio22@gmail.com", "flavio123")
+					.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+						@Override
+						public void onComplete(@NonNull Task<AuthResult> task) {
+							if(task.isSuccessful()){	-> Sucesso ao logar
+                        
+							}else{
+								task.getException();	-> Retorna o erro caso o login não seja sucesso
+							}
+							
+						}
+					});
+			
+			-Cadastrar o usuário automaticamente o deixa logado no sistema
+			-É interessante recuperar informações de email e senha, junto com validações, a partir de diálogos e caixas de texto com o usuário
+			
+		-Verificar se um usuário está logado:
+			if(firebaseAuth.getCurrentUser() != null){	-> O método retorna nulo se o usuário não está logado
+				
+
+			}
+			
+		-Recuperar email do usuario logado:
+			firebaseAuth.getCurrentUser().getEmail();
+			
+		-Deslogar usuário:
+			firebaseAuth.signOut();
+			
+		-Após logar uma vez, o usuário permanece logado, mas perda de conexão com a internet exige um novo login
+		
+-Aplicativo: WhatsApp
+	-Utilizar o Material Design para utilizar temas
+		https://material.io/design/introduction/#principles
+		
+	-Permissões do app:		
+		//SDK < 23:
+		<uses-permission android:name="android.permission.INTERNET"/>	-> Acesso à internet
+		<uses-permission android:name="android.permission.SEND_SMS"/>	-> Acesso ao envio de SMS
+		
+		//SDK > 23:
+		-Permissões no RunTime: pedidas ao usuário quando necessário utilizar somente
+		-Array de Strings com as permissões:
+		
+			private String[] permissoesNecessarias = new String[]{
+					android.Manifest.permission.SEND_SMS,
+					android.Manifest.permission.INTERNET
+			};
+			
+			onCreate():
+				Permissao.validaPermissoes(1, this, permissoesNecessarias);	-> RequestCode: código para controle de qual activity chamou determinada função
+		-Classe auxiliar:
+			public class Permissao {
+				public static boolean validaPermissoes(int requestCode, Activity activity, String permissoes[]){
+					if(Build.VERSION.SDK_INT >= 23){		-> Verifica se o SDK é maior que 23, já que não é necessário pedir permissões em versões menores
+						List<String> listaPermissoes = new ArrayList<String>();
+						
+						//Percorre o array de permissões
+						for(String permissao: permissoes){
+							//Verifica se possui a permissão e é igual ao nível do pacote
+							Boolean validaPermissao = ContextCompat.checkSelfPermission(activity, permissao) == PackageManager.PERMISSION_GRANTED;
+							
+							if(!validaPermissao)					-> Caso não possua a permissão
+								listaPermissoes.add(permissao);		-> Adiciona ela em uma lista
+
+						}
+						
+						if(listaPermissoes.isEmpty()) return true;	-> Caso a lista esteja vazia, significa que todas as permissões já foram aceitas
+
+						String[] novasPermissoes = new String[listaPermissoes.size()];
+						listaPermissoes.toArray(novasPermissoes);									-> Converte a lista em um array
+						ActivityCompat.requestPermissions(activity, novasPermissoes, requestCode);	-> Pede as permissões
+
+					}
+
+					return true;
+				}
+
+			}
+			
+		-Classe principal:
+			//Método que verifica o resultado das permissões (sobrescrito)
+			public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults){
+				super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+				for(int resultados: grantResults){
+					if(resultados == PackageManager.PERMISSION_DENIED){		-> Para cada resultado (array de inteiro) verifica se foi negado
+						alertaValidacaoPermissao();							-> Método simples que exibe um alerta para usuário informando a necessidade da permissão
+
+					}
+				}
+
+			}
+	
+	-Utilização de máscaras (limitar caracteres e quais tipos):
+		gradle.build (app):
+			dependencies{
+				implementation 'com.github.rtoshiro.mflibrary:mflibrary:1.0.0'
+			}
+		
+		-Utilização:
+			N - for numbers.
+			L - for letters.
+			L - for numbers and letters.
+			l - for lowercase letters.
+			U - for uppedcase letters.
+			
+			Example to format dates like MM/DD/YYYY:
+
+				SimpleMaskFormatter smf = new SimpleMaskFormatter("NN/NN/NNNN");
+				MaskTextWatcher mtw = new MaskTextWatcher(myEditText, smf)
+				myEditText.addTextChangedListener(mtw);
+		
+		-Máscara para telefone:
+			-Instanciar objeto com o EditText correspondente do telefone (findViewById)
+		
+			//Cria a máscara/molde
+			SimpleMaskFormatter simpleMaskTelefone = new SimpleMaskFormatter("NNNNN-NNNN");
+			
+			//"Escutador" que aplica a máscara; parâmetros: EditText, máscara
+			MaskTextWatcher maskTelefone = new MaskTextWatcher(editTelefone, simpleMaskTelefone);
+			
+			//"Escutador" para aplicar a máscara
+			editTelefone.addTextChangedListener(maskTelefone);
+			
+		-Mudar o cursor para o próximo campo automaticamente ao atingir um certo número:
+			editCodigoPais.setOnKeyListener(new View.OnKeyListener() {
+
+				@Override
+				public boolean onKey(View v, int keyCode, KeyEvent event) {
+					if(editCodigoPais.getText().length() == 2)	-> Manter a verificação com um dígito a menos, para que ao atingir o limite ative a função e o próximo dígito execute
+						editCodigoArea.requestFocus();
+						
+				}
+			});
+			
+		-Gerar TOKEN para cadastro:
+			-É primeiro preciso filtrar o telefone inserido pelo usuário (remover espaços e caracteres tipo + e -)
+				String telefoneCompleto = editCodigoPais.getText().toString()
+                        + editCodigoArea.getText().toString()
+                        + editTelefone.getText().toString();			-> Cria uma String com o telefone completo
+
+                telefoneCompleto = telefoneCompleto.replace("+", "");	-> Substitui o caractere pelo novo (vazio)
+                telefoneCompleto = telefoneCompleto.replace("-", "");	-> Substitui o caractere pelo novo (vazio)
+				
+			-Gerar um número com 4 dígitos:
+				Random random = new Random();
+                int numeroRandomico = random.nextInt(8999) + 1000;	-> Garante que o menor número será 1000 e o maior será 9999 (gera de 0 a 8999 e adiciona 1000)
+                String token = String.valueOf(numeroRandomico);
+				
+				-Para gerar, é necessário que o app solicite o token para o servidor, enviando via SMS
+				-Utilizar o firebase: https://firebase.google.com/docs/auth/android/phone-auth?hl=pt-br
+				-Gerar token internamente no app (não recomendado por questões de segurança):
+					-Salvar o token utilizando SharedPreferences (criar classe auxiliar com os métodos necessários)
+						public Preferencias(Context contextoParametro){
+							contexto = contextoParametro;
+							preferences = contexto.getSharedPreferences(NOME_ARQUIVO, Context.MODE_PRIVATE);
+							editor = preferences.edit();
+
+						}
+						
+						public void salvarUsuarioPreferencias(String nome, String telefone, String token){
+							editor.putString(CHAVE_NOME, nome);			-> Utiliza constantes para definir as chaves no arquivo
+							editor.putString(CHAVE_TELEFONE, telefone);
+							editor.putString(CHAVE_TOKEN, token);
+							editor.commit();
+
+						}
+						
+						//Lista para armazenar os dados do usuário
+						public HashMap<String, String> getDadosUsuario(){
+							HashMap<String, String> dadosUsuario = new HashMap<>();
+							
+							//preferences.getString(chave, valor default)
+							dadosUsuario.put(CHAVE_NOME, preferences.getString(CHAVE_NOME, null));				-> Define as chaves na lista com o mesmo valor do arquivo
+							dadosUsuario.put(CHAVE_TELEFONE, preferences.getString(CHAVE_TELEFONE, null));
+							dadosUsuario.put(CHAVE_TOKEN, preferences.getString(CHAVE_TOKEN, null));
+
+							return dadosUsuario;
+						}
+					
+					-No método de login:
+						Preferencias preferencias = new Preferencias(getApplicationContext());
+						preferencias.salvarUsuarioPreferencias(nomeUsuario, telefoneCompleto, token);
+
+						HashMap<String, String> dadosUsuario = preferencias.getDadosUsuario();
+						
+					-Método para envio de SMS:
+						//Método enviaSMS(String telefone, String mensagem)
+						SmsManager smsManager = SmsManager.getDefault();					-> Retorna a instância da classe de manipulação de SMS
+						//Parâmetros: telefone, "scAdress", mensagem, sentinela, deliveryIntent
+						smsManager.sendTextMessage(telefone, null, mensagem, null, null);	-> Envia mensagem de texto
+						
+						-É preciso adicionar novamente o sinal "+" antes do telefone
+						String mensagemSMS = "Código de validação WhatsApp: " + token;
+						boolean enviadoSMS = enviaSMS("+" + telefoneCompleto, mensagemSMS);
+						
+						//Inica a nova activity e encerra a atual
+						if(enviadoSMS){
+							Intent intent = new Intent(getApplicationContext(), ValidadorActivity.class);
+							startActivity(intent);
+							finish();
+
+						}
+						
+			-Na nova Activity:
+				Preferencias preferencias = new Preferencias(getApplicationContext());
+                HashMap<String, String> dadosUsuario = preferencias.getDadosUsuario();
+
+				//Recupera o dado token
+                String tokenGerado = dadosUsuario.get("token");
+                String tokenDigitado = editCodigo.getText().toString();
+
+				//Verifica se é igual
+                if(tokenDigitado.equals(tokenGerado)){
+                    Toast.makeText(getApplicationContext(), "Token validado", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(getApplicationContext(), "Token não validado", Toast.LENGTH_SHORT).show();
+
+                }
+					
+	-Login customizado:
+		-Servidor com número de telefone e token
+		-Utiliza o token (recebido pelo aplicativo e armazenado no aparelho) para requisições do servidor
+		
+		-Trabalhando com login e autenticação com email e senha:
+			-Utilizar uma classe de configuração para o Firebase:
+			
+				//Classe final para não permitir que seja instanciada sempre
+				public final class ConfiguracaoFirebase {
+					private static DatabaseReference referenciaFirebase;
+					private static FirebaseAuth firebaseAuth;
+
+					public static DatabaseReference getReferenciaFirebase() {
+						if(referenciaFirebase == null)
+							referenciaFirebase = FirebaseDatabase.getInstance().getReference();
+
+						return referenciaFirebase;
+					}
+
+					public static FirebaseAuth getFirebaseAuth(){
+						if(firebaseAuth == null)
+							firebaseAuth = FirebaseAuth.getInstance();
+
+						return firebaseAuth;
+					}
+
+				}
+			
+			-É importante manter classes que contenham modelos da aplicação
+				public class Usuario {
+					private String id;			-> Modelo de um usuário
+					private String nome;
+					private String email;
+					private String senha;
+
+					public Usuario(){
+
+					}
+					
+					//Métodos get and set
+				}
+				
+			-Cadastrar o usuário:
+				-Recuperar informações digitadas nos EditText
+				
+				private void cadastrarUsuario(){
+					autenticacao = ConfiguracaoFirebase.getFirebaseAuth();	-> Pega uma instância de autenticação do Firebase
+					
+					//Cria usuario com email e senha
+					autenticacao.createUserWithEmailAndPassword(
+							usuario.getEmail(),
+							usuario.getSenha()
+					).addOnCompleteListener(CadastroUsuarioActivity.this, new OnCompleteListener<AuthResult>() {	-> Escutador para o término da operação
+						@Override
+						public void onComplete(@NonNull Task<AuthResult> task) {
+						
+							//Sucesso no task (requisição/pedido/tarefa)
+							if(task.isSuccessful()) {
+								Toast.makeText(getApplicationContext(), "Usuário cadastrado!", Toast.LENGTH_SHORT).show();
+							}else {
+								Toast.makeText(getApplicationContext(), "Usuário não cadastrado!", Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
+
+				}
+		
+			-Salvar dados do usuário dentro do banco:
+				//O resultado task possui um retorno do usuário, sendo capaz de retornar ainda cada atributo ao cadastrar
+				usuario.setId(task.getResult().getUser().getUid());		-> Pega o UId (identificador único do Firebase)
+                usuario.salvar();
+				
+				//Classe modelo usuario:
+				public void salvar(){
+					DatabaseReference databaseReference = ConfiguracaoFirebase.getReferenciaFirebase();
+					databaseReference.child("usuario").child(getId()).setValue(this);	-> Define o objeto usuario no nó ID, recuperado da autenticação
+
+				}
+				
+				@Exclude
+				public String getId() { return id; }			-> Faz com que a senha não seja salva no objeto no banco
+				
+				@Exclude
+				public String getSenha() { return senha; }
+				
+		-Tratamento de exceções de autenticação:
+			-Inserir as exceções, com try e catch no else do task.isSuccessful(), já que é justamente a verificação de sucesso de cadastro
+				else {
+                    String erroExcecao = "";
+
+                    try{
+                        throw task.getException();		-> Pega a exceção lançada pelo task
+
+                    } catch (FirebaseAuthWeakPasswordException e) {
+                        erroExcecao = "Digite uma senha mais forte, com o mínimo de 6 caracteres, letras e números";
+
+                    } catch (FirebaseAuthInvalidCredentialsException e) {		-> Exceções possíveis retornadas pelo Firebase
+                        erroExcecao = "Digite um email válido";
+
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        erroExcecao = "Email já cadastrado";
+
+					//Exceção padrão/não tratada
+                    } catch (Exception e){
+                        erroExcecao = "Erro ao cadastrar Usuário";
+                        e.printStackTrace();
+
+                    }
+
+                    Toast.makeText(getApplicationContext(), erroExcecao, Toast.LENGTH_SHORT).show();
+
+                }
+		
+	-Login de usuario:
+		usuario = new Usuario();
+        usuario.setEmail(editEmail.getText().toString());		-> Informações inseridas pelo usuário
+        usuario.setSenha(editSenha.getText().toString());
+	
+		private void validarLogin(){
+			autenticacao = ConfiguracaoFirebase.getFirebaseAuth();	-> Abre a conexão com o Firebase
+			autenticacao.signInWithEmailAndPassword(
+					usuario.getEmail(),
+					usuario.getSenha()
+			).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+				@Override
+				public void onComplete(@NonNull Task<AuthResult> task) {
+					if(task.isSuccessful()){
+						abrirTelaPrincipal();
+						Toast.makeText(getApplicationContext(), "Sucesso ao fazer login!", Toast.LENGTH_SHORT).show();
+
+					}else{
+						Toast.makeText(getApplicationContext(), "Erro ao fazer login", Toast.LENGTH_SHORT).show();
+
+					}
+				}
+			});
+
+		}
+		
+		//Verifica se o usuário já está logado no sistema (caso de logar, fechar o app e abrir de novo)
+		//Verificar antes de iniciar a activity (primeiro comando do método onCreate())
+		private void verificarUsuarioLogado(){
+			autenticacao = ConfiguracaoFirebase.getFirebaseAuth();
+			if(autenticacao.getCurrentUser() != null)				-> Verifica se o usuário atual na autenticação é nulo
+				abrirTelaPrincipal();
+
+		}
+
+		//Apenas redireciona após comprovar o login
+		private void abrirTelaPrincipal(){
+			Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+			startActivity(intent);
+			finish();
+
+		}
+		
+	-Plugins (Android Drawable Importer):
+		-Plugins
+			-Search in repositories
+				-Install
+				
+		-Esse plugin permite a utilização do Material Design do Google
+		-Clique com o botão direito na pasta drawable e as opções aparecem no new
+			-Icon Pack Drawable Importer
+				-Material Icons
+					-Action
+					
+		-Os ícones importados possibilita escolha da cor, tamanho, formato e dimensão para diferentes resoluções de dispositivos
+		
+	-Criação de uma toolbar:
+		-Criação de um arquivo xml separado:
+		
+			<?xml version="1.0" encoding="utf-8"?>
+			<android.support.v7.widget.Toolbar
+				xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/colorPrimary"
+				app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+				/>
+				
+		-Incluir a toolbar nas activities necessárias:
+			<include android:id="@+id/toolbar"
+				layout="@layout/toolbar"/>
+			
+		-Instanciar a toolbar:			
+			toolbar = (Toolbar) findViewById(R.id.toolbar);
+			toolbar.setTitle("Whatsapp");	-> Título
+			setSupportActionBar(toolbar);	-> Suporte para a toolbar
+			
+			//Cria o menu interno de opções da toolbar
+			@Override
+			public boolean onCreateOptionsMenu(Menu menu) {
+				MenuInflater inflater = getMenuInflater();
+				inflater.inflate(R.menu.menu_main, menu);
+
+				return true;
+			}
+			
+			-Arquivo .xml correspondente às opções do menu:
+			
+				<menu xmlns:android="http://schemas.android.com/apk/res/android"
+					xmlns:app="http://schemas.android.com/apk/res-auto"
+					xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
+					//Cada item representa uma opção
+					<item android:id="@+id/action_settings"
+					android:title="@string/item_configuracoes"
+					android:orderInCategory="100"					-> Quanto menor, mais acima na preferência (o item de menor número é exibido primeiro na lista)
+					app:showAsAction="never" />						-> Show as action: botão de ação
+
+					<item android:id="@+id/item_sair"
+						android:title="@string/item_sair"
+						android:orderInCategory="200"
+						app:showAsAction="never"/>					-> never: não aparece na barra
+						
+					<item android:id="@+id/item_pesquisa"
+						android:title="Pesquisa"
+						android:orderInCategory="300"						
+						android:icon="@drawable/ic_search"			-> Define um ícone
+						app:showAsAction="ifRoom"/>					-> ifRoom: "apenas se couber" (possui preferência na barra)
+
+				</menu>
+				
+			-Configuração de ação da lista da toolbar (3 pontos):
+				@Override
+				public boolean onOptionsItemSelected(MenuItem item) {
+					//Busca o ID do item da lista pressionado
+					switch (item.getItemId()){
+						case R.id.item_sair:
+							deslogarUsuario();
+							return true;
+
+						case R.id.item_configuracoes:
+							return true;
+
+						default:
+							return super.onOptionsItemSelected(item);
+
+					}
+
+				}
+				
+	-Trabalhando com estilos (toolbar e padrões - temas):
+		//Tema base
+		<style name="AppTheme" parent="Theme.AppCompat.NoActionBar">				-> Mantém o app sem toolbar; no caso de toolbar personalizada, definir atributos abaixo:
+			<!-- Customize your theme here. -->
+			<item name="colorPrimary">@color/colorPrimary</item>
+			<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+			<item name="android:windowBackground">@android:color/white</item>		-> Cor de fundo da tela
+			<item name="android:itemBackground">@android:color/white</item>			-> Cor dos itens da lista
+			<item name="android:textColor">@android:color/black</item>				-> Cor do texto (conteúdo de botões, itens, etc)
+			<item name="colorAccent">@color/colorAccent</item>						-> Cor de marcações (checkbox, radiobutton, etc)
+		</style>
+
+		//Tema para aplicar em itens específicos (android:theme="")
+		<style name="botaoPadrao" parent="Theme.AppCompat.Light">					-> Tema padrão
+			<item name="colorButtonNormal">@color/colorPrimaryDarker</item>			-> Define uma cor para um botão normal
+			<item name="colorControlHighlight">@color/colorPrimary</item>			-> Cor para o item pressionado
+			<item name="android:textColor">@android:color/white</item>				-> Cor do texto
+		</style>
+		
+	-Fragments:
+		-Comportamento ou porção da interface com o usuário na activity
+		-Permite o reuso de código
+		-Interfaces dinâmicas
+		-Criação de abas dentro da mesma activity
+		-Fragments possuem ciclo de vida semelhante às activities
+		-Possui um método um create que retorna um objeto Inflater, convertendo seu XML em uma view
+		-Desmarcar o fragment factory e interface callbacks
+		-Método onCreateView:
+			
+			//Trabalhar em cima da view
+			View view = inflater.inflate(R.layout.fragment_cadastro, container, false);
+        
+			texto = (TextView) view.findViewById(R.id.textCadastro);
+			
+			return view;
+			
+		-Na classe principal (utilizará o fragment):
+			//Prepara o fragment
+			android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+			//Instancia o fragment
+            LoginFragment loginFragment = new LoginFragment();
+			
+			//Adiciona a view no layout
+            fragmentTransaction.add(R.id.rl_container_fragmento, loginFragment);
+			
+			//Salva alterações
+            fragmentTransaction.commit();
+			
+		-Carregar um fragmento direto no xml principal:	
+			<fragment
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				class="LoginFragment" />
+				
+		-É importante deixar o fragmento auto-suficiente para utilizar tanto via código quanto via programação
+		
+	-Sliding tabs:
+		-Fazer download (ou copiar) duas classes: SlidingTabStrip e SlidingTabLayout
+			https://github.com/jamiltondamasceno/sliding-tabs/blob/master/SlidingTabStrip
+			
+		-activity_main.xml
+			<nome.pacote.completo.package.SlidingTabLayout	
+				android:id="@+id/stl_tabs"
+				android:layout_width="match_parent"
+				android:background="@color/colorPrimary"
+				android:layout_height="48dp"
+				></nome.pacote.completo.package.SlidingTabLayout>
+				
+			//ViewPager é a página abaixo das abas (que sofrem transições)
+			<android.support.v4.view.ViewPager
+				android:id="@+id/vp_pagina"
+				android:layout_width="wrap_content"
+				android:layout_height="0dp"
+				android:layout_weight="1"
+				></android.support.v4.view.ViewPager>
+				
+		-Criar os fragments extendendo a classe Fragment da classe support.v4, para abrangir todos os dispositivos
+		-Criar um Adapter:
+			private String[] titulosAbas = {"Conversas", "Contatos"};
+			
+			//Trata cada página como fragmentos, aproveitando memória
+			//FragmentStatePagerAdapter é bom para páginas com listagem de dados
+			public class TabAdapter extends FragmentStatePagerAdapter {		-> A classe FragmentPagerAdapter é boa para páginas dinâmicas
+				public TabAdapter(FragmentManager fm) {
+					super(fm);
+				}
+
+				@Override
+				public Fragment getItem(int position) {
+					Fragment fragment = null;
+
+					//Verifica a posicao do item, segundo o array
+					switch (position){
+						case 0:
+							fragment = new ConversasFragment();
+							break;
+						case 1:
+							fragment = new ContatosFragment();
+							break;
+
+					}
+
+					return fragment;
+				}
+
+				@Override
+				public int getCount() {
+					return titulosAbas.length;
+				}
+
+				//Retorna o título da aba
+				@Override
+				public CharSequence getPageTitle(int position) {
+					return titulosAbas[position];
+				}
+			}
+				
+		-Utilizar o Adapter:
+			-Criar e instanciar os atributos SlidingTabLayout e ViewPager
+			slidingTabLayout = (SlidingTabLayout) findViewById(R.id.stl_tabs);
+			viewPager = (ViewPager) findViewById(R.id.vp_pagina);
+			
+			//Faz com que as abas ocupem o mesmo espaço cada, além de ocupar todo o espaço disponível
+			slidingTabLayout.setDistributeEvenly(true);
+			
+			//Define a cor que indica a aba selecionada
+			slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
+
+			//Define o suporte ao fragment para o adapter
+			TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager());
+			
+			//Define que a página receberá o fragment através do adapter
+			viewPager.setAdapter(tabAdapter);
+
+			//Define que as abas receberão a página
+			slidingTabLayout.setViewPager(viewPager);
+			
+	-Base64:
+		-Sistema de criptografia com volta (criptografar e descriptografar)
+		-Classe Base64Custom:
+		
+			public class Base64Custom {
+				//Recebe uma String, pega seus bytes e converte para o padrão da Base64
+				//replaceAll é utilizado para remover a lista de caracteres "(c1|c2|c3)" por outros caracteres, garantindo que a codificação não terá caracteres especiais nesse caso
+				public static String codificarBase64(String texto){
+					return Base64.encodeToString(texto.getBytes(), Base64.DEFAULT).replaceAll("(\\n|\\r)","");
+
+				}
+				
+				//Decodifica recebendo um texto em bytes e transforma para bytes de String, utilizando o construtor da classe para transformar de volta em String
+				public static String decodificarBase64(String textoCodificado){
+					return new String(Base64.decode(textoCodificado, Base64.DEFAULT));
+
+				}
+			}
+			
+		-Por quê utilizar?
+			-Em um sistema de banco de dados, cadastrar os usuários com getUid() não é uma boa opção para buscá-los posteriormente, sendo melhor buscar por email, por exemplo
+			-A utilização dessa base consiste em usar o email como nó principal, mas precisando converter o @ para caracteres codificados e aceitos pelo Firebase
+			
+		-Modificar o cadastro de usuários:
+			//cadastrarUsuario()
+			if(task.isSuccessful()) {
+                Toast.makeText(getApplicationContext(), "Usuário cadastrado!", Toast.LENGTH_SHORT).show();
+				
+				//Codifica o email
+                String identificadorUsuario = Base64Custom.codificarBase64(usuario.getEmail());
+				
+				//Define o nó ID sendo o email codificado
+                usuario.setId(identificadorUsuario);
+                usuario.salvar();
+				
+				//Remover o autenticacao.signOut(), já que para salvar os dados o usuário deve estar logado
+				//Remover o método finish();
+                abrirUsuarioLogado();
+				
+			//Apenas transita entre as activities
+			public void abrirUsuarioLogado(){
+				Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+				startActivity(intent);
+				finish();
+
+			}
+			
+	-Interface para adicionar contatos (entre usuários):
+		-Modificar a classe de Preferencias para salvar o email e o nome do usuário
+			
+			private final String CHAVE_IDENTIFICADOR = "identificadorUsuario";
+			
+			public void salvarDados(String identificadorUsuario){
+				editor.putString(CHAVE_IDENTIFICADOR, identificadorUsuario);
+				editor.commit();
+
+			}
+			
+			public String getIdentificador(){
+				return preferences.getString(CHAVE_IDENTIFICADOR, null);
+
+			}
+			
+		-Modificar as classes de Login e Cadastro para, nas verificações de login, sempre salvar o email do usuário
+			Preferencias preferencias = new Preferencias(getApplicationContext());
+            String identificadorUsuario = Base64Custom.codificarBase64(usuario.getEmail());
+            preferencias.salvarDados(identificadorUsuario);
+	
+		-Modificar o switch onOptionsItemSelected para adicionar o id de adicionar o contato e pesquisa
+		-Função para abrir o dialog para adicionar o contato:
+			AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+			alertDialog.setTitle("Novo contato");
+			alertDialog.setMessage("Email do usuário:");
+			alertDialog.setCancelable(false);				-> Impede que o diálogo feche ao clicar fora
+			
+			EditText editText = new EditText(getApplicationContext());
+			
+			//setView é um método que permite adicionar qualquer view dentro do dialog (botões, texto, caixas de texto, etc)
+			alertDialog.setView(editText);
+
+			alertDialog.setPositiveButton("Cadastrar", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					String emailContato = editText.getText().toString();
+
+					//Verifica se a caixa de texto está vazia
+					if(emailContato.isEmpty()){
+						Toast.makeText(getApplicationContext(), "Preencha o email.", Toast.LENGTH_SHORT).show();
+
+					}else{
+						//Codifca o email inserido
+						identificadorContato = Base64Custom.codificarBase64(emailContato);
+
+						//Gera a instância do banco e define o nó atual como o email inserido pelo usuário
+						databaseReference = ConfiguracaoFirebase.getReferenciaFirebase();
+						databaseReference = databaseReference.child("usuario").child(identificadorContato);
+
+						//Evento de atualização única (procura uma vez, ao invés de atualizar sempre que houver modificação)
+						databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+						
+							@Override
+							public void onDataChange(DataSnapshot dataSnapshot) {
+							
+								//Verifica se o snapshots está vazio - se estiver é porquê o usuário não está cadastrado no banco
+								if(dataSnapshot.getValue() != null){
+								
+									//Criar estrutura para adicionar um novo nó: os contatos e suas informações que cada usuário possui
+									//Busca os dados do usuário que possui aquele email através da classe usuário, já que ela possui o modelo
+									Usuario usuario = dataSnapshot.getValue(Usuario.class);
+
+									//Busca o identificador do usuário atual (que está adicionando)
+									Preferencias preferencias = new Preferencias(getApplicationContext());
+									String identificadorUsuarioLogado = preferencias.getIdentificador();
+
+									//Buusca o email do atual usuário
+									firebaseAuth.getCurrentUser().getEmail();
+
+									//Retorna a referência do banco para a raiz e cria o novo nó: contatos -> identificadorUsuario -> identificadorContato
+									databaseReference = ConfiguracaoFirebase.getReferenciaFirebase();
+									databaseReference = databaseReference.child("contatos").child(identificadorUsuarioLogado).child(identificadorContato);
+
+									//Modelo do contato
+									Contato contato = new Contato();
+									contato.setIdentificadorUsuario(identificadorContato);
+									contato.setEmail(usuario.getEmail());
+									contato.setNome(usuario.getNome());
+
+									//Define o objeto como valor do nó: contatos -> usuário que adicionou -> usuário adicionado -> info usuário adicionado
+									databaseReference.setValue(contato);
+									
+
+								}else{
+									Toast.makeText(getApplicationContext(), "O usuário não possui cadastro.", Toast.LENGTH_SHORT).show();
+
+								}
+
+							}
+
+							@Override
+							public void onCancelled(DatabaseError databaseError) {
+
+							}
+						});
+
+					}
+
+				}
+			});
+
+			alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+
+				}
+			});
+        
+			alertDialog.create();
+			alertDialog.show();
+			
+	-Listando usuários adicionados:
+		-Criar uma ListView no fragment de contatos:
+			private ListView listView;
+			private ArrayAdapter adapter;
+			private ArrayList<String> contatos;
+			
+			@Override
+			public View onCreateView(LayoutInflater inflater, ViewGroup container,
+									 Bundle savedInstanceState) {
+				
+				//Cria o array de contatos
+				contatos = new ArrayList<String>();
+
+				//Pega a view para ser inflada
+				View view = inflater.inflate(R.layout.fragment_contatos, container, false);				
+				listView = (ListView) view.findViewById(R.id.list_contatos);
+				
+				//Monta o adapter
+				adapter = new ArrayAdapter(
+						getActivity(),
+						R.layout.lista_contato,
+						contatos
+				);
+
+				//Define o adapter na lista
+				listView.setAdapter(adapter);
+				
+				//Busca o identificador gravado
+				Preferencias preferencias = new Preferencias(getActivity());
+				String identificadorUsuarioLogado = preferencias.getIdentificador();
+				
+				//Abre a referência do banco de dados no nó do identificador
+				databaseReference = ConfiguracaoFirebase.getReferenciaFirebase().child("contatos").child(identificadorUsuarioLogado);
+
+				//Adiciona o ouvinte para atualizar sempre que houver alterações no banco
+				databaseReference.addValueEventListener(new ValueEventListener() {
+					@Override
+					public void onDataChange(DataSnapshot dataSnapshot) {
+						//Limpa a lista para evitar duplicações
+						contatos.clear();
+
+						//Para cada dado retornado (nível identificador do usuário), age no nó filho (identificadorContato)
+						for(DataSnapshot dados: dataSnapshot.getChildren()){
+							//Usa o molde de contato para pegar os valores
+							Contato contato = dados.getValue(Contato.class);
+							contatos.add(contato.getNome());					-> Adiciona o nome na lista
+
+						}
+
+						//Avisa o adapter que houveram mudanças
+						adapter.notifyDataSetChanged();
+
+					}
+
+					@Override
+					public void onCancelled(DatabaseError databaseError) {
+
+					}
+				});
+
+				return view;
+			}
+		
+		-Criar um layout customizado:
+			-lista_contato.xml:
+				<?xml version="1.0" encoding="utf-8"?>
+				<LinearLayout
+					android:layout_height="match_parent"
+					android:layout_width="match_parent"
+					android:orientation="vertical"
+					xmlns:android="http://schemas.android.com/apk/res/android"
+					>
+					<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+						android:id="@+id/text_nome"
+						android:layout_height="wrap_content"
+						android:layout_width="match_parent"
+						android:textColor="#000"
+						android:textSize="18sp"
+						android:paddingTop="8dp"
+						android:paddingHorizontal="8dp"
+						/>
+
+					<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+						android:id="@+id/text_email"
+						android:layout_height="wrap_content"
+						android:layout_width="match_parent"
+						android:textColor="#000"
+						android:textSize="14sp"
+						android:paddingTop="8dp"
+						android:paddingHorizontal="8dp"
+						/>
+
+				</LinearLayout>
+					
+			-fragment_contatos.xml:
+				<?xml version="1.0" encoding="utf-8"?>
+				<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+					xmlns:tools="http://schemas.android.com/tools"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					tools:context=".fragment.ContatosFragment">
+
+
+					<ListView
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:id="@+id/list_contatos"
+						android:divider="#ccc"
+						android:dividerHeight="1dp"
+						android:layout_gravity="center_horizontal|top"/>
+				</FrameLayout>
+		
+	-Otimizando a listagem de contatos:
+		-Sobrescrever os métodos onStart e onStop, para iniciar a busca por atualizações do banco somente quando abrir o fragment e encerrar quando fechar
+			private ValueEventListener valueEventListenerContatos;
+		
+			public ContatosFragment() {
+				// Required empty public constructor
+			}
+
+			@Override
+			public void onStop() {
+				super.onStop();
+				databaseReference.removeEventListener(valueEventListenerContatos);
+			}
+
+			@Override
+			public void onStart() {
+				super.onStart();
+				databaseReference.addValueEventListener(valueEventListenerContatos);
+			}
+			
+			@Override
+			public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+							 
+				//Código anterior - única modificação foi remover o new ValueEventListener de dentro de addValueEventListener
+				valueEventListenerContatos = new ValueEventListener() {
+				@Override
+				public void onDataChange(DataSnapshot dataSnapshot) {
+					contatos.clear();
+
+					for(DataSnapshot dados: dataSnapshot.getChildren()){
+						Contato contato = dados.getValue(Contato.class);
+						contatos.add(contato.getNome());
+
+					}
+
+					adapter.notifyDataSetChanged();
+
+				}
+					
+			}
+			
+	ArrayList personalizado:
+		-Classe própria para receber o ArrayList<Contato>
+		
+			public class ContatoAdapter extends ArrayAdapter<Contato> {
+				private ArrayList<Contato> contatos;
+				private Context context;
+				private TextView textoNome;
+				private TextView textoEmail;
+
+				//Recebe a activity e o objeto com os itens (array)
+				public ContatoAdapter(@NonNull Context c, ArrayList<Contato> objects) {
+					super(c, 0, objects);
+					this.contatos = objects;
+					this.context = c;
+				}
+
+				@NonNull
+				@Override
+				
+				//Na posição de cada item
+				public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+					View view = null;
+					
+					//Verifica se o a lista está vazia
+					if(contatos != null){
+					
+						//Cria o inflater para criar a view	-> busca o serviço de inflar do contexto (activity)
+						LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+
+						//Infla o layout e joga na view
+						view = layoutInflater.inflate(R.layout.lista_contato, parent, false);
+
+						textoNome = (TextView) view.findViewById(R.id.text_nome);
+						textoEmail = (TextView) view.findViewById(R.id.text_email);
+						
+						//Define o conteúdo de cada elemento das views
+						Contato contato = contatos.get(position);
+						textoNome.setText(contato.getNome());
+						textoEmail.setText(contato.getEmail());
+
+					}
+
+					return view;
+				}
+			}
+			
+	-Abrindo activity de conversa:
+		-Ao clicar em um dos contatos, a tela de conversa deve ser aberta:
+			-classe ContatosFragment:
+			
+				//Implementa o listener pra qual item foi clicado
+				listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+						Contato contato = contatos.get(position);
+
+						Intent intent = new Intent(getActivity(), ConversaActivity.class);
+						intent.putExtra("nome", contato.getNome());			-> Envia dados para a nova activity
+						intent.putExtra("email", contato.getEmail());
+						startActivity(intent);
+					}
+				});
+				
+			-classe ConversaActivity:
+				protected void onCreate(Bundle savedInstanceState) {
+					super.onCreate(savedInstanceState);
+					setContentView(R.layout.activity_conversa);
+
+					//Toolbar
+					toolbar = (Toolbar) findViewById(R.id.toolbar_conversa);
+					
+					//Recupera informações vinda da activity anterior
+					Bundle extra = getIntent().getExtras();
+
+					if(extra != null){
+						nomeUsuarioDestinatario = extra.getString("nome");
+						
+						//Busca o identificador vindo da activity anterior e converte para Base64
+						emailUsuarioDestinatario = Base64Custom.codificarBase64(extra.getString("email"));
+
+					}
+
+					//Define o ícone de navegação - retorna para a MainActivity
+					toolbar.setTitle(nomeUsuarioDestinatario);
+					toolbar.setNavigationIcon(R.drawable.ic_action_arrow_left);		-> AndroidManifest: 
+					setSupportActionBar(toolbar);
+				}
+			
+				//Para fazer a navigationIcon funcionar, basta adicionar o parent na activity:
+				<activity
+					android:name=".activity.ConversaActivity"
+					android:parentActivityName=".activity.MainActivity"			-> Retorna à activity anterior
+					></activity>
+					
+	-Layout de conversa:
+		-LinearLayout com aligParentBottom para ficar o mais embaixo possível
+		-Dentro dele, EditText com weight 1 para ocupar o maior espaço possível e um ImageButton para representar o botão de envio
+		
+	-Salvando conversas:
+		-Criar uma nova estrutura no firebase:
+			Conversas -> idUsuarioRemetente -> idUsuarioDestinatario -> idMensagem -> mensagem (usuarioRemetente, mensagem)
+			-Método para envio (salvar) mensagem:
+			
+			private Boolean salvarMensagem(String emailRemetente, String emailDestinatario, Mensagem mensagem){
+				try{
+					//Cria o nó mensagems
+					databaseReference = ConfiguracaoFirebase.getReferenciaFirebase().child("mensagens");
+					
+					//Cria a estrutura acima: emailRemetente -> emailDestinatario
+					//push() é um método que cria um identificador único, gerando id's na ordem correta: equivalente ao id no SQL (1, 2, 3, etc)
+					//Possibilita salvar mais de uma mensagem de cada usuário na ordem que foi enviada
+					databaseReference.child(emailRemetente).child(emailDestinatario).push().setValue(mensagem);
+
+					return true;
+				}catch (Exception e){
+					e.printStackTrace();
+
+					return false;
+				}
+
+			}
+			
+		-É necessário salvar a mensagem duas vezes: no nó do usuário que enviou e no nó do usuário que recebeu, para criar a conversa:
+			salvarMensagem(emailUsuarioRemetente, emailUsuarioDestinatario, mensagem);
+            salvarMensagem(emailUsuarioDestinatario, emailUsuarioRemetente, mensagem);
+			
+	-Listando mensagems:
+		-Criar um ListView de Mensagem e um AdapterView de Mensagem
+		-O Adapter recebe o array de mensagens e infla a view criada com a mensagem do usuário
+		-Criar dois layouts diferentes: um para mensagens enviadas e um para mensagens recebidas (diferença entre elas é a cor do background e o alimento na tela)
+			if(mensagens != null){
+				Preferencias preferencias = new Preferencias(context);
+				String idUsuarioRemetente = preferencias.getIdentificador();	-> pega o id do usuário logado
+
+				LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+
+				Mensagem mensagem = mensagens.get(position);
+
+				//Se o id do usuário logado for o ID do nó que enviou a mensagem, infla a view de envio
+				if(idUsuarioRemetente.equals(mensagem.getIdUsuario()))
+					view = inflater.inflate(R.layout.item_mensagem_direita, parent, false);
+
+				//Se não, infla a view de recebimento
+				else
+					view = inflater.inflate(R.layout.item_mensagem_esquerda, parent, false);
+
+				TextView textoMensagem = (TextView) view.findViewById(R.id.textView_mensagem);
+				textoMensagem.setText(mensagem.getMensagem());
+
+			}
+			
+		-Activity de conversa:
+			mensagens = new ArrayList<>();
+			adapter = new MensagemAdapter(ConversaActivity.this, mensagens);
+			listView.setAdapter(adapter);
+		
+			valueEventListenerMensagem = new ValueEventListener() {
+				@Override
+				public void onDataChange(DataSnapshot dataSnapshot) {
+					mensagens.clear();
+
+					//Para cada item no nó do usuário remetente: adiciona a mensagemno array
+					for(DataSnapshot dados: dataSnapshot.getChildren()){
+						Mensagem mensagem = dados.getValue(Mensagem.class);
+						mensagens.add(mensagem);
+
+					}
+
+					//Notifica alteração no adapter
+					adapter.notifyDataSetChanged();
+
+				}
+
+				@Override
+				public void onCancelled(DatabaseError databaseError) {
+
+				}
+			};
+			
+	-Listar conversas:
+		-Basta manipular a classe ConversasFragment, fazendo o mesmo que foi feito na ConversaFragment
+		-Necessário modificar a classe Preferencias para salvar também o nome do usuário, adicionando essas cláusulas no cadastro e no login
+		-Criar e manipular um Adapter de Conversa, para exibir a lista personalizada com o nome e a última mensagem enviada
+		-Manipular o banco de dados para resgatar informações com o nó do usuário logado nas conversas/mensagens
+		-Criar o nó de conversas a partir de dados resgatados
+		-Nada de diferente/novo foi introduzido
+		
+-Constraint Layout:
+	-Layout responsivo
+	-Exige algumas regras de componentes
+	-Infer Constraints define automaticamente as regras
+	-Constraints necessitam de especificações em cima do eixo x e y
+	
+-Trabalhando com AlarmManager, Alarm, Notification, BroadcastReceiver:
+	-Manifest:
+		//Notification
+		<uses-permission android:name="android.permission.VIBRATE" />
+	
+		//AlarmManager
+		<receiver android:name="BroadcastReceiverAux" android:label="BroadcastReceiverAux">
+            <intent-filter>
+                <action android:name="ALARME_DISPARADO"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+	
+		//BroadcastReceiver
+		<receiver
+            android:name="br.exemplobroadcastreceiver.BroadcastReceiver1"
+            android:label="BroadcastReceiver1" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="BROADCAST_RECEIVER_XML" />
+            </intent-filter>
+        </receiver>
+	
+-Instagram:
+	-Utilização do Parse:
+		-Backend dos apps
+		-Salvar e recuperar dados
+		-Serviços:
+			-back4app
+			-heroku
+	
+	-Utilizando back4app:
+		-Gradle (module):
+			dependencies {
+				compile 'com.android.support:appcompat-v7:22.2.0'
+
+				compile 'com.parse.bolts:bolts-tasks:1.3.0'
+				compile 'com.parse:parse-android:1.13.0'
+			}
+			
+		-Gradle (project):
+			repositories {
+				mavenCentral()
+				maven {
+					url 'https://maven.google.com/'
+					name 'Google'
+				}
+			}
+			dependencies {
+				classpath 'com.android.tools.build:gradle:3.0.1'
+			}
+			
+					ext {
+				compileSdkVersion = 22
+				buildToolsVersion = "27.0.3"
+
+				minSdkVersion = 9
+				targetSdkVersion = 23
+			}
+		
+		-Configuração (Main):		
+			Parse.initialize(new Parse.Configuration.Builder(getApplicationContext())
+					.applicationId("APPLICATION_ID_AQUI")
+					.clientKey(null)
+					.server("URL_SERVIDOR")			-> https://parseapi.back4app.com/
+			.build()
+			);
+			
+			 //ParseUser.enableAutomaticUser();
+			ParseACL defaultACL = new ParseACL();		-> Define objeto de padrão de nível de acesso (Access Level)
+			// Optionally enable public read access.
+			// defaultACL.setPublicReadAccess(true);	-> Define que os dados possam ser lidos com acesso público
+			ParseACL.setDefaultACL(defaultACL, true);	-> Define o nível de acesso como Master Key Only
+		
+	-Salvar dados:
+		ParseUser.enableAutomaticUser(); 	-> Habilita que o Parse crie usuários automaticamente
+		
+		-Criar uma classe (tabela):
+			ParseObject pontuacao = new ParseObject("Pontuacao");		-> Mesmo sistema do Firebase, caso já exista apenas atualiza, se não, cria
+			
+			pontuacao.put("nome", "flavio");							-> Adiciona valores ao "nó"/coluna
+			pontuacao.put("pontos", "100");
+
+			-2 métodos para salvar em background:
+				pontuacao.saveInBackground();							-> Salva em background
+				pontuacao.saveInBackground(new SaveCallback() {			-> Salva em background com callback
+					@Override
+					public void done(ParseException e) {
+						if(e == null){	
+							//Não ocorreram erros ao salvar
+
+						}else{
+							Log.i("salvarPontos","erro ao salvar dados");
+
+						}
+
+					}
+				});
+		
+	-Atualizar dados:
+		-Utilizar o objeto do tipo ParseQuery<T> para consultar:
+			
+			ParseQuery<ParseObject> consulta = ParseQuery.getQuery("Pontuacao");		-> Prepara o objeto para receber objetos da classe especificada no getQuery
+			
+			consulta.getInBackground("b5LgehJqZL", new GetCallback<ParseObject>() {		-> Recupera o objeto especificado pelo ID, com a opção de fazer essa consulta com callback
+				@Override
+				public void done(ParseObject object, ParseException e) {
+					if(e == null){
+						object.put("pontos", "500");									-> Atualiza o campo de pontuação daquele objeto
+						object.saveInBackground();
+
+					}else{
+						Log.i("consultaObjeto","erro ao consultar dados");
+
+					}
+
+				}
+			});
+			
+		-ACL: Access Level (nível de acesso)
+		-Para atualizar, é preciso ter um ACL correspondente ao do objeto cadastrado
+		-É preciso definir o nível de acesso como público para leitura e escrita (modificando manualmente no banco ou abilitando o setPublicReadAccess para true)
+		
+	-Filtrar dados:
+		-Para aplicar filtros na busca dos dados, é necessário utilizar um objeto ParseQuery e aplicar o callback no findInBackground
+		
+			ParseQuery<ParseObject> filtro = ParseQuery.getQuery("Pontuacao");
+
+			filtro.findInBackground(new FindCallback<ParseObject>() {
+				@Override
+				public void done(List<ParseObject> objects, ParseException e) {		-> Retorna uma lista com todos os objetos recuperados
+					if(e == null){
+						Log.i("listarDados", "Total: " + objects.size());
+						
+						for(ParseObject object : objects){								-> Percorre a lista dos objetos
+							Log.i("listarDados", "Dados: " + object.get("nome"));		-> O método get recupera o dado da coluna especificada
+							Log.i("listarDados", "Dados: " + object.get("pontos"));
+
+						}
+					}else{
+						Log.i("listarDados", "Erro: " + e.getMessage());
+
+					}
+
+				}
+			
+			});
+			
+		-O objeto possui métodos para filtros, começando por where
+			
+			filtro.whereGreaterThan("pontos", 100);				-> Retorna objetos cujo valor da coluna especificada seja maior que o segundo parâmetro
+			filtro.whereLessThanOrEqualTo("pontos", 100);		-> Retorna objetos cujo valor da coluna especificada seja menor que o segundo parâmetro
+			
+			filtro.whereGreaterThanOrEqualTo("pontos", 100);	-> Retorna objetos cujo valor da coluna especificada seja maior ou igual que o segundo parâmetro
+			filtro.whereLessThan("pontos", 100);				-> Retorna objetos cujo valor da coluna especificada seja menor ou igual que o segundo parâmetro
+			
+			filtro.whereStartsWith("nome", "f");				-> Retorna objetos cujo valor da coluna especificada começa com o segundo parâmetro
+			filtro.whereEndsWith("nome", "o");					-> Retorna objetos cujo valor da coluna especificada termina com o segundo parâmetro
+		
+			filtro.addAscendingOrder("nome");					-> Retorna objetos em ordem crescente
+			filtro.addDescendingOrder("nome");					-> Retorna objetos em ordem decrescente
+			
+			filtro.setLimit(1);									-> Limita o número de objetos retornados pela pesquisa
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

@@ -1,0 +1,1189 @@
+Java
+
+-Configurar o java:
+	-> Meu computador
+	-> Propriedades do sistema
+	-> Configurações avançadas do sistema
+	-> Variáveis de ambientes
+	-> Variáveis do sistema
+	-> Nova
+	Nome: JAVA_HOME
+	Valor: caminho da pasta JDK, dentro da pasta onde o java foi instalado (geralmente C:\Program Files\Java\jdk ...)
+	*SEMPRE FINALIZE UM CAMINHO NAS VARIÁVEIS COM ;
+
+	-Ainda em variáveis do sistema:
+	-> Path
+	-> Editar
+	-> Adicione ; no caminho, já que um novo será inserido, e adicione %JAVA_HOME%;%JAVA_HOME%\bin;%JAVA_HOME%\jre; nela
+
+Ubuntu:
+	-> sudo vim /etc/enviroment -> colar o caminho encontrado em sudo update-alternatives --config java
+
+-How to compile and run (como compilar e rodar):
+	-After install the java on your pc, test in the cmd the command "javac" (após instalar o java, teste o comando javac no cmd)
+	-If no error occurs, you are able to run java programs (caso não ocorram erros, o java está configurado)
+	-To compile a program, save your code as "name.java" (para compilar, salve seu código como "nome.java", por exemplo)
+	-Open the folder on cmd and run "javac name.java" (abra a pasta que seu programa está salvo no cmd e digite o comando javac seguido do nome do seu programa)
+	-If nothing was printed, you can run your program with "java name" (caso nada seja mostrado, você pode rodar seu programa com o comando java e o nome, sem a extensão)
+
+-Compilar .jar via prompt:
+	-Exemplo utilizando biblioteca mysql-connector-java-5.1.36-bin.jar
+		javac -cp .;mysql-connector-java-5.1.36-bin.jar MeuPrograma.java
+		java -cp .;mysql-connector-java-5.1.36-bin.jar MeuPrograma
+
+-Compilando mais de uma classe (diferentes arquivos .java):
+	-É necessário ir para a pasta source e compilar por ela
+	-Se, por exemplo, suas classes estejam no caminho exercicio/primeiro/, é necessário ir para o caminho exercicio/ e executar:
+		javac primeiro/*.java
+		java primeiro/Principal
+
+	-Sem isso, o compilador não consegue encontrar as classes adjacentes
+
+-Utilização do Eclipse:
+	-Projeto Java
+	-src
+		-Novo Package
+			-Utilização de url reversa:
+				-google.com vira com.google, por exemplo
+
+			-Nova classe
+
+-Basic concepts (conceitos básicos):
+	-A Hello World program (programa "olá mundo"):
+		-Your first Java program (primeiro programa Java):
+			-Let's start by creating a simple program that prints "Hello World" to the screen (começamos criando um programa simples que escreve "Hello World" na tela)
+
+			class MyClass{
+				public static void main(String[] args){
+					System.out.println("Hello World");
+				}
+			}
+
+			-In Java, every line of code that can actually run needs to be inside a class (toda linha de código que pode rodar deve estar dentro de uma classe)
+			-Each application has an entry point or a starting point, which is a method called main (toda apliação tem o ponto de entrada ou início chamado de main)
+			-Every program must have a class (todo programa deve ter uma classe)
+
+		-The main method:
+			-To run your program, the main method must be identical to this signature (para rodar seu programa, o método main deve ser idêntico a essa assinatura):
+
+			public static void main(String[] args){}
+
+			-public: anyone can access it (qualquer um pode acessar)
+			-static: method can be run without creating an instance of the class containing the main method (método pode ser executado sem criar uma instância da classe
+			contendo o método main)
+			-void: method doesn't return any value (o método não retorna nenhum valor)
+			-main: name of the method (nome do método)
+
+			-The method's parameters are declared inside the parentheses that follow the name of the method (os parâmetros são declarados dentro dos parênteses)
+			-For main, it's an array of strings called args (para o main é um array de strings chamado de args)
+
+		-System.out.println():
+			System.out.println("Hello World!");
+
+			-The println methos prints a line of the text to the screen (o método escreve um texto na tela)
+			-The System class and its out stream are used to access the println method (a classe System e a stream out são usados para acessar o método println)
+			-In classes, methods and other flow-contrl structures code is always enclosed in curly braces {} (classes, métodos e estruturas possuem chaves)
+
+		-semicolons in Java (ponto e vírgula):
+			-Each code statement must end with a semicolon (cada declaração termina com um ponto e vírgula)
+			-Don't use semicolons after method and class declarations that follow with the body defined using the curly braces (não use após declarações de classe e métodos
+			que são seguidos de chaves)
+
+	-Java comments (comentários):
+		-Comments:
+			-A single line comment start with two forward slashes and continues until it reaches the end of the line (uma linha de comentário inicia com duas barras)
+			-Multi-le comments are created using /* */ (comentários em mais de uma linha)
+			-Documentation comments are special comments that have the appearance of multi-line comments, with the difference being that they generate external documentation
+			of you source code (comentários de documentação são especiais por ter a aparência de comentários multi-linhas, com a diferença que geram documentação externa do
+			seu código)
+			-These begin with a forward slash followed by two asterisks and end with an asterisk followed by a forward slash (começa com /**, terminando com */)
+				/**This is a documentation comment */
+
+			-Javadoc is a tool which comes with JDK and it is used for generating Java code documentation in HTML format from Java source code which has required documentation
+			in a predefined format (ferramenta que vem com JDK e é usada para gerar a documentação do código java no formato HTML através de um código que requisitou essa
+			documentação em um formato pré definido)
+			-When a documentation comment begins with more than two asterisks, Javadoc assumes that you want to create a "box" around the comment in the source code (ao usar
+			mais de 2 asteríscos no início do comentário de documentação, o Javadoc assume que deve ser criado uma caixa em volta do comentário)
+
+	-Variables:
+		-Variables stores data for processing (armazena informações para serem processadas)
+		-A variable is given a name (possui nome)
+		-The name uniquely identifies each variable, assigning a value to the variable and retrieving the value stored (o nome identifica uma única variável, atribuind valor e
+		usando para acessar o mesmo)
+		-Types (tipos):
+			-int: for integers - whole numbers (números inteiros)
+			-long: números muito grandes
+			-float: valores decimais (.0f)
+			-double: possui mais casas decimais disponíveis
+			-String: for text such as "Hello", enclosed with double quotes (textos envoltos de aspas duplas)
+			-char: holds a single character (somente um caractere)
+			-boolean: two possible values: true or false (dois valores possíveis: verdadeiro ou falso)
+
+			byte: é capaz de armazenar valores entre -128 até 127.
+			short: é capaz de armazenar valores entre –32768 até 32767.
+			int: é capaz de armazenar valores entre –2147483648 até 2147483647.
+			long: é capaz de armazenar valores entre –9223372036854775808 até 9223372036854775807.
+			float: é capaz de armazenar valores entre 3.4e–038 até 3.4e+038
+			double: é capaz de armazenar valores entre 1.7e–308 até 1.7e+308
+
+		-You can declare a variable of a type and assign it a value (você pode declarar uma variável e atribuir a ela um valor):
+
+			class MyClass{
+				public static void main(String[] args){
+					int age = 42, age2 = 32;
+					char group = 'Z';
+					String name = "David"
+					double score = 15.9;
+				}
+			}
+
+	-Primitive operators (operadores primitivos):
+		-The Math operators (operadores matemáticos):
+			+, -, *, /, % (modulo)
+
+		-You can use a double to retrieve a value with a decimal point, result of a division by two ints (é possível usar double para receber divisão de inteiros)
+		-Modulo - remainder - performs an integer divions, returning the result (módulo realiza uma divisão de inteiros, retornando o resto dessa divisão)
+
+	-Increment and decrement (incremento e decremento):
+		-Increment: ++x (increases x's values by one - acrescenta o valor de x em 1)
+		-Decrement: --x (decreases x's values by one - decresce o valor de x em 1)
+		-Prefix & postfix (préfixo e pósfixo)
+			-In the prefix form, the operator appears before the operand, while in the postfix form the operator appears after (na forma préfixa, o operador aparece antes do
+			operando, enquanto na pósfixa aparece depois)
+
+			-Prefix: increments the variable's value and uses the new value in the expression (incrementa o valor e usa o novo valor na expressão)
+				int x = 34;
+				int y = ++x; //y = 35, x = 35
+
+			-Postfix: the variable's value is first used in the expression and is then increased (usa o valor e depois incrementa)
+				int x = 34;
+				int y = x++; //y = 34, x = 35
+
+		-Assignment operators (operadores de atribuição):
+			+=, -=, *=, /=, %=
+
+	-Strings:
+		-A String is an object that represents a sequence of characters (objeto que representa uma sequência de caracteres)
+
+			String s = "SoloLearn";
+
+		-String concatenation (contacatenação):
+			-Use the plus sign to join two or omre strings in one (use o sinal de adição para juntar duas ou mais strings em uma)
+			String 1, 2, 3;
+			3 = 1 + 2;
+			System.out.println("olá" + 1);
+
+	-Getting user input (entrada do usuário):
+		-Import the Scanner class to use the Scanner object, as seen here (importe a classe para usar o objeto):
+
+			import java.util.Scanner;
+
+		-In order to use the Scanner class, create an instance of the class by using the following syntax (crie uma instância da classe com a seguinte sintaxe):
+
+			Scanner myVar = new Scanner(System.in);
+
+		-You can now read in different kinds of input data that the user enters (você pode ler diferentes tipos de entrada fornecidos pelo usuário)
+		-Here are some methods that are available through the Scanner class (métodos disponíveis através da classe scanner):
+			-Read a byte - nextByte();
+			-Read a short - nextShort();
+			-Read an int - nextInt();
+			-Read a long - nextLong();
+			-Read a float - nextFloat();
+			-Read a double - nextDouble();
+			-Read a boolean - nextBoolean();
+			-Read a complete line - nextLine();
+			-Read a word - next();
+
+				import java.util.Scanner;
+
+				class MyClass{
+					public static void main(String[] args){
+						Scanner myVar = new Scanner(System.in);
+						System.out.println(myVar.nextLine());
+					}
+				}
+
+				-This will wait for the user input and print it (espera a entrada e imprime na tela)
+
+
+-Conditional and loops (condições e loops):
+	-Conditional statements (declarações de condições):
+		-Decision making (tomando decisões):
+
+			if(condition){
+				//Executes when the condition is true (executa se a condição for verdadeira)
+			}
+
+		-Any of the following comparison operators may be used to form the condition (qualquer um dos operadores de comparação podem ser usados para fazer a condição)
+			<		less than
+			>		greater than
+			!=		not equal to
+			==		equal to (= é atribuição, == é comparação)
+			<=		less than or equal to
+			>=		greater than or equal to
+			&&		verdadeiro se ambos os lados forem verdadeiros
+			||		verdadeiro se um dos lados forem verdadeiros
+
+			-Remember that you need to use two = signs to test for equality, since a single equal sign is the assignment operator (lembre-se de usar dois =, já que um
+			representa atribuição)
+
+			int age = 30;
+
+			if(age < 16){
+				System.out.println("Too young");
+			}else{
+				System.out.println("Welcome!");
+			}
+
+	-Nested if statements (if's aninhados):
+		-You can use one if-else statement inside another if or else statement (é possível usar um if dentro de outro)
+
+			int age = 25;
+
+			if(age > 0){
+				if(age > 16){
+					System.out.println("Too young");
+				}else{
+					System.out.println("Welcome!");
+				}
+			}else{
+				System.out.println("Error");
+			}
+
+	-Else if statements:
+		-Instead of using nested if-else statements, you can use the else if statement to check multiple conditions (ao invés de usar if's aninhados, é possível usar um else
+		if para checar múltiplas condições)
+
+			if(age > 0){
+				System.out.println("Error");
+			}else if(age <= 16){
+				System.out.println("Too young");
+			}else if(age < 100){
+				System.out.println("Welcome!");
+			}else{
+				System.out.println("Really?");
+			}
+
+	-Logical statements (declarações lógicas):
+		-AND: &&
+
+			if(age > 18 && money > 500){
+				System.out.println("Welcome");
+			}
+
+			-If both operands of the AND operator are true, then the condition becomes true (se os dois operandos forem verdadeiros, a condição se torna verdadeira)
+
+		-OR: ||
+
+			if(age > 18 || money > 500){
+				System.out.println("Welcome");
+			}
+
+			-The condition becomes true if any one of the operands evaluates to true (a condição é verdadeira se um dos operandos for verdadeiro)
+
+		-NOT: !
+
+			if(!(age > 18)){
+				System.out.println("Too young");
+			}else{
+				System.out.println("Welcome!");
+			}
+
+			-Used to reverse the logical state of its operand; if a condition is true, the NOT logical will make it false (reverte o estado lógico; se for verdadeiro, se torna
+			falso)
+
+	-The switch statement:
+		-Syntax (sintaxe):
+
+			switch(expression){
+				case value1:
+					//Statements
+					break; //Optional
+
+				case value2:
+					//Statements
+					break; //Optional
+
+				case value3:
+					//Statements
+					break; //Optional
+
+				default:
+					//Statements
+			}
+
+			-When the variable being switched on is equal to a case, the statements following that case will execute until a break statement is reached (quando a variável
+			escolhida é equivalente a um dos valores, as declarações que a segue são executadas até que um break seja encontrado)
+
+		-The default statement:
+			-A switch statement can have an optional default case (o comando pode ter um caso padrão - opcional)
+			-The default case can be used for performing a task when none of the cases is matched (o caso padrão é usado quando nenhum dos outros casos são combinados)
+			-No break is needed in the default case, as it is always the last statement in the switch (não precisa de break por ser o último caso)
+
+	-While loops:
+		-Syntax:
+
+			int x = 3;
+
+			while(x > 0){
+				System.out.println(x);
+				x--;
+			}
+
+	-For loops:
+		-Syntax:
+
+			for(int x = 1; x <=5; x++){
+				System.out.println(x);
+			}
+
+	-Do while loops:
+		-Syntax:
+
+			int x = 1;
+			do{
+				System.out.println(x);
+				x++;
+			}while(x < 5);
+
+			-The difference from a while is that a do while runs at least one time (a diferença para o while é que o do while roda pelo menos uma vez)
+
+	-Loop control statements:
+		-Break:
+			-This statement terminates the loop and transfers execution to the statement immediately following the loop (termina o loop e passa para a execução a seguir)
+
+		-Continue:
+			-Causes the loop to skip the remainder of its body and then immediately retest its condition prior to reiterating (faz o loop saltar o restante do seu corpo e
+			testa novamente o a condição, visando reiniciar)
+
+-Arrays:
+	-An array is a collection of variables of the same type (coleção de variáveis do mesmo tipo)
+
+		int[] arr = new int[5];
+		arr[2] = 42;
+
+	-Initializing arrays:
+
+		String[] myNames = {"A","B","C","D","E"};
+		System.out.println(myNames.length);
+
+	-Enhanced for loop:
+		-The enhanced for loop - sometimes called a "for each" loop - is useed to traverse elements in arrays (usado para atravessar os elementos)
+		-The advantages are that it eliminates the possibility of bugs and makes the code easier to read (elimina possibilidade de bugs e torna mais fácil de ler)
+
+		int[] primes = {2,3,4,5};
+		for(int t: primes){
+			System.out.println(t);  -> prints the array
+		}
+
+		-This "t" variable is availabre within the for block and its value will be the same the current array element (disponível dentro do bloco e será o mesmo do elemento
+		atual do array)
+		-On each iteration of the loop, the variable will be equal to the corresponding element in the array (em cada iteração do loop, a variável é correspondente ao elemento)
+
+	-Multidimensional array:
+		int[][] sample = {{1,2,3},{4,5,6}};
+
+-Classes and objects:
+	-Object-orientation:
+		-Each object is an independent unit with a unique identity, just as objects in the real world (cada objeto é uma unidade independente com identidade independente)
+
+	-Methods:
+		-Define behavior; is a collections of statements that are grouped togther to perform an operation (define comportamento; coleção de comandos que são agrupados para
+		realizar uma operação)
+
+		class MyClass{
+			static void sayHello(){							-> declara um método "sayHello"
+				System.out.println("Hello");
+			}
+
+			public static void main(String[] args){			-> função main, chama o método "sayHello"
+				sayHello();
+			}
+		}
+
+		-You can call a method as many time as necessary (pode chamar um método quantas vezes forem necessárias)
+		-You can also create a method that takes some data, called parameters, along with it when you call it (criar métodos que pegam informação, chamadas de parâmetros,
+		passados ao chamar o método)
+		-Write parameters within the method's parentheses (escreva os parâmetros dentro dos parênteses)
+
+		class MyClass{
+			static void sayHello(String name){							-> declara um método "sayHello" com uma string como parâmetro
+				System.out.println("Hello" + name);
+			}
+
+			public static void main(String[] args){			-> função main, chama o método "sayHello"
+				sayHello("David");							-> passa a string "David" para o método
+			}												-> método main pega um array de strings como parâmetro
+		}
+
+	-Return types:
+		-The keyword can be used to return values (usado para retornar valores dos métodos)
+		-In the method definition, we define the return type before the method name (na definição do método, definimos o tipo de retorno antes do nome do método)
+		-As the method returns a value, we can assign it to a variable (quando um valor é retornado, é possível atribuir a uma variável)
+		-When you don't need to return any value from your method, use the keyword void (use void se não precisar retornar nada)
+			-Void in the main method means that main doesn't return anything (void no main significa que não retorna nada)
+
+	-Creating Classes:
+		-Right click on the src folder in Eclipse and select Create -> New -> Class; give a name and click Finish (clique com o botão direito na pasta src do Eclipse)
+
+	-Creating objects:
+		-In the main, create like this:
+			class MyClass{
+				public static void main(String[] args){
+					Class_name object = new Class_name();	-> cria um objeto object do tipo Class_name
+					object.method();						-> chama o método method do objeto object da classe Class_name
+				}											-> o ponto (.) é usado para acessar atributos e métodos do objeto
+			}
+
+	-Classes attributes:
+		public class Vehicle{
+			int wheels;
+			String color;							-> atributos
+			double fuelCapacity;
+
+			void horn(){
+				System.ou.println("Beep");			-> método
+			}
+
+		}
+
+		class MyClass{
+			public static void main(String[] args){
+				Vehicle v1 = new Vehicle();
+				Vehicle v2 = new Vehicle();
+				v1.color = "red";					-> acessando o atributo
+				v2.horn();							-> acessando o método
+			}
+		}
+
+	-Access modifiers (modificadores de acesso):
+		-For classes:
+			-public: accessible by any other class (acessível por qualquer outra classe)
+			-default: accessible only bby classes in the same package (acessível somente entre classes do mesmo "pacote")
+
+		-For attributes and methods:
+			-default: variable or method declared with no access control modifier is available to any other class in the same package (dentro do mesmo pacote)
+			-public: accessible from any other class (acessível em qualquer outra classe)
+			-protected: same as default, but subclasses can access the protected methods and variables of the superclass (disponível para subclasses)
+			-private: accessible only within the declared class itself (acessível dentro da própria classe declarada)
+
+	-Getters and setters:
+		-Use to protect your data; for each variable, the get method returns its value, while set method sets the values (proteja a informação; o método get retorna seu valor
+		enquanto o método set define)
+		-Getters starts with get, followed by the variable name, with first letter of the variable capitalized (inicia com get seguido da primeira letra da variável maiúscula)
+		-Setters starts with set, followed by the variable name, with first letter of the variable capitalized (inicia com set seguido da primeira letra da variável maiúscula)
+		-The getter method returns the value of the attribute (o método get retorna o valor do atributo)
+		-The setter method takes a parameter and assigns it to the attribute (o método set ega um parâmetro e define como valor do atributo)
+
+			public class Vehicle{
+				private String color;
+
+				public String getColor(){			-> getter
+					return color;
+				}
+
+				public void setColor(String c){		-> setter
+					this.color = c;
+				}
+			}
+
+			-The keyword this is used to refer to the current object (o palavra this significa dizer que a função afetará o objeto atual que a chamou)
+
+		-Getters and setters are fundamental building blocks for encapsulation (bloco fundamental no encapsulamento)
+
+	-Constructors:
+		-Are special methods invoked when an object is created and are used to initialize them (método invocado quando um objeto é criado, usado para inicializar ele)
+		-Can be used to provide initial values for object attributes (usado para definir valores iniciais aos atributos)
+		-A constructor name must be same as its class name (o nome deve ser o mesmo de sua classe)
+		-Must have no explicit return type (não deve haver tipo de returno explícito)
+		-Example:
+			public class Vehicle{				-> whenever an object of that class is created, the color attribute will be set to "red" (qualquer que seja o objeto dessa
+				private String color;				classe criado, o atributo color vai ser definido com ored)
+				Vehicle(){
+					color = "Red";
+				}
+			}
+
+		-A constructor can also take parameters to initialize attributes (construtores podem ter parâmetros para inicializar os atributos)
+			public class Vehicle{
+				private String color;
+				Vehicle(String c){
+					color = c;
+				}
+			}
+
+		-The constructor is called when you create an object using the new keyword (chamado quando usado a palavra new ao criar um objeto)
+			public class MyClass{
+				public static void main(String[] args){
+					Vehicle v1 = new Vehicle("Green");		-> call the constructorm which will set the color attribute to "Green"
+				}
+			}
+
+		-A sinlge class can have multiple constructors with different numbers of parameters (uma única classe pode ter múltiplos construtores com diferentes números de
+		parâmetros)
+			public class Vehicle{
+				private String color;
+
+				Vehicle(){
+					color = "Red";		-> here you can use the setter method too, like: this.setColor(c);
+				}
+
+				Vehicle(String c){
+					color = c;
+				}
+			}
+
+	Value  & reference types:
+		-Value types:
+			-Are basic types, and include byte, short, int, long, float, double, boolean and char (são os tipos básicos e incluem)
+			-These data types store the values assigned to them in the corresponding memory locations (armazena os valores associados aos tipos em localizações correspondentes
+			da memória)
+			-When you pass them to a method, you  basically operate on the variable's value, rather on the variable itself (ao passar pra um método, basicamente opera no valor
+			ao invés da variável em si)
+
+		-Reference types:
+			-A referebce type stores a reference - or address - to the memory location where the corresponding data is stored (armazena uma referência ou endereço à memória
+			onde a informação correspondente está armazenada)
+			-When you create an object using the constructor, you create a reference variable (ao criar um objeto usando o construtor, é criado uma variável de referência)
+			-Arrays and Strings are also reference data types (também são tipos de informação de referência)
+
+	-The Math class:
+		-Provides predefined methods for mathematical operations (provê métodos predefinidos para operações matemáticas)
+		-To access it, just type in Math. and the corresponding method (para usar, digite Math. e o método necessário)
+
+		Math.abs() returns the absolute value of its parameter (retorna o valor absoluto do parâmetro)
+		Math.ceil() rounds a floating point up to the nearest integer value; the rounded value is returned as a double (arredonda um ponto flutuante para o inteiro mais
+		próximo, sempre para cima; o valor retornado é um double)
+		Math.floor() rounds a floating point value down to the nearest integer (arredonda para baixo para o valor mais próximo)
+		Math.max() returns the largest of 2 parameters (retorna o maior de dois parâmetros)
+		Math.min() returns the smallest of 2 parameters (retorna o menor de dois parâmetros)
+		Math.pow() return the first parameter raised to the power of the second (retorna o primeiro parametro elevado ao segundo parâmetro)
+		Math.sqrt(): square root (raiz quadrada)
+
+	-Static:
+		-When you declare a variable or method as static, it belongs to the class, rather than to a specific instance; it means that only one instance of a static member
+		exists, even if you create multiple objects of the class or if you don't create any (ao declarar um método como static, ele pertence à classe ao invés de uma
+		instância específica; o que significa que só existe uma instancia daquele método, mesmo se forem criados mais de um objetos ou nenhum)
+		-Example:
+			public class Counter{
+				public static int COUNT = 0;		-> this variable will be shared by all the objects of that class (essa variável é compartilhada entre todos os objetos)
+				Counter(){
+					COUNT++;
+				}
+			}
+
+			public class MyClass{
+				public static void main(String[] args){
+					Counter c1 = new Counter();
+					Counter c2 = new Counter();
+					System.out.println(Counter.COUNT)	-> outputs 2 (printa 2, já que 2 objetos foram criados e, por ser uma variável static, ela é compartilhada por ser)
+				}											única, cada vez que o construtor foi chamado o valor dela aumentou
+			}											-> é possível acessar pela Classe.staticMember ou objeto.staticMember
+
+			-It's a common practice to use upper case when naming a static variable, although not mandatory (é comum usar letras maiúsculas para nomear variáveis static)
+
+	-Final:
+		-Use the final keyword to mark a variable constant, so that it can be assigned only once (usar a palavra final torna a variável constante, com seu valor sendo
+		definido apenas uma vez)
+		-Methods and classes can also be marked final; final methods can't be overriden and final classes can't be made subclasses (impede que métodos sejam sobrescritos e
+		classes tenham subclasses)
+
+	-Packages:
+		-Used to avoid name conflicts and to control access to classes (usado para evitar conflito de nomes e controlar acesso às classes)
+		-Can be defined as a group made up of similar types of classes, along with sub-packages (pode ser definido como um grupo feito de tipos similares de classes, inclindo
+		sub-packages)
+		-Create: right click on src directory -> new -> package -> give a name and click finish (criar: botão direito no diretório src, etc)
+		-When you move/create a class in your package, the following code will appear at the top of the list of files (ao mover/criar uma classe em um package, o seguinte
+		código aparece no topo da lista de arquivos):
+			package name;		-> name equivale ao nome do package escolhido, indicando a qual package aquela classe pertence
+
+		-Importing:
+			import packageName.className;		-> import nome.nomeDaClasse
+
+		-When a class is placed in a package, the name of the package becomes a part of the name of the class and the name of the package must match the directory structure
+		where the corresponding class file resides (quando uma classe é colocada em um package, o nome do package passa a fazer parte do nome da classe e o nome do package
+		deve combinar com o a estrutura de diretório onde a classe correspondente faz parte)
+			import name.* importa todas as classes do package name
+
+-More on classes:
+	-Encapsulation:
+		-Ensure that implementation details are not visible to users (assegura que os detalhes de implementação não são visíveis aos usuários)
+		-The variables of one class will be hidden from other classes, accessible only through the methods of the current class (as variáveis são escondidas de outras classes)
+		-Declare the class' variables as private and provde public setter and getter methods to modify and view the variable's values (declare as variáveis como privadas e
+		defina métodos públicos de get and set para modificar e ver valores delas)
+
+	-Inheritance:
+		-Process that enables one class to aquire the properties of another (processo que permite uma classe adquirir propriedades de outra)
+		-The information is placed in a more manageable, hierarchical order (a informação é colocada em uma ordem mais manuseável e hierárquica)
+		-The class inheriting the properties of another is the subclass (derived, child); the class whose properties are inherited is the superclass (base or parent) (a classe
+		que herda propriedades de outra é a subclasse, derivada, filha; a classe a qual tem suas propriedades herdadas é a superclasse, base ou pai)
+
+		class Child extends Base{}		-> classe filha herda do pai
+
+		-When one class is inherited from another, it inherits all of the superclass' non-private variables and methods (quando uma classe herda, todos os métodos e variáveis
+		não privados são herdados)
+		-Constructors aren't inherited, but the constructor of the superclass is called when the subclass is instantiated (construtores não são herdados, mas os construtores
+		de superclasses são chamados quando as subclasses são instanciadas)
+		-You can access the superclass from the subclass using the super keyword (é possível acessar a classe pai dentro da filha usando a palavra super)
+			super.var		-> acessa a variável var da classe pai
+
+	-Polymorphism:
+		-Occurs when there is a hierarchy of classes related to each other through inheritance (ocorre quando existe uma hierarquia de classes relacionadas entre si através
+		de herança)
+		-A call to a member method will cause a different implementation to be executed, depending on the type of the object invoking the method (a chamada de um método causa
+		a execução de uma implementação diferente, dependendo do tipo de objeto que invocou o método)
+			-Example: the same method called by 2 different class will call a different implementation in each invoking, where these implementation is defined inside these
+			classes (um mesmo método chamado por classes diferentes vai chamar implementações diferentes em cada chamada, onde essas implementações são definidas dentro de
+			cada classe)
+
+				-Vale ressaltar que isso se encaixa caso as duas classes herdem de uma mesma classe pai, por exemplo, onde existe um método nela e em cada classe filha existe
+				uma implementação para o mesmo método
+
+			class Animal{
+				public void makeSound(){
+					System.out.println("Grr...");
+				}
+			}
+
+			class Dog extends Animal{				-> inherit from the Animal class; has its own implementation of the makeSound method (herda da classe animal; tem sua)
+				public void makeSound(){			própria implementação do método makeSound
+					System.out.println("Woof");
+				}
+			}
+
+			class Cat extends Animal{
+				public void makeSound(){
+					System.out.println("Meow");
+				}
+			}
+
+			-We can do the following in main:
+				Animal a = new Dog();			-> basicamente, use o nome da classe pai para determinar o tipo de objeto e chame o construtor da classe filha
+				Animal b = new Cat();			-> é útil quando existem múltiplas subclasses de uma superclasse
+
+			-Como a variável a tem a referencia de um objeto do tipo Dog, o método makeSound da classe Dog é chamado
+
+	-Overrading & overloading:
+		-Method overriding:
+			-A subclass can define a behavior that is specific to the subclass type, meaning that a subclass can implement a parent class method based on it requiriment (uma
+			classe filha pode definir comportamento específico ao tipo da subclasse, o que significa que a subclasse pode implementar um método da classe pai)
+			-This is known as method overriding (conhecido como sobrescrita do método)
+			-Rules (regras):
+				-Should have the same return type and argments  (deve ter o mesmo nome e argumentos)
+				-The access level can't be more restrictive that the overrriden method (não pode ter seu acesso em um nível mais restrito que o método a ser sobrescrito da
+				classe pai)
+				-Final and static method can't be overrriden (métodos final e static não podem ser sobrescritos)
+				-If a method can't be inherited, it can't be overriden (se um método não pode ser herdado, não pode ser sobrescrito)
+				-Construtor can't be overriden (construtores não podem ser sobrescritos)
+
+		-Method overloading:
+			-When methods have the same name, but different parameters, it is known as method overloading (quando mais de um método tem o mesmo nome mas parâmetros diferentes,
+			é conhecido como método sobrecarregado)
+			-It is useful when tou need the same method functionality for different types of parameters (útil quando você precisa da mesma funcionalidade para diferentes tipos)
+
+			int sum(int a, int b){
+				return a + b;
+			}
+
+			float sum(float a, float b){
+				return a + b;
+			}
+
+			double sum(double a, double b){
+				return a + b;
+			}
+
+
+	-Abstract classes:
+		-Abstraction:
+			-Data abstraction provides the outside with only essential (provê ao externo somente o necessário)
+			-Is achieved using abstract classes and interfaces (alcançado usando classes abstratas e interfaces)
+			-An abstract class is defined using the abstract keyword (uma classe abstrata é definida usando a palavra abstract)
+			-If a class is declared abstract it can't be instantiated (não pode ser instanciada - objetos dessa classe não podem ser criados)
+			-To use an abstract class, you have to inherit it from another class (para usar, você deve herdá-la de ouutra classe)
+			-Any class that contains an abstract method shoud be defined as abstract (qualquer classe que tenha um método abstrato deve ser definida como abstrata)
+			-An abstract methos is declared without an implementation, without braces and followed by a semicolon (método abstrato é declarado sem implementação)
+
+				abstract class Animal{
+					abstract void walk();		-> obriga uma implementação por parte das classes filhas
+					int legs = 0;
+				}
+
+	-Interfaces:
+		-Completely abstract class that contains only abstract methods (classe completamente abstrata que contém somente métodos abstratos)
+		-Defined using the interface keyword (definida com interface)
+		-May contain only static final variables (pode conter somente variáveis static final)
+		-Cannot contain constructor (não pode ter construtor)
+		-Can extend other interfaces (pode herdar outras interfaces)
+		-A class can implement any number of interfaces (uma classe pode ter mais de uma interface)
+
+			interface Animal{
+				public void eat();
+				public void makeSound();
+			}
+
+		-You don't need to use the abstract keyword while declaring an interface (não precisa usar a palvra abstract ao declarar uma interface)
+		-Each method in a interface is also implicity abstract (cada método é implicitamente abstrato)
+		-Methods in a interface are implicity public (métodos numa interface são implicitamente públicos)
+
+			class Cat implements Animal{				-> you need to override all of its methods (necessário sobrescrever todos os métodos)
+				public void eat(){
+					System.out.println("Eating");
+				}
+
+				public void makeSound(){
+					System.out.println("Meow");
+				}
+			}
+
+	-Casting:
+		-Assigning a value of one type to a variable of another type is known as type casting (determinar um valor de um tipo a uma variável de outro tipo é conhecido como
+		type casting)
+		-To cast a value to a specific type, place the type in parentheses and position it in front of the value (para mudar o valor para um tipo específico, coloque o tipo
+		entre parênteses e posicione na frente do valor)
+			int a = (int) 3.14;		-> a = 3
+
+		-Upcasting:
+			-You can cast an instance of a subclass to its superclass (é possivel usar o cast em uma instância de subclasse para superclasse)
+
+			Animal a = new Cat();
+
+		-Downcasting:
+			-Casting an object of superclass to its subclass is called downcasting (mudar o objeto de superclasse para suubclasse é chamado de downcasting)
+
+			Animal a = new Animal();
+			((Cat)a).makeSound();		-> tenta usar o cast para o tipo Cat e chamar seu método makeSound()
+
+			*Upcasting é automático porquê nunca falha, enquanto o downcast é manual porquê pode dar errado
+
+	-Anonymous classes:
+		-A way to extend the existing classes on the fly (um jeito de sobrecarregar classes/métodos existentes sem criar subclasses)
+
+			class Machine{
+				public void start(){
+					System.out.println("Stating...");
+				}
+			}
+
+			public static void main(String[] args){
+				Machine m = new Machine(){
+					@Override public void start(){				-> sobrescreve o método somente para esse objeto
+						System.out.println("something");
+					}
+				};												-> note this semicolon
+
+				m.start;			-> outputs "something"
+			}
+
+		*"on the fly" significa fazer algo repentino; nesse caso significa poder "herdar" e sobrescrever a classe sem definir antes uma subclasse
+		*O @Override não é necessário devido o @ criar uma anotação
+		*Essa método se diferencia da sobrecarga por se tratar apenas do objeto,classe ou método atual, sem afetar os outros objetos da mesma classe, só usando a palavra
+
+	-Inner classes:
+		-Java supports nesting classes; a class can be member of another class (Java suporta aninhamento; uma classe pode ser membro de outra classe)
+		-Unlike a class, an inner class can be private (diferente de classe, uma classe interna pode ser privada)
+
+			class Robot{
+				int id;
+
+				Robot(int i){
+					id = i;
+					Brain b = new Brain();
+					b.think();
+				}
+
+				private class Brain{
+					public void think(){
+						System.out.println(id + " is thinking");
+					}
+				}
+			}
+
+	-The equals method:
+		-Comparing objects - variables that stores references to the objects - with equality testing operator (==), it actually compare the references and not the values (
+		comparar objetos - variáveis que armazenam referências a objetos - com o sinal de teste de igualdade compara as referências e não os valores, retornando sempre falso)
+		-Each object has a predefined equals() method that is used for semantical equality testing (cad aobjeto tem predefinido o método equals que é usado para teste de
+		igualdade semântico)
+			Source -> Generate hashCode() and equals()	-> gera automático
+
+		-The automatically generated hashCode method is used to determine where to store the object internally (determina onde armazenar o objeto internamente)
+
+		*Para fazer o teste de igualdade, ao invés de a == b, sendo a e b objetos, por exemplo, é usado a.equals(b)
+
+	-Enum:
+		-Special type used to define collections of constants (tipo especial para definir coleções de constantes)
+
+		enum Rank{
+			SOLDIER,		-> values are comma-separated (valores separados por vírgula)
+			SERGEANT,
+			CAPTAIN
+		}
+
+		-you can refer to the constants in the enum with the dot syntax (referir-se às constantes com ponto)
+		Rank a = Rank.SOLDIER;
+
+		switch(a){
+			case SOLDIER:
+				...
+				break;
+
+			case SERGEANT:
+				...
+				break;
+
+			case CAPTAIN:
+				...
+				break;
+		}
+
+	-JAva API:
+		-Is a collection of classes and interfaces that have been written for you to use (coleção de classes e interfaces para usar)
+		-Located on the Oracle website
+		-Once you locate the package you want to use, you need to inport it into your code (uma vez encontrado o package, importe-o para seu código)
+
+			import java.awt.*;
+
+		-awt contains all of the classes for creating user interfaces and for graphics and images (contém todas as classes para criação de interfaces para usuário e gráficos
+		e imagens)
+
+-Exceptions, lists, threads & files:
+	-Exception handling:
+		-An exception is a problem that occurs during program executuion (problema que ocorre durante a execução do programa)
+		-Causes abnormal termination of the program (termina o programa)
+		-Exception handling is a powerful mechanism that handles runtime errors to maintain normal application flow (mecanismo que lida com os erros na execução para manter
+		a aplicação rodando)
+		-A try/catch block is placed around the code that might generate an exception (um bloco try/catch é posicionado em volta do código que pode gerar um erro)
+			try{
+				...
+			}catch(Exception e){
+				...
+			}
+
+		-If an exception that occurs in the try block, the catch block that follows the try is checked; if the type of the exception that occurs is listed in the catch block,
+		the exception is passed to the catch block much as an argument is passed into a method parameter (se uma exception ocorrer no bloco try, o bloco catch é checado; se
+		o tipo da exception que ocorreu estiver listado no catch, a exception é passada para o bloco catch como um argumento é passado em um parâmetro de método)
+
+			try{
+				int a[] = new int[2];
+				System.out.println(a[5]);
+
+			}catch(Exception e){								-> "Exception e" catch all possible Exceptions (pega todos as possíveis exceptions)
+				System.out.println("An error occurred");
+			}
+
+		*Os erros podem surgir de informação errada enviada pelo usuário; arquivo que precisa ser aberto e não foi encontrado; problema de conexão no meio de comunicações;
+		memória insuficiente; etc
+		*Programas bem escritos devem lidar com todos os possíveis erros
+
+	-Throw:
+		-Allows you to manually generate exceptions from your methods (permite gerar manualmente as exceptions dos seus métodos)
+
+		int div(int a, int b) throws ArithmeticException{
+			if(b == 0){
+				throw new ArithmeticException("Division by zero");
+
+			}else{
+				return a/b;
+			}
+		}
+
+		-The throws statement in the method definition defines the type of Exception(s) the method can throw (o comando throws na declaração do método define o(s) tipo(s) de
+		exception que o método pode lançar)
+		-Next, the throw keyword throws the corresponding exception, along with a custom message (em seguida, a palavra throw lança a exception correspondente, com uma
+		mensagem)
+
+		-Multiple exceptions can be defined in the throws statement using a comma-separated list (múltiplas exceptions podem ser definidas usando uma lsita separada por
+		vírgula no comando throws)
+		-A single try block can contain multiple catch blocks that handle different exceptions separately (um único bloco try pode contém múltiplos blocos catch que tratam de
+		diferentes exceptions separadamente)
+
+			try{
+
+			}catch(ExceptionType1 e1){			-> should be ordered from most specific to most general (deve ser ordenado do mais específico pro mais geral)
+
+			}catch(ExceptionType2 e2){
+
+			}catch(ExceptionType3 e3){
+
+			}
+
+	-Threads:
+		-Java programs can make optimal use of available resources by running two or more components concurrently, with each component handling a different task (programas
+		podem fazer uso otimizado de recursos disponíveis rodando 2 ou mais componentes simultaneamente, com cada componente lidando com diferentes tarefas)
+		-You can subdivide specific operations within a single application into individual threads that all run in parallel (você pode subdividir operações específicas dentro
+		de uma única aplicação em threads individuais que rodam em paralelo)
+		-Two ways to create a thread (dois modos de criar uma thread):
+			1: extend the Thread class (herdar a classe Thread):
+				-Inherit from the Thread class, override its run() method, and write the functionality of the thread in the run() method (herdar a classe, sobrescrever o
+				método e escrever a funcionalidade do thread no método)
+				-Then you create a new object of your class and call it's start method to run the thread (criar o novo objeto da sua classe e chamar o método start para
+				iniciar a thread)
+
+				class Loader extends Thread{
+					public void run(){
+						System.out.println("Hello");
+					}
+				}
+
+				class MyClass{
+					public static void main(String[] args){
+						Loader obj = new Loader();
+						obj.start();			-> quando chamado, o método run é executado em uma thread diferente
+					}
+				}							*thread pode ser traduzido como trilha, caminho
+
+				-Every Java thread is prioritized to help the operating system determine the order in which to schedule threads (toda thread é priorizada para ajudar o
+				sistema operacional determinar a ordem na qual a thread será agendada)
+				-The priority range from 1 to 10, with each thread defaulting to priority 5; you can set this with the setPriority() method (o limite de prioridade é de 0 a
+				10, sendo o padrão 5 caso nào seja definido; é possível definir com o méteodo setPriority)
+
+			2: implementing the Runnable interface (implementando a interface runnable)
+				-Implement the run() method; create a new Thread object, pass the Runnable class to its constructor, and start the Thread by calling the start method (
+				implemente o método run; crie um objeto Thread, passe a class runnable para seu construtor e inicie o método run do Thread)
+
+				class Loader implements Runnable{
+					public void run(){
+						System.out.println("Hello");
+					}
+				}
+
+				class MyClass{
+					public static void main(String[] args){
+						Thread t = new Thread(new Loader());
+						t.start();
+					}
+				}
+
+				-This is a preferred way to start a Thread, because it enables you to extend from another class (é um meio mais adotado para iniciar uma Thread, já que
+				permite uma herança de outra classe)
+
+		-The Thread.sleep() method pauses a Thread for a specified period of time in miliseconds; this method throws an InterruptedException, so be sure to surround it with
+		a try/catch block (o método sleep pausa a Thread por período determinado de tempo em milisegundos; o método lança uma exception, certifique-se de cobrir com o bloco
+		try/catch)
+
+	-Runtime vs. checked options:
+		-Types of exceptions:
+			-There are 2 exception types: checked and unchecked (also called runtime) (dois tipos de exception)
+			-The checked exceptions are checked when compiled, while the unchecked are checked at runtime (exceptions checadas são validadas na compilação, a outra enquanto
+			o programa roda)
+
+				public class MyClass{
+					public static void main(String[] args){
+						try{
+							Thread.sleep(1000);
+
+						}catch(InterruptedException e){
+							...
+
+						}
+					}
+				}
+
+	-ArrayList:
+		-The Java API provides special classes to store and manipualte groups of objects (a API provê classes especiais para armazenar e manipular grupos de objetos)
+		-Java arrays are of a fixed length, which means that after they are created, they cannot expand or shrink (arrays são de tamanhos fixos, que significa que depois de
+		criados não podem ser expandidos ou reduzido)
+		-ArrayLists are created with an initial size, but when this size is exceeded, the collection is automatically enlarged (criados com tamanho inicial, mas quando
+		excedido, a cleção autmaticamente fica mais larga)
+		-When objects are removed, the ArrayList are may shrink in size (quando objetos são removidos, o array pode reduzir seu tamanho)
+
+			import java.util.ArrayList;
+
+			ArrayList color = new ArrayList();
+
+			-You can optionally specify a capacity and type of objects the ArrayList will hold (você pode especificar a capacidade e o tipo de objetos que o ArrayList vai
+			armazenar)
+
+			ArrayList<String> color = new ArrayList<String>(10);
+
+		-The add() method adds new objects to the ArrayList (adiciona objetos)
+		-The remove() methods remove objects from the ArrayList (remove objetos)
+		contains():	returns true if the list contains the specified element (retorna verdadeiro se a lista tiver o elemento especificado)
+		get(int index): return the element at the specified position in the list
+		size(): returns the number of elements in the list (retorna o número de elementos na lista)
+		clear(): removes all of the elements from the list (remove todos os elementos da lista)
+
+		-The indexing starts with 0 (o índice começa no 0)
+
+	-LinkedList:
+		-You can easily change the object type (pode facilmente mudar o tipo do objeto)
+		-You cannot specify an initial capacity for the LinkedList (não pode especificar capacidade inicial para a lista)
+
+			import java.util.LinkedList;
+
+			public class MyClass{
+				public static void main(String[] args){
+					LinkedList<String> c = new LinkedList<String>();
+
+				}
+			}
+
+			-LinkedList is better for manipulating data, such as making numerous inserts and deletes (melhor para manipulação de informação, como inúmeras adições e remoções)
+			-Stores the memory address of the element in addition to storing the object (armazena o endereço da memória ao invés de adicionar o objeto)
+			-Each element contains a link to the neighboring element (cada elemento possui um link para o elemento vizinho)
+			-Use ArrayList when you need a faster access to your data (use o ArrayList quando necessitar de um acesso rápido à informação)
+
+	-HashMap:
+		-HashMap is used for storing data collections as key and value pairs (usado para armazenar informações como pares de chave e valores)
+		-One object is used as a key - index - to another object - the value (um objeto é usado como chave para outro - index e valor)
+		-The put, remove and get methods are used to add, delet and access values in the HashMap (os métodos são usados para adicionar, deletar e acessar valores no HashMap)
+
+			import java.util.HashMap;
+
+			public class MyClass{
+				public static void main(String[] args){
+					HashMap<String, Integer> points = new HashMap<String, Integer>();
+					points.put("Amy", 154);
+					points.put("Dave", 42);
+					points.put("Rob", 733);
+					System.out.println(points.get("Dave"));		-> outputs 42
+
+				}
+
+			}
+
+		-HashMap cannot contain duplicare keys (não pode conter chaves duplicadas)
+		-Adding a new item with a key that already exists overwrites the old element (adicionar um novo item com uma chave existente sobrescreve o elemento antigo)
+		-The HashMap class provides containsKey and containsValue methods that determine the presence of a specified key or value (métodos que determinam presença do valor ou
+		chave na lista)
+		-It returns null if you try to get a value that isn't present in your map (retorna nulo se você tenta pegar um valor que não está presente no mapa)
+
+	-Sets:
+		-Collection that cannot contain duplicate elements (não pode conter elementos duplicados)
+
+			import java.util.HashSet;
+
+			public class MyClass{
+				public static void main(String[] args){
+					HashSet<String> set = new HashSet<String>();
+					points.add("A");
+					points.add("B");
+					points.add("C");
+					System.out.println(set);		-> outputs [A,B,C]
+
+				}
+
+			}
+
+			-The HashSet class doesn't automatically retain the order of the elements as they're added (não mantém a ordem dos elementos automaticamente)
+			-To order the elements, use a LinkedHashSet, which maintains a linked list of the set's elements in the order in which they were instead (para ordenar, use a
+			classe, que mantém um lista linkada dos elementos na ordem que eles foram colocados)
+
+	-Sorting lists:
+		-For the manipulation of data in different collection types, the Java API provides a Collections class, which is included in the java.util package (para a manipulação
+		de informação em diferentes tipos de coleção, o Java API provê a classe Collections, incluída no java.util package)
+		-sort(): sorts the elements of your collection type (ordena os elementos)
+		-Collections methods are static, so you don't need a Collections object to call them (métodos static, não precisa dr objeto para chamar)
+		-String values are sorted alphabetically (valores string são ordenados alfabeticamente)
+		max(Collection c): returns the maximum element in c as determined by natural ordering (retorna o elemento máximo determinado pela ordem natural)
+		min(Collection c): returns the minimum element in c as determined by natural ordering (retorna o elemento mínimo deteriminado pela ordem natural)
+		reverse(List list): reverses the sequence in list (inverte a sequência na lista)
+		shuffle(List list): shuffles - randomizes - the elements in list (embaralha os elementos)
+
+	-Iterators:
+		-Enables to cycle through a collection, obtain or remove elements (permite um ciclo através da coleção, otendo ou removendo elementos)
+		-Each of the collection classes provides an iterator() method that returns an iterator to the start of the collection (cada classe de coleção provê um iterator, que
+		retorna um iterador para o início da coleção)
+		-By using this iterator object, you can access each element in the collection, one element at a time (usando o iterador, é possível acessar cada elemento da coleção,
+		um de cada vez)
+		-The Iterator class provides the following methods (a classe libera os seguintes métodos):
+			hasNext(): return true if there is at least one more element (retorna verdadeiro se existe pelo menos mais um elemento)
+			next(): returns the next object and advances the iterator (retorna o próximo objeto e avança o iterador)
+			remove(): removes the last object that was returned by next from the collection (reomve o último objeto que foi retornado pelo next da coleção)
+
+			import java.util.Iterator;
+			import java.util.LinkedList;
+
+			public class MyClass{
+				public static void main(String[] args){
+					LinkedList<String> animals = new LinkedList<String>();
+					animals.add("fox");
+					animals.add("cat");
+					animals.add("dog");
+					animals.add("rabbit");
+
+					Iterator<String> it = animals.iterator();
+					String value = it.next();
+					System.out.println(value);		-> outputs "fox"
+
+				}
+
+			}
+
+	-Working with files:
+		-The java.io package includes a File class that allows you to work with files (o package inclui a classe File que permite o trabalho com arquivos)
+		-To start, create a File object and specify the path of the file in the constructor (cria um objeto e especifique o caminho do objeto no construtor)
+
+			import java.io.File;
+
+			File file = new File("C:\\data\\input-file.txt");
+
+		-With exists() method tou can determine whether a file exists (determina se o arquivo existe)
+		-The getName() method returns the name of the file (retorna o nome do arquivo)
+		-Note that we used double backslashes in the path, as one backslash should be escaped in the path String (note o use de duas barras invertidas, já que uma sai)
+
+	-Reading a file:
+		-Use the Scanner class from java.util package (use o Scanner para ler arquivos)
+
+			try{
+				File x = new File("C:\\sololearn\\test.txt");
+				Scanner sc = new Scanner(x);
+				while(sc.hasNext()){
+					System.out.println(sc.next());		-> the next method returns each word separately from the file (retorna as palavras separadas)
+				}
+
+				sc.close();				-> use the Scanner's close() to close the file (use o scanner para fechar o arquivo)
+
+			}catch(FileNotFoundException e){
+				System.out.println("Error");
+
+			}
+
+	-Creating and writing files:
+		-Creating:
+			-Formatter, another useful class in java.util package, is used to create content and write it to files (classe usada para criar conteúdo e escrever nos arquivos)
+
+			import java.util.Formatter;
+
+			public class MyClass{
+				public static void main(String[] args){
+					try{
+						Fromatter f = new Formatter("c:\\sololearn\\test.txt");		-> creates an empty file (cria um arquivo vazio)
+																					-> caso exista, sobrescreve
+					}catch(Exception e){
+						System.out.println("Error");
+
+					}
+
+				}
+
+			}
+
+		-Use the format() method to write content (use o método para escrever conteúdo)
+
+			import java.util.Formatter;
+
+			public class MyClass{
+				public static void main(String[] args){
+					try{
+						Formatter f = new Formatter("c:\\sololearn\\test.txt");
+						f.format("%s %s %s", "1", "John", "Smith\r\n");				-> %s means String (significa string), replaced by the first parameter (substituída pelo)
+						f.format("%s %s %s", "2", "Amy", "Brown");					primeiro parâmetro, assim por diante
+						f.close();													-> \r\n is the newline in Windows (nova linha)
+
+					}catch(Exception e){
+						System.out.println("Error");
+
+					}
+
+				}
+
+			}
+
+	-charAt(n): caractere na posição n de uma String
+
+-DecimalFormat:
+	-Utilizada para definir o formato que um número decimal será impresso
+	DecimalFormat formato = new DecimalFormat("0.00"); //Indica que o objeto formato será a forma de um decimal com duas casas
+	formato.format(total); //Total é uma variávl double ouo float que, ao utilizar esse método - geralmente em um outro de impressão - exibe no formato especificado
+

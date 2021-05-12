@@ -1,0 +1,36 @@
+JSON
+
+-Data types:
+	-Strings:							"Hello", "I"
+	-Numbers:							10, 1.5, -30, 1.2e10
+	-Booleans:							true, false
+	-Null:								null
+	-Arrays:							[1, 2, 3], ["Hello", "World"]
+	-Objects:							{"key":"value"}
+	
+	user.json							-> Deve conter alguma informação
+		{
+			"key": value,
+			"key": value,			
+			"key": [{
+				...			
+			}]			
+		}
+		
+	let var_string = '[
+	{
+		"name": "Big Corporation",
+		"numberOfEmployees": 10000,
+		"ceo": "Mary",
+		"rating": 3.6
+	},
+	{
+		"name": "Small Startup",
+		"numberOfEmployees": 3,
+		"ceo": null,
+		"rating": 4.3
+	}
+]';
+
+	console.log(JSON.parse(var_string))
+	console.log(JSON.parse(var_string)[0].name)

@@ -1,0 +1,1048 @@
+PHP
+
+//Comentários em php
+Script syntax (sintaxe do script):
+
+	//Official standar, most widelly recommended (recomendado, padrão oficial):
+	<?php
+		//Código
+		echo "Hello World!";
+	?>
+	
+	//Latest version of PHP removes support fo this tags (a última versão removeu o suporte para a tag):	
+	<script language="php">
+		echo "Hello World!";
+	</script>
+	
+	//If the server supports (se suportado pelo servidor):
+	<?
+		echo "Hello World!";
+	?>
+
+*Statements end with ";" (comandos terminam com ";")
+
+-HTML markup can be added to the text in the "echo" (tags de HTML podem ser escritas no texto do "echo")
+	<?php
+		echo "<strong>Hello World!</strong>";
+	?>
+	
+//This is a single-line comment (linha simples de comentário)
+/*
+	This is a multi-line comment block (bloco de cometários multi-linha)
+	For multiple lines (para múltiplas linhas)
+*/
+
+Variables (variáveis):
+	-Starts with a dollar sign "$", followed by the name of the variable (inicia com o símbolo do dólar, seguido do nome da variável)
+		$variable_name = value;
+	-Must start with a letter or an underscore "_" (deve começar com letra ou underline)
+	-Cannot start with number, it's case-sensitive (não pode começar com números, é case-sensitive)
+	-Has no command for declaring variavle, it is created the moment you first assign a value to it (não possui comando de declaração, é criada no momento em que 
+	um valor é atribuído)
+	
+Constants (constantes):
+	-Similar to variavles expect that they can't be changed or undefined after they've been defined. Use the define() function :
+	//(similar às variáveis, exceto que não podem ser modificadas após serem definidas. Use a função define())
+		define(name, value, case-insensitive)
+		-name: name of the constant (nome da constante)
+		-value: values of the constant (valor da constante)
+		-case-insensitive: specifies whether the constant name should be case-insensitive, with false default (especifica se o nome deve ser case-insensitive)
+		
+		<?php
+			define("MSG","Hi!");
+			echo MSG;
+		?>
+		
+		//With case-insensitive name (com nome case-insensitive):
+		<?php
+			define("MSG","Hi!",true);
+			echo msg;
+			echo MSG;
+			echo MsG;
+			//Prints the same thing (imprime a mesma coisa)
+		?>
+
+Data types (tipos de informação):
+	-String, Integer, Float, Boolean, Array, Object, NULL, Resource
+		-Strings can be any text within a set of single or double quotes (strings são textos entre aspas simples ou duplas)
+		
+		<?php
+			$string1 = "Teste"; //Double quotes (aspas duplas)
+			$string2 = 'Teste'; //Single quotes (aspas simples)
+		?>
+		
+		-You can join 2 strings with the dot "." concatenation operator (junte duas strings com o operador de concatenação)
+		<?php
+			echo $s1.$s2
+		?>
+		
+	-Integer is a whole number (without decimals) that must (qualquer número, exceto decimais, que devem): 
+		-Can't contain commas or blanks (não conter vírgulas ou espaços)
+		-Must not have a decimal point (não conter pontos decimais)
+		-It can be either positive or negative (pode ser positivo ou negativo)
+		
+		<?php
+			$int1 = 42; //Positive number
+			$int2 = -42; //Negative number
+		?>
+		
+	-Float, floating point number, includes a decimal point (ponto flutuante, inclui um ponto decimal):
+		<?php
+			$f = 42.123;
+		?>
+		
+	-Boolean represents two possible states: TRUE or FALSE (representa 2 estados: verdadeiro e falso)
+		-Are often used in condicional testing (usado em teste condicional)
+		<?php
+			$t = true;		-> se chamada em um eco, exibe 1
+			$f = false;		-> se chamada em um eco, exibe null (nada)
+		?>
+		
+		-Most of data types can be used in combination with one another. You can add a string ann a integer (Muitos tipos de data podem ser combinados, como um 
+		inteiro e uma frase)
+		<?php
+			$string1 = "10";
+			$int1 = 20; 
+			$sum = $string1 + $int1; 
+			echo ($sum); //Outputs 30
+		?>
+		
+	-PHP automatically converts each variable to the correct data type, according to its value (converte automaticamente cada variável para o tipo correto)
+
+Variables scopes (escopo das variáveis)
+	-The scope of a variable is the part of the scrip in which variable can be referenced or used (parte do script que a variável pode ser referenciada ou usada)
+	-Most used scopes are local and global (escopos mais usados são local e global)
+	-Variable declared outside a function has a global scope (variáveis declaradas fora de função tem escopo global)
+	-Variable declared within a function has a local scope, can only be accessed within that function (variáveis declaradas dentro de função tem 
+	escopo local, só podem ser acessadas com a função)
+	
+	-The global keyword is used to access a global variable from within a function; use this within the function, prior to the variables
+	(é usado pra acessar variáveis globais fora de uma função; use dentro, priorizando as variáveis)
+	
+	<?php
+		$name = 'David';
+		function getName(){
+			global $name;	//Withou this global keyword, an error occours (sem a palavra, ocorre erro)
+			echo $name;
+		}
+		
+		getName();
+	?>
+	
+Variable variables
+	-You can use one variable to espcify another variable's name (pode usar uma variável pra especificar outra pelo nome)
+	-Treats the value of another variable as its name (trata o valor de outra variável como nome)
+	
+	<?php
+		$a = 'hello';
+		$hello = "Hi!";
+		echo $$a; //Prints Hi!
+	?>
+	
+	-$$a is a variable that is using the value of another variable, $a, as its name. (é uuma variável que usa o valor de outra como nome)
+	-$a is equal to "hello", the resulting is $hello, which holds the value "Hi!" (equivale a hello, resultando nesta variável, que possui outro valor)
+	
+Arithmetic operators (operadores aritméticos)
+	-Operators carry out operations on variables and values (Operadores carregam operações em variáveis e valores)
+	-Arithmetic work with numeric values to perform commom arithmetical operations (operadores aritméticos trabalhoam com valores numéricos para operações aritméticas)
+		-Addition, subtraction, multilication, division
+		
+	-Modulus, represented by "%", returns the remainder of the division of the first operand by the second one (módulo retorna o resto da divisão entre os 2 valores)
+		-Using floating numbers with de modulus operator will be converted to integers before the operation (valores float são convertidos para inteiro antes da operação)
+		
+	-Increment e decrement operators
+		$x++;
+		$x--; //Post-decrement, returns the original value before it changes (retorna o valor primário, original, antes de alterar a variável)
+		$++x;
+		$--x; //Pre-decrement, changes the variable first ant then returns the value (altera a variável e depois retorna o valor)
+		
+Assignment operators
+	-Are used to write values to variables (são usados para escrever valores para variáveis)
+		$n1 = 5;
+		$n2 = $n1;
+	
+	-Can also be used in conjunction with arithmetic operators (podem ser usados com operadores aritméticos)
+		$x += 2;
+		
+Comparison operators (operadores de comparação)
+	-Compare 2 values (numerical or strings)
+	-Are used inside conditional statements, and evaluate to either TRUE or FALSE (usados dentro de comparações e avalia entre verdadeiro e falso)
+		$x == $y 	(true if $x is equal to $y) 									(igual)
+		$x === $y	(true if $x is equual to $y AND they are of the same type) 		(igual e mesmo tipo)
+		$x != $y 	(true if $x is different to $y)									(diferente)
+		$x <> $y 	(true if $x is different to $y)									(diferente)
+		$x !== $y	(true if $x is different to $y OR they aren't of same type)		(diferente valor ou tipo)
+		$x > $y 	(true if $x is greater than $y)									(maior)
+		$x < $y 	(true if $x is less than $y)									(menor)
+		$x >= $y 	(true if $x is greater or equal than $y)						(maior ou igual)
+		$x <= $y 	(true if $x is less or equal than $y)							(menor ou igual)
+
+Logical operators (operadores lógicos)
+	-Used to combine conditional statements (combina declarações de lógica)
+		$x and $y 	(true if both $x and $y are true)								(ambos verdadeiros)
+		$x or $y 	(true if either $x and $y are true)								(um deles verdadeiros)
+		$x xor $y 	(true if either $x and $y are true, but not both)				(um deles verdadeiros, mas não os dois)
+		
+		*Os operadores a seguir possuem maior precedência (como multiplicação e adição, o primeiro tem maior precedência)
+		$x && $y 	(true if both $x and $y are true)								(ambos verdadeiros)
+		$x || $y 	(true if either $x and $y are true)								(um deles verdadeiros)
+		!$x			(true if $x isn't true)											(verdadeiro se x for falso)
+
+Arrays (vetores):
+	-Special variable, which can hold more than one value at a time (variável especial, pode conter mais de um valor ao mesmo tempo)
+	
+	-Numeric:
+		-Numeric or indexed arrays associate a numeric index with their values (associam um número de índice aos seus valores)
+		-The index can be assigned automatically - starts at 0 (os índices podem ser associados automaticamente - começam no 0)
+			$names = array("David","Amy","John");
+		
+		-You can assign manually (atribuir manualmente):
+			$names[0] = "David";
+			$names[1] = "Amy";
+			$names[2] = "John";
+		
+		-You can access the array elements through their indices (acessar o vetor pelo índice):
+			echo $names[1]; //Prints "Amy"
+			
+		-You can have more than one data type together in one array (você pode ter mais de um tipo de data em um único array):
+			<?php
+				$myArray[0] = "John";
+				$myArray[1] = "<strong>PHP</strong>";
+				$myArray[2] = 21;
+				$myArray[]	= 31;	-> não é necessário especificar o índice ao inserir
+			?>
+	
+	-Associative:
+		-Arrays that use named keys that you assign to them (usam palavras-chave que você atribui a eles)
+		-Two ways to create (dois modos de criar):
+			$people = array("David"=>"27", "Amy"=>"21", "John"=>"42");	//Use of the => signs in assigning values to named keys
+			//or
+			$people['David'] = "27";
+			$people['Amy'] = "21";
+			$people['John'] = "42";
+			
+			echo $people['Amy']; //Outputs "21"
+			
+	-Multidimensional:
+		-Contain one or more arrays (mais de um vetor)
+		-The dimension of an array indicates the number of indices that you would need to select an element (as dimensões indicam o número de índices 
+		necessários para selecionar o elemento)
+		-For a two-dimensional array, yuo need two indices to select an element (para um vetor de 2 dimensões, você precisa de 2 índices)
+		-Arrays more than three levels deep are difficult to manage (vetores com mais de 3 dimensões são difíceis de manusear)
+		
+			$people = array('online'=>array('David', 'Amy'), 'offline'=>array('John', 'Rob', 'Jack'), 'away'=>array('Arthur','Daniel'));
+			
+			-The two-dimensional array contains 3 arrays, and it has two indices: row and column (o vetor de duas dimensões tem 3 vetores: linha e coluna)
+			-To access the element, we must point the two indices (para acessar o elemento, precisamos mostrar os dois índices)
+			
+			echo $people['online'][0]; //Outputs "David"
+			
+		-Can be both numeric and associative (podem ser numéricos e associativos)
+
+Control structures (estruturas de controle):
+	-Conditional statements perform different actions for different decisions (declarações de condição executam diferentes ações para diferentes escolhas)
+		
+	-If else:	
+		-The if else statement is used to execute a certain code if a condition is true, and another code if the condition is false (os comandos if else são
+		usados para executar um códico se a condição for verdadeira e outro caso seja falsa)
+			if(condition){
+				code to be executed if condition is true;
+			}else{
+				code to be executed if condition is false;
+			}
+			
+		-You can use without the else statement, if you don't need to do anything in case the condition is false (você não precisa declarar o bloco else se não
+		precisar que algo seja feito caso a condição seja falsa)
+	
+	-Elseif:
+		-Specifies a new condition to test, if the first condition is false (especifica uma nova condição para testar caso a primeira seja falsa)
+			if(condition){
+				code to be executed if condition is true;
+			}elseif(condition){
+				code to be executed if condition is true;				
+			}else{
+				code to be executed if condition is false;
+			}
+		-You can add as many elseif statements as you want. Just note that elseif statement must begin with an if statement (você pode usar quantos elseif quiser,
+		apenas certifique-se que tenha um if antes)		
+			
+			if(condição):
+				comando;
+			
+			elseif(condição):
+				comando;
+				
+			else:						-> elseif deve ser junto ao usar os 2 pontos
+				comando;
+				
+			endif;						-> bloco semelhante ao if com as chaves
+		
+	-Loops:
+		-When writing a code, instead of adding several almost equal code-lines in a script when you want the same block of code to run over and over again, we can
+		use loops to perform a task like this (ao invés de copiar códigos iguais no script quando queira que repita uma parte várias vezes, usamos loops para isso)
+		
+		-While:
+			-Executes a block of code as long as the specified condition is true (executa um bloco enquanto a condição especificada for verdadeira)
+				while(condition is true){
+					code to be executed;
+				}
+			
+			-If the condition never becomes false, the statement will continue to execute indefinitely (se a condição nunca ficar falsa, o bloco será executado infinitamente)
+		
+		-Do... while:
+			-Always execute a block of code once, check the condition, and repeat as long as the specified condition is true (sempre executa uma vez, checa a condição e
+			repete enquanto a condição for verdadeira)
+				do{
+					code to be executed;
+				}while(condition is true);
+				
+			-Regardless of whether the condition is true or false, the code will be executed at least onde, which could be needed in some situations (independente se a condição
+			for verdadeira ou false, o código será executado pelo menos uma vez, sendo necessário em algumas situações)
+			
+		-For:
+			-Used when you know in advance how many times the script should run (usado quando você sabe quantas vezes o script deve rodar)
+				for(init; test; increment){
+					code to be executed;
+				}
+				
+				-Parameters (parâmetros):
+					init: initialize the loop counter value (inicializa o contador do loop)
+					test: evaluates each time the loop is iterated, continuing if evaluates to true and ending if it evaluates to false (avalia/testa cada vez que o loop é 
+					iterado, continuando se a avaliação/teste for positiva ou encerrando se o teste for negativo)
+					increment: increases the loop counter value (aumenta o valor do contador do loop)
+					
+			-Each of the parameter expressions can be empty or contain multiple expressions that are separated with commas (cada expressão do parâmetro pode ser vazio ou conter
+			múltiplas expressões separadas por vírgulas)
+			-In the for statement, the parameters are separated with semicolons (os parâmetros são separados com ponto e vírgula)
+			
+		-Foreach:
+			-Works only on arrays, and is used to loop through each key/value pair in an array (trabalha em vetores, faz o loop entre cada par de valor em um vetor)
+				foreach(array as $value){
+					code to be executed;
+				}
+					$salada = array("Laranja", "Tangerina", "Limao", "Maçã", "Pêra", "Banana", "Uva", "Mamão", "Abacate");			
+					foreach($salada as $frutas){
+						echo $frutas . "<br>";
+						
+					}
+				
+				//or
+				foreach(array as $key => $value){
+					code to be executed;
+				}
+				
+					$agenda = array("nome" => "José", "sobrenome" => "silva", "salario" => 800);				
+					foreach($agenda as $atributo => $valor){
+						$atributo . ": " . $valor . "<br>";
+						
+					}
+				
+			-The first one loops over the array. On each iterator, the value of the currrent element is assigned to $value, and the array pointer is moved by one, until it the
+			last array element. (o primeiro percorre o array; em cada iterador, o valor atual é atribuido ao $value e o ponteiro avança em 1 até chegar no fim do vetor)
+			-The second form will additionally assign the current element's key to the $key variable on each iteration (o segundo adicionalmente atribui o valor da chave para 
+			a variável em cada posição da iteração)
+			
+		-Switch:
+			-Alternative to the if-elseif-else statement (alternativo ao if)
+			-Use to select one of number of blocks of code to be executed (use para selecionar um dos blocos para ser executado)
+				switch(n){
+					case value1:
+						code to be executed;
+						break;
+					case value2:
+						code to be executed;
+						break;
+					case value3:
+						code to be executed;
+						break;
+					default:
+						code to be executed if n is different from all labels (executa se n for diferente das opções)
+				}
+			
+			-Similar behavior from if else, but offers a more elegant and optimal solution (comportament semelhante ao if, com mais elegância)
+			-If you forget the "break", PHP continue trhough the next case statements, ven when the case doesn't match (caso esqueça o break, o código continua nos blocos 
+			mesmo se não condizem com o caso)
+			-Default system is optional (default é opcional)
+			-You can ommit one break if you want the same output for more than one case (você pode omitir o break caso queira o mesmo resultado pra mais de um caso)
+				$day = "Wed";
+				switch($day){
+					case 'Mon':
+					case 'Tue':
+					case 'Wed':
+					case 'Thu':
+						echo 'Working day';		//Same output for 3 cases (mesma saída para 3 casos)
+						break;
+					case 'Friday':
+						echo 'Ending';
+				}
+				
+		-Break:
+			-Can be used to halt the execution of for, foreach, while, do-while structures (pode ser usado para parar nas outras estruturas)
+			-Break ends the structure in the current loop and continues to run the program on the line coming up after this (para no elemento atual e continua na primeira 
+			linha após o bloco)
+			-Break in outer part of a program will stop the script (fora de estruturas termina o script)
+			
+		-Continue:
+			-Allows for skipping over what remains of the current loop iteration. Continues the execution at the condition evaluation and moves on to the beginning of the next
+			iteration (termina o loop la parte atual e pula o restante, voltando ao começo na próxima iteração)
+				for($i = 0; $i < 10; $i++){
+					if($i % 2 == 0)
+						continue;
+					echo $i . ' '; 		//Outputs 1 3 5 7 9
+				}
+				
+			-you can use this statemnt with all looping structures (pode usar em todas as estruturas de loop)
+			
+		-Include and require:
+			-Include
+				-Allow for the insertion of the content of one PHP file into another PHP file, before the server executes it (inclui o conteúdo de um PHP em outro, antes de ser 
+				executado pelo server)
+				-Saves quite a bit of work (poupa trabalho)
+				-You can create a standard for header, footer, or menu file for all of your web pages (pode criar cabeçalho, rodapé ou menu para as páginas)
+				-When the header is requiring updating, you can update the header include file only (quando uma parte requer atualização, pode atualizar somente o arquivo 
+				incluso)
+					header.php:
+					<?php
+						echo '<h1>Welcome</h1>'; 
+					?>
+					
+					another file:
+					<html>
+						<body>
+							<?php include 'header.php'; ?>
+							<p>Some text.</p>
+						</body>
+					</html>
+				
+				-You can include the same file into multiple pages (pode adicionar o mesmo arquivo em múltiplas páginas)
+				-Files are included based on the file path. You can use relative or absolute path to specify which file should be included (as inclusões são baseadas no caminho 
+				dos arquivos. Você pode usar o caminho relativo ou absoluto para especificar qual arquivo incluir)
+					-Absolute:
+						-Full URL to an internet file (caminho inteiro)
+							<img src="https://www.w3schools.com/images/picture.jpg" alt="Mountain">
+							
+					-Relative:
+						-Points to a file relative to the current page (aponta para um arquivo relativo à página atual)
+							-Points to a file in the images folder located at the root of the current web (aponta para o arquivo na pasta de imagens localizado na raiz da 
+							página atual):
+								<img src="/images/picture.jpg" alt="Mountain">
+								
+							-Points to a file in the images folder located in the current folder (aponta para a pasta de imagens localizada na pasta atual):
+								<img src="images/picture.jpg" alt="Mountain">
+								
+							-Points to a file in the images folder located in the folder one level above the current folder (aponta para a pasta de imagens localizada na pasta 
+							um nível
+							acima da pasta atual):
+								<img src="../images/picture.jpg" alt="Mountain">
+							
+			-Require:
+				-The require statement is identical to include, the exception begin that, upon failure, it produces a fatal error (idêntico ao include, produz um erro fatal em 
+				caso de falha)
+				-When a file is included using the include statement, but PHP is unable to find it, the script continues to execute (quando o arquivo é incluído pelo include 
+				mas o php não consegue encontrá-lo, o script continua)
+				-In the case of require, the script will ceace execution and produce an error (no caso do require, o script cessa a execução e produz um erro)
+				
+			-Use require when the file is required for the application to run (use quando o arquivo é necessário para a aplicação rodar)
+			-Use include when the file isn't required (use quando o arquivo não é essencial)
+
+Functions (funções):
+	-Is a block of statements that can be used repeatedly in a program (bloco de comandos que podem ser usados repetidamente em um programa)
+	-A function won't execute immediately when page loads. It will be executed by a call to the function (não são executadas imediatamente quando a página carrega, mas quando 
+	são chamadas)
+	-A user defined function declaration starts with the word function (uma função definida pelo usuário começa com "function")
+		function functionName(){
+			code to be executed;
+		}
+	
+	-A function name can start with a letter or an underscore, but not with a number or special symbol (pode começar com letra ou underline, mas não com número ou caractere 
+	especial)
+	-Function names aren't case-sensitive (nomes de função não são case-sensitive)
+	-The beginning of the function code is indicate by the opening curly brace ( { ) (o começo do código da função é indicado pela chave de abertura)
+	-The ending of the function code is indicate by the closing curly brace ( } ) (o dim do código da função é indicado pela chave de fechamento)
+		-Example:
+			function sayHello(){
+				echo "Hello!";
+			}
+			
+			sayHello(); //Call the function (chama a função)
+			
+			//Outputs "Hello!"
+	
+	-Function parameters (parâmetros):
+		-Information can be passed to functions through arguments, which are like variables (informações podem ser passadas por argumentos, como variáveis)
+		-Arguments are specified after the function name and within the parentheses (são especificados após o nome, dentro dos parênteses)
+			function multiplyByTwo($number){
+				$number *= 2;
+				echo $number;
+			}
+			
+			multiplyByTwo(3);
+			
+		-You can add as many arguments as you want, as long as they are separated with commas (pode adicionar quantos argumentos quiser, desde que sejam separados por vírgulas)
+			function multiply($v1, $v2, $v3){
+				$v1 = $v2 * $v3;
+				echo $v1;
+			}
+			
+		-When you define a function, the variables that represent the values that will be passed to it for processing are called parameters (ao definir uma função, as variáveis
+		que representam os valores que serão passados para processamento são chamadas de parâmetros)
+		-However, when you use a function, the value you pass to it is called an argument (no entanto, quando usamos a função, o valor passado é chamado de argumento)
+		-Default arguments defines a value to the parameter if there are no argument (argumentos padrão define um valor para o parâmetro se não há argumento)
+			function setCounter($n = 10){
+				echo "Counter is ".$n;
+			}
+			
+			setCounter(42); //Counter is 42
+			setCounter(); //Counter is 10
+			
+		-When using default arguments, any defaults should be on the right side of any non-default arguments; otherwise, things won't work as expected (ao usar argumentos padrões,
+		eles devem estar à direita de qualquer outro argumento que não use padrão; caso contrário, não funcionará como esperado)
+		
+	-Return:
+		-A function can return a value using the return statement (uma função pode retornar um valor através do comando return)
+		-Return stops the function's execution and sends the value back to the calling code (o return para a função e manda o valor de volta para o código que a chamou)
+			function mult($n1, $n2){
+				$r = $n1 * $n2;
+				return $r;
+			}
+			
+			echo mult(8,3); //Outputs 24
+			
+		-Leaving out the return results in a NULL value being returned (funções sem return devolvem valor nulo - NULL)
+		-A function cannot return multiple values, but returning an array will produce similar results (não podem retornar múltiplos valores, mas retornar um array produz um 
+		resultado parecido)
+		
+		-Múltiplos retornos:
+			
+		
+Predefined variables (variáveis pré-definidas):
+	-$_SERVER variables: script name
+		-A superglobal is a predefined variable that is always accessible, regardless of scope (variável pré-definida que está sempre acessível, independente do escopo)
+		-You can access the PHP superglobals through any function, class or file (pode acessar através de qualquer função, classe ou arquivo)
+		-Variables: $_SERVER, $GLOBALS, $_REQUEST, $_POST, $_GET, $_FILES, $_ENV, $_COOKIE, $_SESSION
+		
+		-$_SERVER:
+			-Is an array that includes information such as headers, paths and scripts location (array que inclui cabeçalhos, caminhos e localização de scripts)
+			-The entries in this array are created by the web server (as entradas no array são criadas pelo servidor)
+			$_SERVER['SCRIPT_NAME'] returns the path of current script (retorna o caminho do script atual)
+				<?php
+					echo $_SERVER['SCRIPT_NAME']; //Outputs "/arquivo.php" -> script salvo no arquivo.php, no root do servidor
+				?>
+				
+			$_SERVER['HTTP_HOST'] return the host header from the current request (retorna o cabeçalho do host do pedido atual)
+				<?php
+					echo $_SERVER['SCRIPT_NAME']; //Outputs "localhost"
+				?>
+				
+			-This method can be useful when you have a lot of images on your server and need to transfer the website to another host (é útil ao transferir seu site para outro 
+			servidor e possui muitas imagens nele)
+			-Instead of changing the path for each image, you can do the following (ao invés de modificar o caminho de cada imagem, faça o seguinte):
+				+Create a config.php (will holds the path to your images):  (crie um arquivo config, que receberá o caminho das suas imagens)
+					<?php
+						$host = $_SERVER['HTTP_HOST'];
+						$image_path = $host.'/images/';
+					?>
+				+Use the config in your scripts: (use-o nos seus scripts)
+					<?php
+						require 'config.php';
+						echo '<img src="'.$image_path.'header.png"/>';
+					?>
+					
+			-The path to your images is now dinamic, will change automatically, based on the host header (o caminho para suas imagens agora é dinâmico, baseado no header do 
+			host)
+			
+			$_SERVER['PHP_SELF']		Returns the filename of the currently executing script (retorna o nome do arquivo do script que está executando no momento)
+			$_SERVER['SERVER_ADDR']		Returns the IP adress of the host server (retorna o endereço de IP do servidor atual)
+			$_SERVER['SERVER_NAME']		Returns the name of the host server (retorna o nome do servidor)
+			$_SERVER['REMOTE_ADDR']		Returns the IP adress from where the user is viewing the current page (retorna o IP de onde o usuário está vendo a página atual)
+			$_SERVER['REMOTE_HOST']		Returns the host name from where the user is viewing the current page (retorna o nome do server de onde o usuário está vendo a página)
+			$_SERVER['REMOTE_PORT']		Returns the port being used on the user's machine to communicate with the web server (porta usada elo usuário na comunic. com o server)
+			$_SERVER['SCRIPT_FILENAME']	Returns the absolute pathname of the currently executing script (caminho absoluto do script executando atualmente)
+			$_SERVER['SERVER_PORT']		Returns the port on the server machine being used by the web server for communication (porta no servidor usado pelo web servidor) (such as 80)
+			$_SERVER['SCRIPT_NAME']		Returns the path of the current script (retorna o caminho do script atual)
+			$_SERVER['SCRIPT_URI']		Returns the URI of the current page (retorna a URI da página atual)
+			
+	-Forms (formulários):
+		-The purpose of the PHP superglobals $_GET and $_POST is to collect data that has been entered into a form (o propósito dessas variáveis é coletar informação de 
+		formulários)
+			<form action="first.php" method="post">
+				<p>Name: <input type="text" name="name" /></p>
+				<p>Age: <input type="text" name="age" /></p>
+				<p><input type="submit" name="submit" value="Submit" /></p>
+			</form>
+			
+			-The "action" attribute specifies that when the form is submitted, the data is sent to a PHP file named "first.php" (o atributo escpecifica que os dados serão 
+			enviados para a página selecionada)
+			-HTML form elements have names, which will be used when accessing the data with PHP (elementos possuem nome, que serão usados para acessar as informações com o PHP)
+			-The posted form data is accessed using the $_POST associative array (a informação do formulário é acessada usando o array associativo)
+				echo $_POST["name"];
+			
+			-This superglobal key holds key/value pairs. In the pairs, key are the names of the form controls and values are the input data entered by the user (a variável 
+			abriga pares de chave e valores. Nos pares, chaves são os nomes de controle dos formulários e os valores são as informações inseridas pelo usuário)
+			
+	-GET and POST:
+		-POST:
+			-Information sent from a form via the POST method is invisible to others, since all names and/or values are embedded within the body of the HTTP request. Also, 
+			there are no limits on the amount of information to be sent (informações com o método post são invisíveis aos usuários, já que os nomes e valores são incorporados 
+			com o corpo do pedido HTTP. No entanto, não existe limite na quantidade de informação a ser mandada)
+			-Moreover, POST supports advanced functionality such as support for multi-part binary input while uploading files to the server (post suporta funcionalidades 
+			avançadas, como suporte para partes binárias enquanto carrega uma imagem para o servidor)
+			-However, it is not possible to bookmark the page, as the submitted values are not visible (no entanto, não é possível marcar a página, já que os dados não são 
+			visíveis)
+			-POST is the preferred method for sending form data (melhor método para enviar dados de formulário)
+			
+		-GET:
+			-Information sent via a form using the GET method is visible to everyone (all variable names and values are displayed in the URL). GET also sets limits on the 
+			amount of information that can be sent - about 2000 characters (informações enviadas pelo método GET é visível para todos, já que os nomes e valores são mostrados 
+			na URL; também define um limite de informação enviada, entre 2000 caracteres)
+			-However, because the variables are in URL, it is possible to bookmark the page, which can be useful in some situations (no entanto, devido as variáveis estarem na 
+			URL, é possível marcar a página, o que pode ser útil em algumas situações)				
+				-Example URL from a form with name and age: localhost/actionGet.php?name=John&age=25
+				
+			-GET should NEVER be used for sending passwords or other sensitive information! (não use GET com senhas ou informações importantes)
+			-When using POST or GET, proper validation of form data through filtering and processing is vitally important to protect your form from hackers and exploits (a 
+			validação correta da informação é um importante filtro e processo na proteção contra hackers e explorações)
+			
+	-$_SESSION:
+		-Using a session, you can store information in variables, to be used across multiple pages (usando a sessão, você pode armazenar informações em variáveis, usando entre 
+		múltiplas páginas)
+		-Information isn't stored on the user's computer, as it is with cookies (informações não são armazenadas no computador do usuário, como cookies)
+		-By default, session variables last until the user closes the browser (por padrão, variáveis de sessão se mantém até o usuário fechar o navegador)
+		-A session is started using the session_start() function. Use the PHP global $_SESSION to set session variables (sessão se inicia com a função, use a variável para 
+		definir variáveis)
+			<?php
+				session_start();
+				$_SESSION['color'] = "red";
+				$_SESSION['name'] = "John";
+			?>
+			
+			-Now the color and name session variables are accessible on multiple pages, throughout the entire session (as variáveis de sessão para o nome e cor estão acessíveis 
+			em diversas páginas durante a sessão inteira)
+		
+		-This function must be the very first thing in your document, before any HTML tags (a função deve ser essencialmente o primeiro comando do seu código, antes de qualquer 
+		tag HTML)
+		-Another page can be created that can access the session variables we set in the previous page:
+			<?php
+				session_start();
+			?>
+			<!DOCTYPE html>
+			<html>
+				<body>
+					<?php
+						echo "Your name is ".$_SESSION['name']; //Outputs "Your name is John"
+					?>
+				</body>
+			</html>
+			
+			-Your session variables remain available in the $_SESSION superglobal until you close it (as variáveis de sessão se mantém disponíveis na supergobal até que feche)
+			-All global session variables can be removed manually by using session_unset() (todas as variáveis globais de sessão podem ser removidas manualmente)
+			-You can also destroy de session with session_destroy() (pode também destruir a sessão)
+	
+	-$_COOKIE:
+		-Cookies are often used to identify the user. A cookie is a small file that the server embeds on the user's computers. Each time the same computer requests a page through
+		a browser, it will send the cookie too. With PHP, you can both create and retrieve cookie values (são utilizados para identificar o usuário; é um pequeno arquivo que o
+		servidor incorpora no computador do usuário; sempre que o computador solocita uma página pelo navegador, envia um cookie também)
+		-Create cookies using the setcookie() function (use a função para criar)
+			setcookie(name, value, expire, path, domain, secure, httponly);
+			
+			-Parameters (parâmetros):
+				name: specifies the cookie's name (especifica o nome)
+				value: specifies the cookie's value (especifica o valor)
+				expire: specifies (in seconds) when the cookie is to expire (especifica quando vai expirar, em segundos)
+				The value: time()+86400*30, will set the cookie to expire in 30 days (determina duração de 30 dias)
+				If this parameter is omitted or set to 0, the cookie will expire at the end of the session (when the browser closes) (caso não tenha parâmetro ou seja 0 (padrão),
+				expira quando o navegador for fechado)
+				path: specifies the server path of the cookie  (especica o caminho do cookie no servidor)
+				If set to "/", the cookie will be available within the entire domain (se definido assim, o cookie estará disponível no domínio inteiro)
+				If set to "/php/", the cookie will be only available within the php directory and all sub-directories of php (só estará disponível com o diretório e sub-diretórios
+				do php)
+				The defaul value is the current directory in which the cookie is being set (o valor padrão é o diretório atual que o cookie foi definido)
+				domain: specifies the cookie's domain name (especifica o cookie do nome do domínio)
+				To make the cookie available on all subdomains of "example.com", set the domain to this (para deixar disponível para todos os sub-domínios, atribua o domínio a ele)
+				secure: specifies whether or not the cookie should only be transmitted over a secure, HTTPS connection (especifica se o cookie deve ser transmitido ou não somente
+				com uma conexão HTTPS segura)
+				TRUE indicates that the cookie will only be set if a secure connection exists - default is FALSE (true indica que o cookie só deve ser transmitido em uma conexão
+				segura - o padrão é false)
+				httponly: if set to TRUE, the cookie will be accesible only through the HTTP protocol (the cookie will not be accessible to scripting languages) (o cookie só será
+				acessível através do protocolo HTTP)
+				Using httponly helps reduce identity theft XSS attacks - default is FALSE (usar isso ajuda a reduzir ataques XSS de roubos de identidade - padrão é false)
+				
+			-The "name" parameter is the only one that's requuired, all of the other are optional (o nome é o único obrigatório, todos os outros são opcionais)
+			
+			-Example: creating a cookie named "user" with the value "John". The cookie will expire after 30 days, which is written as 86.400 * 30, in which 86.400 seconds is one day
+			The "/" means that the cookie is available throughout the entire website (criando um cookie chamado usuário com valor John, expirando após 30 dias, escrito com 86.400
+			segundos (um dia) * 30; a barra significa que o cookie é disponível em todo o site)
+				<?php
+					$value = "John";
+					setcookie("user", $value, time()+(86400*30), '/');
+					
+					if(isset($_COOKIE['user'])){	//Isset: function used to find out if the cookie is set (função que verifica se o cookie foi definido)
+						echo "Value is: ".$_COOKIE['user']; //Outputs "Value is: John"
+					}
+				?>
+			
+			-The setcookie() must appear BEFORE the <html> tag (deve aparecer antes da tag <html>)
+			-The value of the cookie is automatically encoded when the cookie is sent, and is automatically decoded when it's received (é automaticamente codificado ao enviar e
+			decodificado ao receber)
+			-Nevertheless, NEVER store sensitive information in cookies (entretanto, nunca atribua informações confidenciais/importantes em cookies)
+			
+Working with files (trabalhando com arquivos):
+	-Writing to a file (escrevendo para um arquivo):
+		-Manipulating files (manipulando arquivos):
+			-PHP offers a number of functions to use when creating, reading, uploading and editing files (php oferece inúmeras funções ao criar, ler, enviar e editar arquivos)
+			-The fopen() creates or opens a file (cria ou abre um arquivo)
+			-If you use fopen() with a file that doesn't exist, the file will be created, given that the file has been opened for writing (w) or appending (a) (usando a função
+			com um arquivo inexistente, um arquivo será criado, determinando que será aberto para escrita ou anexo)
+			-Use one of the following modes to open the file (use um dos modos para abrir o arquivo):
+				r		opens file for read only (somente leitura)
+				w		opens file for write only; erase the contents of the file or creates a new if doesn't exist (somente escrita, apaga conteúdo do arquivo ou cria)
+				a		opens file for write only (somente leitura)
+				x		creates new file for write only (cria um novo arquivo para escrita somente)
+				r+		opens file for read/write (leitura e escrita)
+				w+		opens file for read/write; erase the content of the file or creates a new if doesn't exist (leitura e escrita, apaga o conteúdo ou cria um novo)
+				a+		opens file for read/write; creates a new if doesn't exist (leitura e escrita, cria um novo se não existir)
+				x+		creates a new file for read/write (cria um novo arquivo para leitura e escrita)
+		
+		-Write to a file (escrever em um arquivo):
+			<?php
+				$myfile = fopen("file.txt","w");
+				$txt = "John\n";
+				fwrite($myfile,$txt);		//When writing to a file, use the fwrite() (quando estiver escrevendo em um arquivo)
+				$txt = "David\n";			//"\n" means new line (significa uma nova linha)
+				fwrite($myfile,$txt);		//The first parameter is the file to write to; the second is the string to be written (primeiro parâmetro é o arquivo, segundo o texto)
+				fclose($myfile);			//Close the file (fecha o arquivo)
+			?>
+			
+		-fclose():
+			-The fclose() closes an open file and returns TRUE on success or FALSE on failure (fecha um arquivo aberto e retorna true ou false a depender de falhas)
+			
+	-Appending to a file (anexando em um arquivo): 
+		-If you want to append content to a file, you need to open the file in append mode (caso queira anexar conteúdo, abra o arquivo no modo de anexo)
+		-When appending to a file using the 'a' mode, the file pointer is placed at the end of the file, ensuring that all new data is added at the end of the file (ao anexar
+		através do modo 'a', o ponteiro do arquivo é posicionado no fim do arquivo, assegurando que toda a nova informação seja adicionada no fim do arquivo)
+			<?php
+				$myFile = "file.txt";
+				$myfile = fopen($myFile,"a");
+				fwrite($myfile,"some text");
+				fclose($myfile);			//Close the file (fecha o arquivo)
+			?>
+		
+		-Example:
+			<?php
+				if(isset($_POST['text'])){		//Determines wheter the form had been submited, as well as whether the text contained a value (determina se o formulário foi 
+												  enviado e se há um valor no texto submetido)
+					$name = $_POST['text'];
+					$handle = fopen("names.txt","a");
+					fwrite($handle,$name.'\n');
+					fclose($handle);
+				}
+			?>
+			<form method="post">	//If you don't specify any action attribute, it will submit to itself (se não especificar o atributo action, vai submeter a ele mesmo)
+				Name: <input type="text" name="text" />
+				<input type="submit" name="submit" />
+			</form>
+			
+	-Reading a file (lendo um arquivo):
+		-The file() function reads the entire file into an array (a função lê o arquivo inteiro para um array)
+		-Each element within the array corresponds to a line in the file (cada elemento dentro do array corresponde a uma linha do arquivo)
+			$read = file('names.txt');
+			foreach($read as $line){	//Use the foreach because the $read is an array (usamos o foreach devido $read ser um array)
+				echo $line.', ';
+			}
+			
+		-At the end of the output in the previous example, we would have a comma, as we print it after each element of the array (no fim da saída no exemplo anterior temos uma
+		vírgula, como imprimimos cada elemento em seguida do outro)
+		-The following code lets us avoid printing that final comma (o código a seguir nos permite "esquecer" da última vírgula, não adicionando ela após o último)
+			$read = file('names.txt');
+			$count = count($read); 		//Obtain the number of elements in the $read array (obtém o número de elementos no array)
+			$i = 1;
+			foreach($read as $line){	//Use the foreach because the $read is an array (usamos o foreach devido $read ser um array)
+				echo $line;
+				if($i < $count)			//If it is the last element, won't print that comma (se for o último elemento, não irá imprimir a vírgula)
+					echo ', ';
+				$i++;
+			}
+			
+Udemy:
+	-Strings:
+		strlen(string): 								retorna a quantidade de caracteres
+		stripos(string, "letra"): 						retorna a primeira ocorrência
+		strripos(string, "letra"):						retorna a última ocorrência
+		substr(string, 0, 3):							retorna a sub-string do caractere 0 até o caractere 3, o último parâmetro indica quantos caracteres serão pegos
+		strtolower(string):								converte para letras minúsculas
+		strtoupper(string):								converte para letras maiúsculas
+		SUBSTR_COUNT(string, "letra/string"):			conta quantas vezes aparece uma "letra", tendo diferença entre maiúsculas e minúsculas
+		
+	-Funções matemáticas:
+		pow(x,y):				x elevado a y
+		sqrt(x):				raiz quadrada de x	
+		rand():					número aleatório
+		rand(x,y):				aleatório entre x e y
+		abs(y):					valor absoluto de y
+		*:						multiplicação
+		/:						divisão
+		round(x):				arredonda o valor de x
+		floor(x):				arredonda o valor de x para baixo, independente do quanto vale
+		ceil(x):				arredonda o valor de x para cima, independente do quanto vale
+		
+		is_numeric(x):			returna 1 se x for uma variável de número (int, float...), null se não
+		is_int(x):				returna 1 se x for do tipo int, null se não
+		is_float(x):			returna 1 se x for do tipo float, null se não
+		is_bool(x):				retorna 1 se x for do tipo boolean, independente se for true ou false
+		is_null(x):				retorna 1 se x for null (valor)
+			*Null é diferente de vazio, só é null se realmente houver null atribuída a ela
+			
+		empty(x):				retorna 1 se x estiver vazio (string "" ou null retornam 1)
+		isset(x):				retorna 1 se x estiver configurada - com valor (string "" não é configuração, mas qualquer caractere dentro passa a ser)
+		
+	-Funções de array:
+		count($array):							retorna o número de elementos do array $array
+		max($array):							retorna o maior número do array
+		min($array):							retorna o menor número do array
+		array_sum($array):						retorna a soma de todos os elementos
+		sort($array):							ordena os elementos de forma crescente
+		rsort($array):							ordena os elementos de forma decrescente
+		shuffle($array):						ordena os elementos de forma aleatória
+		in_array(elemento,$array):				retorna 1 caso o elemento "elemento" esteja presente no array $array
+		number_format(x, n):					formata o decimal x para n casas decimais
+		
+		-Imprimir todos os elementos do array:
+			<pre>
+				<?php
+					print_r($array);		-> imprime o índice e o valor
+				?>
+			</pre>
+
+	-Operador ternário:
+		-Funciona como um if que atribui um valor a uma variável dependendo do resultado de uma condição
+		$idade = 17;
+		$maioridade = (condição)? "valor que será atribuido à maioridade caso a condição seja verdadeira" : "valor que será atribuido caso seja falsa";
+		
+	-List:
+		-Funciona como uma maneira de desmembrar o array
+			list($r1, $r2) = array(12, 13);
+			echo $r1 . $r2;
+			
+	-Data:
+		-Retorna toda a informação de data do usuário
+		-Usar o método date_default_timezone_set() para determinar o fuso horário
+		
+			date_default_timezone_set('Etc/GMT+3'); determina o fuso horário do Brasil
+			date_default_timezone_set('America/Sao_Paulo'); determina o fuso horário de São Paulo
+		
+		getdate():
+			$agora = getdate();			
+			$ano = $agora["year"];
+			$mes = $agora["mon"];
+			$dia = $agora["mday"];			
+			$hora = $agora["hours"];
+			$min = $agora["minutes"];
+			$sec = $agora["seconds"];
+			
+		strftime():	função para formatação de data e hora com informações extensas
+			$ano = strftime('%Y');
+			$mes = strftime('%B');
+			$dia =  strftime('%d');			
+			$hora = strftime('%H');
+			$min = strftime('%M');
+			$sec = strftime('%S');
+			
+		setlocale(): determina a localização, com as informações sendo mostradas na língua determinada
+			setlocale(LC_TIME, "pt_BR");
+		
+		-Diferença entre datas:		
+			diff:
+				$data1 = new DateTime('2018-02-19');
+				$data2 = new DateTime('2015-01-21');
+				$intervalo = $data1->diff($data2);		-> retorna a diferença completa entre a data1 e data2
+				
+		format('% c'):
+			-"c" é um caractere que indica qual informação será exibida
+			
+			print_r($intervalo->format('%Y'));	-> exibe o ano
+			
+			print_r($intervalo->format('%R%Y'));	-> exibe a informação com diferença positiva ou negativa ( %R )
+			
+	-Links com parâmetros:
+		-Parâmetros em links são definidos com uma interrogação após a página, sendo a ? e um nome de variável qualquer, contendo um valor associado
+		
+			<a href="destino.php?codigo=0"></a>
+			<a href="destino.php?codigo=1"></a>
+			<a href="destino.php?codigo=2"></a>
+			
+		-Um segundo parâmetro pode ser definido após o caractere &
+			
+			<a href="destino.php?codigo=2&fruta=0"></a>
+			
+		-Para recuperar o dado, na página de destinno, criar:
+			$codigo = $_GET["codigo"];	-> deve conter o nome do parâmetro que foi passado
+			
+	-Formulários:
+		HTML:
+			<form action="destino.php" method="post">
+				<label for="nome">Nome Completo</label>
+				<input type="text" name="nome" id="nome">
+				
+				<label for="email">Email</label>
+				<input type="text" name="email" id="email">
+				
+				<input type="submit" value="Enviar Cadastro">
+			</form>
+		
+		PHP:
+			$nome = $_POST["nome"];
+			$email = $_POST["email"];
+		
+		-Prever mostra de dados vazios (caso formulário não esteja 100% preenchido):
+			if(isset($_POST["nome"])){
+				$nome = $_POST["nome"];
+			
+			}else{
+				$nome = "Sem definição";
+			}
+		
+		-Enviar dados para a mesma página:
+			-Adicionar um name ao submit
+			
+				<input type="submit" name="formulario" value="Enviar Cadastro">
+				
+			-Adicionar php na mesma página, no escopo global
+				<?php
+					if(isset($_POST["formulario"])){
+						$nome = isset($_POST["nome"])? $_POST["nome"] : "Sem definição";
+						$email = isset($_POST["email"])? $_POST["email"] : "Sem definição";
+												
+						echo "Meu nome é " . $nome . "<br>";
+						echo "Meu email é " . $email;
+						
+					}
+				?>
+
+				<!doctype html>
+				<html>
+					<head>
+						<meta charset="UTF-8">
+						<title>Curso PHP FUNDAMENTAL</title>
+						<link href="_css/estilo.css" rel="stylesheet">
+					</head>
+
+					<body>
+						<?php if(!isset($_POST["formulario"])){ ?>
+						<form action="formulario2.php" method="post">
+							<label for="nome">Nome Completo</label>
+							<input type="text" name="nome" id="nome">
+							
+							<label for="email">Email</label>
+							<input type="text" name="email" id="email">
+							
+							<input type="submit" name="formulario" value="Enviar Cadastro">
+						</form>
+						<?php } ?>
+					</body>
+				</html>
+
+-Redirecionar páginas:
+	-Utilizar a função header para redirecionar a página atual para outra
+		header('Location: www.google.com.br');
+	
+	-Caso necessário enviar uma mensagem antes, utilizaro refresh:
+		header( "refresh:5;url=www.google.com" );
+		echo 'Mensagem recebida! Redirecionando em 5 segundos...';
+		
+		-O valor do refresh é o tempo em segundos até redirecionar a página para o link indicado no url
+		
+	-Comando javascript:
+		window.location.replace('www.google.com');
+	
+	-Alternativas:
+		https://pt.stackoverflow.com/questions/30266/header-atropelando-o-echo
+		
+-Caracteres especiais vindo de um banco de dados:
+	utf8_encode(<string>);	-> Formata o conteúdo da string passada no parâmetro para UTF-8
+	
+-Utilização de objetos:
+	-Acessar os atributos de um objeto com ->
+	-Resgatando um objeto de uma consulta SQL:
+	
+		while($linha = mysqli_fetch_object($produtos)){
+	
+		<li> <?php echo $linha->nomeproduto ?> </li>	-> Objeto linha apontando para o atributo produto
+
+-Classes:
+	class Funcionario{
+		public $nome = null;
+		public $telefone = null;
+		public $numFilhos = null;
+		
+		function resumirCadFunc(){
+			return "$this->nome eh o nome";
+		
+		}
+		
+		function modificarNumFilhos(){
+		
+		
+		}
+	
+	
+	}
+	
+	$y = new Funcionario();
+	echo $y -> resumirCadFunc();
+	
+	-Sobrecarga de get/set:
+		function __set($atributo, $valor){
+			$this->$atributo = $valor;
+		
+		}
+		
+		function __get($atributo){
+			return $this->$atributo;
+		
+		}
+		
+		$y->__set('nome', 'jose');
+		echo $y->__get('nome');
+
+	-Construtor:
+		function __construct($nome){
+			$this->nome = $nome;
+		}
+		
+		function __destruct(){
+			echo 'objeto removido';
+		
+		}
+		
+		unset($y);									-> Remove o objeto da memória
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

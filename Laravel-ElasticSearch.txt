@@ -1,0 +1,68 @@
+- Elasticsearch: ferramenta para gerenciar análises e busca de dados
+- Permite escalonar, sendo quase em real-time
+- Utilize a Apache Lucene para utilizar nas buscas
+
+- Configurando:
+    Para configurar o Elasticsearch, vamos editar os arquivos de configuração dele. O Elasticsearch tem três arquivos de configuração:
+
+    Elasticsearch.yml para configuração do Elasticsearch, o arquivo de configuração principal, localizado no diretório /etc/elasticsearch
+    jvm.options para definir as configurações do Java Virtual Machine (JVM) do Elasticsearch
+    log4j2.properties para a configuração de logs do Elasticsearch
+
+- Cluster:
+    - Pode ter vários nodes, sendo uma instância do Elasticsearch cada um.
+    - O node master processa as requisições e manda para os seguintes.
+    - Os nodes retornam os dados requisitados
+    - Os nodes possuem Shards, contendo índices dos dados
+    - Caso um node falhe, a requisição passa para o próximo e o master é notificado
+    - Os índices também podem ser desmembrados em shards menores por questões de tamanhos
+    - Os shards podem ser replicados como backup
+    - Indexação:
+        Shard         | BD relacional
+            index     | schema
+            type      | tabela
+            document  | linha tabela
+        - Indexar significa inserir um novo dado
+    - As consultas são tratadas com JSON
+
+- Funciona com requisições HTTP e com JSON
+    GET localhost:9200/              -> exibe as informações básicas do cluster
+    GET localhost:9200/_cat/health   -> exibe as informações de saúde
+    GET localhost:9200/_cat/health?v -> exibe as informações de saúde com verbose, mais legível
+        - Status:
+            verde: ok
+            amarelo: +-
+            vermelho: deu ruim amigão
+    GET localhost:9200/_cat/indices  -> exibe as informações dos índices criados
+    GET localhost:9200/_cat/nodes    -> exibe as informações dos nós criados
+
+- Criar índice:
+    POST localhost:9200/{nome_indice}/{tipo_doc}
+    {
+        "atributo": "valor"
+    }
+
+- Remover índice:
+    DELETE localhost:9200/{nome_indice}
+
+- Consultar:
+    GET localhost:9200/{nome_indice}/{tipo_doc}/_search?pretty
+
+- Consultas com query:
+    POST localhost:9200/{nome_indice}/{tipo_doc}/_search?pretty
+    {
+        "query": {
+            "match": {
+                "atributo": "valor"
+            },
+            "bool": {
+                "must": {
+                    { "match": { "atributo": "valor" } },
+                    { "match": { "atributo2": "valor2" } }
+                }
+            }
+        }
+    }
+
+- Mapeando:
+    GET localhost:9200/{nome_indice}/{tipo_doc}/_mapping?pretty

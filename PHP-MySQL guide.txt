@@ -1,0 +1,652 @@
+PHP com MySQL
+
+-Funções pré-definidas:
+	-mysqli_connect						Conexão com o banco
+	-mysqli_connect_errno				Número do erro
+	-mysqli_connect_error
+	-mysqli_real_escape_string
+	-mysqli_query
+	-mysqli_fetch_assoc
+	-mysqli_close
+	
+-Iniciar conexão:
+	-Utilizar variável para conexão, junto com a função mysqli_connect
+		$conecta = mysqli_connect("localhost", "root", "", "andes");
+		
+		-Parâmetros: nome do servidor (servidor do banco), usuário, senha, nome do banco 
+		
+		-Importante sempre fechar a conexão:
+		
+		mysqli_close($conecta) -> variável de conexão do banco de dados
+		
+	-Testar conexão:
+		-Por algum motivo, a conexão pode não ser um sucesso, por motivos de mudança do banco, servidor, etc
+		
+		if(mysqli_connect_errno()){			-> Retorna o número de erro, 0 caso nada tenha ocorrido
+			die("Conexao falhou " . mysqli_connect_errno());	-> "die" é capaz de encerrar a conexão, exibindo a mensagem definida
+		
+		}
+		
+		-Para o usuário pouco importa qual erro ocorreu, os testes são feitos para iniciare, rotinas que resolvam o problema
+		
+-Criar uma consulta ao banco:
+	-Criar uma variável que contenha o comando de pesquisa:
+		$consulta = "SELECT * FROM categorias WHERE categoriaID > 2";
+		
+	-Utilizar uma variável que recebe o retorno da consulta da função mysqli_query:
+		$tabela = mysqli_query($conecta, $consulta);	-> A função deve receber como parâmetro a variável do banco de dados e a variável que contém a consulta
+		
+	-Verificação de erro:
+		if(!$tabela){
+			die("Erro na consulta");
+		
+		}
+		
+	-É possível fazer a consulta em mais de uma linha, de forma a deixar mais legível:
+		$consulta = "SELECT * ";
+		$consulta .= "FROM categorias ";		-> Atenção para o espaço antes de continuar o comando
+		$consulta .= "WHERE categoriaID > 2";	-> O ponto "." antes do "=" indica concatenação
+		
+-Exibir as consultas:
+	-Inicar um código php dentro do body da página
+	-É utilizado um código de repetição junto com a função mysqli_fetch_row, que separa o array recebido com as consultas por coluna
+		
+		while($registro = mysqli_fetch_row($tabela)){	-> A variável registro recebe coluna por coluna retornada na variável de resultado da consulta
+			print_r($registro);							-> É usado o print_r por se tratar de um array, onde cada posição é o valor de uma coluna (array dinâmico)
+			echo "<br>";								-> O array é sempre criado novamente recebendo cada linha com os valores das colunas recebidas
+			
+		}
+		
+	-Tratando as consultas pelo nome das colunas:
+		-Uma alternativa para trabalhar os resultados, sem ser pelas posições do array, é utilizar a função mysqli_fetch_assoc
+		
+		while($registro = mysqli_fetch_assoc($tabela)){	
+			print_r($registro);							-> A posição no array é o nome das colunas
+			echo "<br>";								
+			
+		}
+		
+	-Uma terceira maneira, é utilizar a função mysqli_fetch_array, que é a junção das outras duas anteriores
+		-Ela exibe o índice numérico e o nome das tabelas, mostrando o mesmo resultado duas vezes
+		
+-Exibir os dados dentro de uma lista:
+	-Constantemente o código php é aberto e fechado ao meio do html
+
+		<ul>	-> Abertura da lista
+		
+			<?php
+				while($registro = mysqli_fetch_assoc($categorias)){		-> Abertura do php para o loop dos dados
+			
+			?>
+				<li><?php echo $registro["nomecategoria"]; ?></li>		-> Abertura do php dentro de cada item da lista
+				
+				//Importante ressaltar que é impresso somente o valor de certa coluna do resultado da consulta
+				//Só é possível utilizando o array associativo, que define suas posições com o nome da tabela
+				
+			<?php														-> Fechamento do loop
+				}
+				
+			?>
+		
+		</ul>	-> Fechamento da lista
+		
+-Liberar a consulta da memória do servidor:
+	-Sempre que executada uma consulta, ela ocupa a memória do servidor
+	-É importante sempre liberar após utilizar
+		
+		mysqli_free_result($tabela);
+	
+-Include e require;
+	-O comando include é capaz de incluir em uma página o conteúdo de outra
+		<body>
+			<?php
+				include("pagina1.php");
+				echo "<br>";
+				include("pagina1.php");	-> A mesma página pode ser inserida mais de uma vez
+				echo "<br>";
+				include("pagina2.php");
+			
+			?>
+		
+		</body>
+		
+	-A diferença entre o include e require, é que o include continua a página caso um dos arquivos não possam ser carregados
+		-Exibe uma mensagem de erro, mas os comandos seguintes são executados
+		-Já o require, executa um erro fatal que encerra a página, nada é mostrado
+	
+	-Para evitar que a mesma página seja incluída mais de uma vez, utilizar o comando include_once
+	
+-Otimização e proteção do código:
+	-É importante manter certos dados a salvo do usuário, utilizando include e require para encapsular certos comandos
+	
+		<?php 
+			require_once("../../conexao/conexao.php");	-> No início da página o arquivo que tem os comandos de conexão do banco de dados deve ser requerido uma vez
+
+		?>
+		
+	-Além do encapsulamento, é interessante utilizar o include em partes de código que estão presentes em todas as páginas, como footer e headers:
+		<?php include_once("_incluir/cabecalho.php"); ?>	-> Inserido nas devidas partes do código, antes e depois da tag "main"
+		<?php include_once("_incluir/rodape.php"); ?>
+		
+-Tratamento de imagens:
+	-O banco de dados não deve guardar imagens em si, mas sim um caminho para elas
+	-Montar uma página com imagens armazenadas no banco significa resgatar o caminho dessa imagem e processar dentro da página, na tag "img" e atributo "src"
+	
+		<li class="imagem"><img src="<?php echo $linha["imagempequena"] ?> "> </li>	-> "$linha" é o resultado de uma consulta à tabela que contém o endereço da imagem
+		
+-Formatação:
+	-A função money_format não funciona em alguns sistemas operacionais, como o Windows
+	-Uma solução é utilizar a função number_format que é capaz de resolver o problema de modificação relacionada a dinheiro, por exemplo
+		-Formatar o número decimal, geralmente com ponto separando as casas decimais, depende de alguns passos
+		
+		-Definir a localização:
+			-É necessário definir a localidade para o Brasil, para que os números decimais sejam tratados como valores da moeda local, o real
+			
+				setlocale(LC_ALL, 'pt_BR');
+					-LC_ALL define que a localidade vai valer para tudo, não só para funções monetárias
+					-Para alterar somente funções monetárias, utilizar "LC_MONETARY" no primeiro parâmetro
+		
+		-Soluções para tratar a exibição:				
+			money_format('%.2n', "20.0000");	
+				-Mostra o valor com duas casas decimais e o símbolo monetário logo em seguida, substituindo o ponto pela vírgula, como é característica da moeda brasileira
+				-Junto o setlocale, no linux, por exemplo, exibe "20,00 R$"
+				
+			number_format("20.000001", 2, ',', '.');
+				-Mostra o valor formatado para o real brasileiro, com duas casas decimais e vírgula como sinal que separa decimais e ponto como sinal que separa unidade de milhar
+				-Exibe "20,00"
+		
+			str_replace('.', ',', "20.00");
+				-Apenas substitui o ponto pela vírgula, mas não trata casas decimais adicionais
+				
+-Criação de uma página de detalhe dinâmica:
+	-É comum em sites de vendas, com a página principal contendo uma lista de itens e ao clicar em um item específico, ela abre informações sobre aquele item
+	-É possível fazer isso utilizando links com parâmetros, com cada parâmetro indicando o item que foi clicado
+		<li class="imagem">
+			<a href="detalhe.php?codigo=<?php echo $linha['produtoID']; ?>">	-> Define que o destino da página, ao clicar nessa parte, é a página "detalhe.php"
+				<img src="<?php echo $linha["imagempequena"] ?>">				-> Envia também o código do produto que foi clicado como parâmetro
+			</a>																-> Link com parâmetro: <a href="page.php?parametro1=valor1&parametro2=valor2"></a>
+		</li>
+		
+	-Resgatar o parâmetro enviado pela URL:
+
+		if(isset($_GET["codigo"])){				-> Verificação de existência do parâmetro, para evitar erros
+			$produto_id = $_GET["codigo"];		-> Resgatado da mesma forma: se foi enviado com letras minúsculas, assim que deve ser recebido
+		
+		}else{
+			Header("Location: inicial.php");	-> Redireciona para a página anterior caso o parâmetro não exista
+			
+		}
+		
+-Filtro de pesquisas:
+	$consulta = "SELECT *";
+	$consulta .= " FROM produtos";
+	$consulta .= " WHERE produtoID = {$produto_id}";	-> Monta a query (consulta) para fazer a pesquisa específica de certo produto
+	
+	$detalhe = mysqli_query($conecta, $consulta);
+	
+	//Teste de erro
+	if(!$detalhe){
+		die("Falha no banco de dados.");
+		
+	}else{
+		$dados_detalhe = mysqli_fetch_assoc($detalhe);			-> Define variáveis com o conteúdo específico de cada coluna do resultado
+		$produtoID 		= $dados_detalhe["produtoID"];
+		$nomeproduto	= $dados_detalhe["nomeproduto"];
+		$descricao 		= $dados_detalhe["descricao"];
+		$codigobarra 	= $dados_detalhe["codigobarra"];
+		$tempoentrega 	= $dados_detalhe["tempoentrega"];
+		$precorevenda 	= $dados_detalhe["precorevenda"];
+		$precounitario 	= $dados_detalhe["precounitario"];
+		$estoque 		= $dados_detalhe["estoque"];
+		$imagemgrande 	= $dados_detalhe["imagemgrande"];
+		
+	}
+	
+	-Basta apresentar os dados em seguida
+
+-Tela de pesquisa:
+	-O formulário com o campo de pesquisa deve ser enviado para a mesma página em que está (action voltado para a mesma página), com o método GET
+	-Basta criar, no início da página, uma verificação para a variável do formulário (isset)
+	-Caso ela esteja configurada (inserida uma pesquisa), exibe somente os produtos
+	
+	if(isset($_GET["produto"])){			-> Verifica se houve uma pesquisa
+		$nome_produto = $_GET["produto"];
+		$produtos .= "WHERE nomeproduto LIKE '%{$nome_produto}%' ";		-> Faz uma pesquisa de um produto que contém em seu nome aquilo que foi digitado
+		
+	}	-> Isso faz com que somente esses produtos sejam exibidos
+	
+-Login
+	-Ao logar, é criada uma variável de sessão, expirada caso não usada com 3 horas por definição
+	-Fica ativa entre o navegador e o servidor. Utilizar o mesmo site em outro navegador exige login novamente
+	-Criar e excluir variável de sessão:
+		
+		session_start();					-> Inicia a sessão, deve estar presente em todas as páginas que usem a sessão
+		$_SESSION["usuario"] = "Fantz";		-> Cria e atribui valor a variável de sessão
+	
+		-Recomendado utilizar a função isset($_SESSION["usuario"]) para verificar funcionamento da supervariável
+		-Encerrar a sessão:
+			unset($_SESSION["usuario"]);
+			
+		-Destruir todas as variáveis de sessão da aplicação:
+			session_destroy();
+			
+	-No início da página, verificar se existe variáveis do tipo POST configuradas
+		if(isset($_POST["usuario"])){
+			$usuario = $_POST["usuario"];	-> Define variáveis locais com o valor
+			$senha = $_POST["senha"];
+			
+			$login = "SELECT *";			-> Monta uma consulta
+			$login .= " FROM clientes";
+			$login .= " WHERE usuario = '{$usuario}' AND senha = '{$senha}' "; -> Busca os dados em que o usuário e senha sejam iguais
+			
+			$acesso = mysqli_query($conecta, $login);	-> Executar a busca
+			if(!$acesso){								-> Verificação de erro
+				die("Falha na consulta ao banco.");
+			
+			}
+			
+			$informacao = mysqli_fetch_assoc($acesso);	-> Resgatar os valores do array
+			if(empty($informacao)){						-> Verifica se o array está vazio: caso sim, o usuário ou senha não existe
+				$mensagem = "Login sem sucesso";
+				
+			}else{										-> Se existir valor no array, significa que o login foi efetuado com sucesso
+				$_SESSION["user_portal"] = $informacao["clienteID"]; 	-> Define valor para a variável de sessão
+				header("location: listagem.php");		-> Redireciona para página de acesso restrito a usuários logados
+				
+			}
+			
+		}
+		
+	-Proteção da página para restringir acesso somente com login:
+		-Logo após iniciar a sessão, fazer um teste de existência da variável de sessão, configurada somente com o login correto
+			session_start();
+	
+			if(!isset($_SESSION["user_portal"])){	-> Caso não exista a variável configurada
+				header("location: login.php");		-> Redireciona o usuário para a página de login
+				break;								-> Garante que o restante da página não seja lido
+			}
+	
+	-Rotina de saudação de login:
+		-Em um arquivo a parte, ou no código do header da página, inserir:
+			if(isset($_SESSION["user_portal"])){
+				$user = $_SESSION["user_portal"];
+				
+				$saudacao = "SELECT nomecompleto";
+				$saudacao .= " FROM clientes";
+				$saudacao .= " WHERE clienteID = {$user}";	-> Monta a consulta que busca o nome do usuário logado através do seu ID na variável de sessão
+				
+				$saudacao_login = mysqli_query($conecta, $saudacao);
+				if(!$saudacao_login){
+					die("Falha no banco.");
+					
+				}
+				
+				$saudacao_login = mysqli_fetch_assoc($saudacao_login);
+				$nome = $saudacao_login["nomecompleto"];
+				
+			?>
+			
+			<div id="header_saudacao">
+				<h5>Bem vindo, <?php echo $nome; ?> </h5>	-> Insere a saudação na página
+			</div>
+			<?php
+				}
+				
+			?>
+			
+	-Logout:
+		-Página de logout:
+			<?php
+				session_start();					-> Inicia a sessão
+				unset($_SESSION["user_portal"]);	-> Encerra a sessão, bloqueando o acesso as outras páginas restritas
+				header("location: login.php");		-> Redireciona o usuário para a página inicial
+
+			?>
+			
+-Caracteres especiais vindo de um banco de dados:
+	utf8_encode(<string>);	-> Formata o conteúdo da string passada no parâmetro para UTF-8
+			
+-Inserir dados em um banco:
+	-Criar um formulário para a página com o nome dos campos sendo os mesmos das colunas do banco
+	-Inserir opções do formulário dinamicamente:
+		-No início da página, consultar os nomes a partir de um banco:
+			//Exemplo de preenchimento de formulário que pega o nome de todos os estados
+			<?php
+				$select = "SELECT estadoID, nome";
+				$select .= " FROM estados";
+				
+				$lista_estados = mysqli_query($conecta, $select);
+				if(!$lista_estados){
+					die("Erro no banco.");
+					
+				}
+
+			?>
+			
+		-No formulário, insirir no campo select:	
+			<select name="estados">
+				<?php
+					while($linha = mysqli_fetch_assoc($lista_estados)){
+					
+				?>
+				
+					<option value="<?php echo ($linha["estadoID"]); ?>"> 
+						<?php echo utf8_encode($linha["nome"]); ?> 
+					</option>
+					
+				<?php
+					}
+					
+				?>
+			</select>
+	
+	-No início da página, verificar se o formulário foi preenchido:
+		if(isset($_POST["nometransportadora"])){
+			$nome 		= utf8_decode($_POST["nometransportadora"]);
+			$endereco 	= utf8_decode($_POST["endereco"]);	-> Nomes na variável POST deve ser o mesmo que está no formulário
+			$cidade		= utf8_decode($_POST["cidade"]);
+			$estado 	= utf8_decode($_POST["estados"]);
+			$cep 		= utf8_decode($_POST["cep"]);		-> utf8_decode é responsável por adaptar as informações para a codificação de caracteres do banco
+			$cnpj 		= utf8_decode($_POST["cnpj"]);		-> Da mesma forma que deve ser convertido com utf8_encode quando recebido, deve ser utilizado para inserir
+			$telefone 	= utf8_decode($_POST["telefone"]);
+			
+			$inserir = "INSERT INTO transportadoras";
+			$inserir .= " (nometransportadora, endereco, telefone, cidade, estadoID, cep, cnpj)";
+			$inserir .= " VALUES";
+			$inserir .= " ('{$nome}', '{$endereco}', '{$telefone}', '{$cidade}', $estado, '{$cep}', '{$cnpj}')";	-> Monta o comando SQL
+				
+			$operacao_inserir = mysqli_query($conecta, $inserir);	-> Insere no banco e verifica erro
+			if(!$operacao_inserir){
+				die("Erro no banco.");
+				
+			}
+		
+		}
+		
+-Trabalhar alteração de dados:
+	-É necessário criar um formulário que seja preenchido automaticamente com os dados atuais, para que o usuário saiba o que pode ser alterado
+	-Na página principal, deve ser exibido um resumo dos dados disponíveis, com a opção de alteração para todos:
+		-O resumo não precisa conter todos as informações, bastam as mais importantes, como nome e aluma outra crucial
+			
+		<?php												-> Início do código: faz a consulta para buscar os dados disponíveis
+			$tr = "SELECT * FROM transportadoras ";
+			$consulta_tr = mysqli_query($conecta, $tr);
+			if(!$consulta_tr) {
+				die("erro no banco");
+			}
+		?>
+		
+		<?php
+            while($linha = mysqli_fetch_assoc($consulta_tr)) {	-> Busca dado por dado para ser exibido
+        
+		?>
+				
+        <ul>
+            <li><?php echo utf8_encode($linha["nometransportadora"]) ?></li>	-> Trata a formatação dos dados devido a codificação do banco
+            <li><?php echo utf8_encode($linha["cidade"]) ?></li>
+            <li><a href="alteracao.php?codigo=<?php echo $linha["transportadoraID"] ?>">Alterar</a> </li>	-> Exibe um link para a página de alteração, além de enviar como 
+        </ul>																								-> parâmetro o código do item que será alterado
+				
+        <?php
+            }
+			
+        ?>
+		
+	-Resgatando informações para alteração:
+		-No início da página para alterar, deve ser tratado qual informação será alterada através do parâmetro enviado pela página anterior:
+			
+			$tr = "SELECT * ";
+			$tr .= "FROM transportadoras  ";	-> Monta a consulta
+			
+			if(isset($_GET["codigo"])){			-> Verifica se foi enviado um parâmetro pelo link
+				$id = $_GET["codigo"];
+				$tr .= "WHERE transportadoraID = {$id} ";	-> Completa a consulta com o parâmetro enviado
+				
+			}else{
+				$tr .= "WHERE transportadoraID = 1 ";		-> Define uma consulta padrão caso nenhum seja enviado ou o usuário entre nessa página direto (deve-se previnir disso)
+				
+			}
+			
+			$con_transportadora = mysqli_query($conecta, $tr);	-> Faz a consulta
+			if(!$con_transportadora){							-> Verifica erros
+				die("Erro na consulta.");
+				
+			}
+			
+		-No atributo "value" de cada campo input do formulário, deve-se usar o php para resgatar a informação correspondente:
+			<input type="text" value="
+				<?php echo utf8_encode($info_transportadora["nometransportadora"]); ?>" -> Atenção para a função utf8_encode para traduzir os dados para a codificação da página
+			name="nometransportadora" id="nometransportadora">
+	
+	-Preencher um campo que necessite de mais de uma opção:
+		<?php
+			$meu_estado = $info_transportadora["estadoID"];			-> Dentro da tag select
+			while($linha = mysql_fetch_assoc($lista_estados)){
+				$estado_principal = $linha["estadoID"];				-> Detalhe para manter certo item selecionado
+								
+				if($meu_estado == $estado_principal){
+						
+		?>
+			
+			<option value="<?php echo $linha["estadoID"]; ?>" selected>
+				<?php echo utf8_encode($linha["nome"]); ?>
+			</option>
+							
+		<?php
+			}else{			-> Caso o item selecionado e o atual do array não sejam iguais, exibir normalmente
+				
+		?>
+			<option value="<?php echo $linha["estadoID"]; ?>" selected>		-> O valor da tag é atribuído dinamicamente
+				<?php echo utf8_encode($linha["nome"]); ?>					-> O conteúdo também
+			</option>
+						
+		<?php
+				}
+			}
+		?>
+		
+	-Preparando os dados alterados para atualização no banco:
+		-No início da página deve verificar a existência do formulário preenchido e tratar as novas informações:
+			if(isset($_POST["nometransportadora"])){
+				$nome 		= utf8_decode($_POST["nometransportadora"]);	-> Pega os dados do formulário, independente se foram alterados ou não
+				$endereco 	= utf8_decode($_POST["endereco"]);				-> Prepera a codificação dos caracteres
+				$cidade 	= utf8_decode($_POST["cidade"]);
+				$telefone 	= utf8_decode($_POST["telefone"]);
+				$cep 		= utf8_decode($_POST["cep"]);
+				$cnpj 		= utf8_decode($_POST["cnpj"]);
+				$estado 	= utf8_decode($_POST["estados"]);
+				$tID		= $_POST["transportadoraID"];					-> É importante resgatar também o ID do item alterado, para que não seja criado outro
+				//Essa opção ID deve estar no formulário mas com o valor do atributo type="hidden"
+			}	
+			
+		-Montar o comando de alteração:
+			$alterar = "UPDATE transportadoras ";
+			$alterar .= "SET ";
+			$alterar .= "nometransportadora = '{$nome}', ";
+			$alterar .= "endereco = '{$endereco}', ";
+			$alterar .= "cidade = '{$cidade}', ";
+			$alterar .= "telefone = '{$telefone}', ";
+			$alterar .= "cep = '{$cep}', ";
+			$alterar .= "cnpj = '{$cnpj}', ";
+			$alterar .= "estadoID = {$estado} ";
+			$alterar .= "WHERE transportadoraID = {$tID} ";
+			
+		-Alterar:
+			$operacao_alterar = mysqli_query($conecta, $alterar);
+			if(!$operacao_alterar){
+				die("Erro na alteração.");
+				
+			}else{
+				header("location: listagem.php");	-> Retorna para a página principal, mostrando os dados atualizados
+				
+			}
+		
+-Exclusão de dados:
+	-Mostrar os dados para o usuário para confirmar exclusão, semelhante à página de alteração
+		$tr = "SELECT * FROM transportadoras ";
+	
+		if(isset($_GET["codigo"])){		-> Verificar se o código do elemento a ser excluído foi passado por parâmetro
+			$id = $_GET["codigo"];
+			
+			$tr .= "WHERE transportadoraID = {$id}";	-> Monta a requisição
+			
+		}
+		
+		//Mesmo método da exibição dos dados para alteração
+		
+	-Resgatar informações para exclusão:
+		-Verificar se a página recebeu a confirmação de exclusão vinda do formulário, para confirmar a informação vinda da própria página
+		
+			if(isset($_POST["nometransportadora"])){
+				$tID = $_POST["transportadoraID"];		-> Pega o ID do objeto atual para evitar que todos os registros sejam excluídos
+				
+				$exclusao = "DELETE FROM transportadoras ";
+				$exclusao .= "WHERE transportadoraID = {$tID} ";	-> Comando de exclusão
+				
+				$con_exclusao = mysqli_query($conecta, $exclusao);	-> Exclusão
+				if(!$con_exclusao){
+					die("Erro na exclusão.");
+					
+				}else{
+					header("location: listagem.php");	-> Redirecionamento para a página principal
+					
+				}
+				
+			}
+			
+-Uploads de arquivos:
+	-Verificar o arquivo PHP.INI, com configurações importantes para uploads
+	-file_uploads deve ser "ON" ou "true"
+	-Conhecer a pasta de arquivos temporária do upload upload_tmp_dir
+	-post_max_size define o tamanho máximo de dados de postagem permitidos, com padrão de 128MB
+	-upload_max_filesize define o tamanho máximo do arquivo a ser enviado
+	-max_execution_time define o tempo máximo em segundos que é permitido rodar antes de ser finalizado pelo interpretador, evitando o congestionamento do servidor. 30 segundos de padrão
+	-max_input_time define o máximo de tempo em segundos para analisar dados de entrada como GET e POST, com padrão de 60 segundos
+	-memory_limit
+	
+	-A pasta de uploads não pode rodar nenhum script; caso algum entre nela, ele não pode publicar e executar código nela por questões de seegurança
+	
+	-Formulário de uload de arquivos:
+		-Necessário o atributo enctype="multipart/form-data" na tag <form>
+		-Define para o formulário que um arquivo pode ser publicado
+		-Tipo de input:
+			<input type="file" name="upload_file">
+			<input type="submit" name="enviar" value="publicar">
+			
+		-Recebendo o arquivo:
+			print_r($_FILES["upload_file"]);
+			
+			-Gera um array com as seguintes informações:
+				[name] => Screenshot_1.png					-> Nome do arquivo
+				[type] => image/png							-> Tipo
+				[tmp_name] => C:\xampp\tmp\php8B90.tmp		-> Local e nome temporários
+				[error] => 0								-> Não existiu erro no envio
+				[size] => 289248							-> Tamanho em b (bytes)				
+				
+				[error] => 4								-> Erro quando nenhum arquivo é enviado
+				
+		-Array contendo os possíveis erros:
+			$array_erro = array(
+				UPLOAD_ERR_OK => "Sem erro.", 																						(valor 0)
+				UPLOAD_ERR_INI_SIZE => "O arquivo enviado excede o limite definido na diretiva upload_max_filesize do php.ini.", 	(valor 1)
+				UPLOAD_ERR_FORM_SIZE => "O arquivo excede o limite definido em MAX_FILE_SIZE no formulário HTML",					(valor 2)
+				UPLOAD_ERR_PARTIAL => "O upload do arquivo foi feito parcialmente.", 												(valor 3)
+				UPLOAD_ERR_NO_FILE => "Nenhum arquivo foi enviado.",																(valor 4)
+				UPLOAD_ERR_NO_TMP_DIR => "Pasta temporária ausente.",																(valor 6)
+				UPLOAD_ERR_CANT_WRITE => "Falha em escrever o arquivo em disco.",													(valor 7)
+				UPLOAD_ERR_EXTENSION => "Uma extensão do PHP interrompeu o upload do arquivo."										(valor 8)									
+			); 
+			
+			<input type="hidden" name="MAX_FILE_SIZE" value="1000000">	-> Define o tamanho máximo de um arquivo em bytes
+			
+			$numero_erro = $_FILES['upload_file']['error'];			-> Pega o erro e utiliza o array acima para informar sobre
+			$mensagem = $array_erro[$numero_erro];
+	
+	-Mover os arquivos publicados:
+		$arquivo_temporario = $_FILES['upload_file']['tmp_name'];	-> Pega o nome temporário
+		$arquivo = basename($_FILES['upload_file']['name']);		-> Utiliza a função basename para não pegar um nome muito extenso sem necessidade
+		$diretorio = "uploads";										-> Nome da pasta destino
+		
+		move_uploaded_file($arquivo_temporario, $diretorio . "/" . $arquivo)	-> Função que move o arquivo
+		-Parâmetros: nome do arquivo temporátio, destino/nome
+		
+	-Otimização do código:
+		-Criar um arquivo com funções que definem o array de erro e responsável por mover o arquivo, trabalhando com valores de retornos
+		
+-Inserção no banco de dados com upload de arquivo:
+	-Gerar nome único para arquivos publicados:
+		-Para garantir que o código gerado será diferente de qualquer outro gerado posteriormente, geramos um código aleatório para a foto:
+			
+			$alfabeto = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";										-> Define um array de números e caracteres
+			$tamanho = 12;																			-> Define uma quantidade de caracteres
+			$letra = "";
+			$resultado = "";
+			
+			for($i = 1; $i < $tamanho; $i++){
+				$letra = substr($alfabeto, rand(0, strlen($alfabeto) - 1), 1);						-> Pega uma letra aleatória do array
+				$resultado .= $letra;																-> Junta a sequência em uma nova string
+				
+			}
+
+			date_default_timezone_set('America/Sao_Paulo');											-> Define o local de data
+			
+			$agora = getdate();
+			
+			$codigo_data = $agora["year"] . "_" . $agora["mon"] . "_" . $agora["mday"];				-> Monta uma string com ano_mês_dia
+			$codigo_data .= "_" . $agora["hours"] . $agora["minutes"] . $agora["seconds"];			-> Acrescenta hora, minutos e segundos
+			
+			echo "foto_" . $codigo_data . "_" . $resultado;											-> Define o nome do arquivo como foto_informacaoData_codigoAleatorio
+			
+			-Isso garante que não existam arquivos com o mesmo nome, já que é presente os segundos atuais da hora que o arquivo foi enviado
+			-Não é necessário guardar o nome original do arquivo, devido a presença de caracteres especiais em muitos casos
+			
+		-Pegar a extensão:
+			-Utilizar a função strrchr(string, caractere):
+				-A função pega o conteúdo a partir do caractere no segundo parâmetro, caso exista na string do primeiro parâmetro, até o final da mesma
+				
+				strrchr($arquivo, '.');	-> Pega a partir do ponto até o fim do $arquivo, como exemplo: ".jpg"
+				
+				-É importante ressaltar que a função pega a última ocorrência do caractere, outros pontos no início da string, por exemplo, são desconsiderados
+				
+-Formulário de contato:
+	-Criar um formulário comum, com nome, assunto e mensagem
+	-Processar os dados, a fim de montar uma mensagem organizada para o corpo do email, lembrando que quem enviará o email é o servidor do site hospedado para um email ou alguém
+	do próprio servidor
+		mail($destino, $assunto, $mensagem, $remetente);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

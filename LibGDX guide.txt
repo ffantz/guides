@@ -1,0 +1,346 @@
+LibGDX
+
+-Mario Bros:
+	-Game class:
+		-Implements ApplicationListener that delegates to a Screen. Allows an application to easily have multiple Screens
+	
+	-Screen interface:
+		-Represents one of many application screens, such as menus
+	
+	-Main class (Mario Bros):
+		-Extends Game ao invés de ApplicationAdapter
+		
+	-SpriteBatchs: 
+		-Container que armazena imagens para animações
+		
+	-Viewports:
+		-Resolve o problema de portabilidade entre dispositivos com diferentes resoluções
+		-Window into our game, how our game will looks into individual device
+			
+		-FitViewport:
+			-ScalingViewport that uses Scale.fit so it keeps the aspect ratio by scaling the world up to fit the screen , adding black bars (letterboxing) for the remaining space
+		
+		-StretchViewport:
+			-ScalingViewport that uses Scale.strech so it does not keep the aspect ratio, the world is scaled to take the hole screen
+		
+		-ScreenViewport:
+			-The world size is based on the size of the screen; by default 1 world unit == 1 screen pixel, but this ratio can be changed
+			
+		private OrthographicCamera gamecam;
+		private Viewport gamePort; 
+		
+		gamecam = new OrthographicCamera();
+		gamePort = new StretchViewport(800, 480, gamecam);
+		
+		@Override
+		public void resize(int width, int height) {
+			//Mudar o tamanho da tela
+			gamePort.update(width, height);
+			
+		}
+		
+		//Render
+		game.batch.setProjectionMatrix(gamecam.combined);	-> Renderiza somente o que a câmera pode ver
+		
+	-PlayScreen:
+		-Classe que trata das imagens e do jogo em si
+		-Implementa a interface Screen
+			private MarioBros game;
+	
+			public PlayScreen(MarioBros game) {
+				this.game = game;
+				
+			}
+			
+			@Override
+			public void render(float delta) {
+				//Limpa a tela
+				Gdx.gl.glClearColor(0, 0, 0, 1);			//Cor e alpha
+				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	//Limpa a tela
+				
+			}
+			
+	-Creating HUD:
+		-Scene2d.ui
+			-Layout manager for widths that we can place on the screen
+			-Plain text
+			-Update these labels
+			
+	-TileLayer: 
+		-Use to draw the game (different textures)
+		
+	-ObjectLayer:
+		-Shapes to do the colision, they are invisible and just for reference
+		
+	-Box2d:
+		-World
+			-Bodies:				-> containers
+				-Mass
+				-Velocity
+				-Location
+				-Angles
+				-Fixtures (physical)
+					-Shape
+					-Density
+					-Friction
+					-Restiution
+		
+-Flappy Bird (android):
+	-Estrutura do projeto:
+		-Métodos iniciais: create e render
+		-create() é semelhante ao método onCreate do ciclo de vida das activities
+			-Configurar e inicializar o jogo
+			Gdx.app.log("create", "Inicializado o jogo");	-> Log semelhante ao Log.i do android
+			
+		-render() é chamado de tempos em tempos para atualizar o jogo
+	
+	-Inserindo imagens:
+		-Atributo SpriteBatch para criar animações
+		private SpriteBatch batch;
+		private Texture passaro;
+		
+		@Override
+		public void create () {
+			batch = new SpriteBatch();
+			passaro = new Texture("passaro1.png");	-> Para inserir a textura é necessária a classe Batch
+
+		}
+		
+		@Override
+		public void render () {
+			batch.begin();		-> Inicia a exibição das imagens
+			
+			batch.draw(passaro, 0, 0);		-> Insere a imagem na posição x, y (respectivamente)
+			
+			batch.end();		-> Finaliza a exibição das imagens
+
+		}
+		
+		-Altura e largura de cada imagem:
+			passaro.getWidth();		-> Largura da imagem
+			passaro.getHeight();	-> Altura da imagem
+		
+		-Criar animações com as imagens:
+			-A ordem que os objetos são desenhados na tela fazem diferença, definindo o que fica em cima do que
+			
+			//Os outros 2 parâmetros adicionais no fim definem largura e altura da imagem
+			batch.draw(imagem, posicao_x, posicao_y, largura, altura);
+			
+			//Gdx.graphics.getWidth()/getHeight() recupera altura e largura da tela
+			batch.draw(imagem, posicao_x, posicao_y, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());		
+			
+			-É interessante criar variáveis que armazenem essas dimensões do dispositivo, já que serão usadas inúmeras vezes:
+				//Atributos de configuração
+				private int movimento = 0;
+				private int larguraDispositivo;
+				private int alturaDispositivo;
+				
+				@Override
+				public void render () {
+					movimento++;		-> Incrementa a variável para ser usada na nova posição da imagem, criando o movimento através das renderizações
+					batch.begin();
+
+					batch.draw(fundo, 0, 0, larguraDispositivo, alturaDispositivo);
+					batch.draw(passaro, movimento, alturaDispositivo/2);
+
+					batch.end();
+
+				}
+				
+			-Animações com diferentes imagens (criando ideia de movimento):
+				-Modificar a variável do tipo Texture para um array de Texture, com cada posição contendo um estado de movimento da imagem
+					private Texture[] passaro;
+					passaro = new Texture[3];
+					passaro[0] = new Texture("passaro1.png");
+					passaro[1] = new Texture("passaro2.png");
+					passaro[2] = new Texture("passaro3.png");
+					
+				-Criar uma variável que controle as animações (transição entre as posições do array):
+					private float variacao = 0;		-> Float para ser incrementado com uma velocidade menor, dando uma movimentação mais realista
+					
+					-Método render:
+						variacao += 0.1;
+						if(variacao > 3) variacao = 0;		-> Garante que a variável de controle não irá passar da quantidade de imagens do array
+						batch.draw(passaros[(int)variacao], 30, alturaDispositivo/2);	-> Desenha a imagem com a posição da variável de controle, convertida pra int
+						
+					-Uma outra maneira de incrementar é com o método Gdx.graphics.getDeltaTime(), retornando a dirença de tempo entre cada renderização (0.001 aproximadamente)
+						variacao += Gdx.graphics.getDeltaTime();
+						
+			-Tratar repetição da imagem (encostar em um lado da tela e aparecer novamente em outro):
+				-Fazer verificações de posicionamento
+				-Exemplo:
+					if(posicaoInicialVertical > 0)				-> Verifica se a posição atual é maior que 0
+						posicaoInicialVertical = 500;			-> Define uma nova posição para "retornar" a imagem
+						
+					if(posicaoMovimentoCanoHorizontal > larguraDispositivo)				-> Verifica se a posição atual é maior que a largura (saindo da tela)
+						posicaoMovimentoCanoHorizontal = 0 - canoBaixo.getWidth();		-> Retorna a imagem para "trás" da tela, fazendo-a surgir
+						
+					if(posicaoMovimentoCanoHorizontal < (canoBaixo.getWidth() * (-1)))	-> Verifica se a posição atual é menor do que a largura e a imagem (saindo para esquerda)
+						posicaoMovimentoCanoHorizontal = larguraDispositivo - 100;		-> Define a posição inicial da tela
+						
+	-Tratar eventos de Touch:
+		Gdx.input.justTouched();	-> Verifica se a tela foi tocada
+		
+	-Texto na tela:
+		-Atributo do tipo BitmapFont
+			private BitmapFont fonte;
+			fonte = new BitmapFont();
+			fonte.setColor(Color.WHITE);	-> Define a cor do texto
+			fonte.getData().setScale(6);	-> Define o tamanho da fonte
+			
+		-Definir pontuação:
+			//Estrutura de desenho da tela, conversão de inteiro para String, posição x e posição y
+			fonte.draw(batch, String.valueOf(pontuacao), larguraDispositivo/2, alturaDispositivo - 50);
+			
+	-Sistema de colisão:
+		-Não são feitas com as texturas, mas com formas que ficam em cima das texturas
+		-Utiliza as classes Circle e Rectangle para criar as formas e ShapeRenderer para desenhá-las, semelhante ao Batch (shape somente para ilustrar, tornar visível; não 
+		é necessário)
+		-Método render:
+			//Desenhar formas:
+			
+			//Define a forma do pássaro: posição x, posição y e raio
+			passaroCirculo.set(
+				120 + passaros[0].getWidth()/2, 
+				posicaoInicialVertical + passaros[0].getHeight()/2, 
+				passaros[0].getWidth()/2
+			);
+			
+			//Define a forma do retângulo: posição x, posição y, largura e altura
+			retanguloCanoBaixo = new Rectangle(		
+                posicaoMovimentoCanoHorizontal, 
+                alturaDispositivo/2 - canoBaixo.getHeight() - espacoEntreCanos/2 + alturaEntreCanosRandomica, 
+                canoBaixo.getWidth(), 
+                canoBaixo.getHeight()
+			);			
+			
+			//Bloco necessário apenas para ilustração
+			shape.begin(ShapeRenderer.ShapeType.Filled);	-> Forma preenchida
+			shape.circle(passaroCirculo.x, passaroCirculo.y, passaroCirculo.radius);	-> Cria a forma de círculo com as dimensões e posição do pássaro
+			shape.rect(retanguloCanoBaixo.x, retanguloCanoBaixo.y, retanguloCanoBaixo.width, retanguloCanoBaixo.height);	-> Cria a forma
+			shape.setColor(Color.BLUE);			-> Define uma cor para a forma (ilustração)
+			shape.end();
+			
+			//Verificar interseção:
+			//Teste de colisão:
+			//Classe que verifica se houve interseção entre um círculo e um retângulo (o mesmo método é usado para outras formas)
+			if(Intersector.overlaps(passaroCirculo, retanguloCanoBaixo) || Intersector.overlaps(passaroCirculo, retanguloCanoTopo)){
+				//Estado de jogo = game over
+				estadoJogo = 2;
+
+			}
+			
+			if(estadoJogo == 2){
+				batch.draw(gameOver, larguraDispositivo/2 - gameOver.getWidth()/2, alturaDispositivo/2);
+				mensagem.draw(batch, "Toque para reiniciar!", larguraDispositivo/2 - 200, alturaDispositivo/2 - gameOver.getHeight()/2);
+				
+				//Reiniciar (dentro do loop != 0) consiste em redefinar variáveis aos valores iniciais
+				if(Gdx.input.justTouched()){
+                    estadoJogo = 0;
+                    pontuacao = 0;
+                    velocidadeQueda = 0;
+                    posicaoInicialVertical = alturaDispositivo/2;
+                    posicaoMovimentoCanoHorizontal = larguraDispositivo;
+
+                }
+
+			}
+			
+		-Trabalhando com ícones para diferentes dispositivos:
+			-Pastas:
+				-Android
+					-Res
+						-Diferentes pastas drawable:
+							-mdpi 		(pequeno)						48x48
+							-hdpi		(médio)							72x72
+							-xdpi		(grande)						96x96
+							-xxdpi		(muito grande)					144x144
+							-xxxdpi		(maior ainda - LibGDX)			192x192
+			
+			-Modificar o ícone inicial do jogo:
+				-AndroidManifest:
+					android:icon="@drawable/ic_flappybird" -> Após copiar os ícones de cada resolução para sua respectiva pasta
+					
+	-Ajustar para diferentes resoluções:
+		-Camera:
+		-Viewport: área disponível para visualização da tela
+		
+		-Atributos para controle:
+			private OrthographicCamera camera;
+			private Viewport viewport;				-> Criar um viewport com tamanho fixo; a LibGDX cuida do restante
+			
+			//Constantes para a resolução (adaptar para aplicações diferentes)
+			private final float VIRTUAL_WIDTH = 768;
+			private final float VIRTUAL_HEIGHT = 1024;
+			
+			-Instanciar a camera normalmente, mas viewport recebe classes diferentes
+			camera = new OrthographicCamera();
+			
+			//Recebe 3 parâmetros: largura, altura e a camera
+			viewport = new StretchViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
+			
+			//FitViewport corta parte da tela para ocupar todo o espaço, como algumas TV's cortam partes do filme para encaixar a resolução sem partes preta
+			viewport = new StretchViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
+			
+			//Sobrescrever o método resize() -> Chamado após o método create()
+			@Override
+			public void resize(int width, int height) {
+				viewport.update(width, height);
+			}
+					
+			//Modificar atributos larguraDispositivo e alturaDispositivo para receber as constantes (modificar elas para float)
+			private float larguraDispositivo;
+			private float alturaDispositivo;
+			
+			larguraDispositivo = VIRTUAL_WIDTH;
+			alturaDispositivo = VIRTUAL_HEIGHT;
+			
+		-Configurar projeção da câmera no batch:
+			-Antes do batch.begin():
+				batch.setProjectionMatrix(camera.combined);	-> Recupera os dados de projeção
+				
+			-Posicionar a câmera (logo após instanciar):
+				camera = new OrthographicCamera();
+				camera.position.set(VIRTUAL_WIDTH/2, VIRTUAL_HEIGHT/2, 0);	-> Recebe os valores x, y e z (caso de aplicação 3D)
+				
+			-No método render, é necessário atualizar a câmera e limpar os frames anteriores, para ocupar e gastar menos memória
+				camera.update();
+				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				

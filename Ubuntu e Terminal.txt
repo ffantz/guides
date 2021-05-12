@@ -1,0 +1,84 @@
+Diretório root/raiz (/):
+- bin: arquivos binários, podem ser executados diretamente pelo terminal
+- home: dados pessoais e diretórios de usuários
+- var: dados de crash, backups, servidores
+- tmp: arquivos temporários de sistema
+- root: dados do administrador
+- lib: bibliotecas de programas
+
+ctrl + alt + t: abrir terminal:
+
+Terminal:
+usuario@maquina
+
+ctrl + shift + t: nova aba:
+ctrl + shift + n: nova janela
+TAB: completa o nome de uma pasta ou arquivo que está sendo digitado
+ctrl + l: limpar a tela:
+ctrl + c: interromper uma execução:
+
+Comandos:
+pwd: mostra a pasta/caminho atual
+cd: navega entre diretórios
+    cd <nome da pasta>: entra na pasta indicada
+    cd .. : volta ao diretório anterior
+ls: lista o conteúdo do diretório
+    ls -l: lista arquivos com detalhes
+    ls -lh: lista arquivos com detalhes mais completos
+        permissão | dono | grupo | tamanho | data | nome
+        -rw-r--r--:
+        drwxr-xr-x:
+            d: indica que é um diretório
+            rwx: permissões do dono (leitura, escrita, permissão de execução)
+clear: limpa a tela
+mkdir <nome>: cria uma pasta
+echo <mensagem>: imprime a mensagem na tela
+> : insere o retorno do comando anterior ao símbolo em um arquivo ou função indicada após
+    echo teste > mensagem.txt : insere o texto "teste" no arquivo "mensagem.txt"
+cat <arquivo>: imprime o conteúdo do arquivo na tela
+more <arquivo>: imprime o conteúdo do arquivo na tela
+cp <origem> <destino>: copia conteúdo indicado em origem para o destino
+mv <arquivo> <novo_nome>:
+    - Se usado no mesmo diretório, renomeia o arquivo ou pasta
+    - Se usado em diretórios diferentes, move o arquivo ou pasta
+rm: remover
+rm -rf: remover o conteúdo forçado (para apagar pastas e todo seu conteúdo interno)
+sudo: define permissões de administrador para executar comandos (necessário digitar a senha de usuário adm)
+sudo su: alterna para o usuário root
+<comando> &: executa o comando em background, criando um processo
+top: lista os processos e programas que estão sendo executados
+kill -9 <pid>: finaliza o processo indicado (pid = process ID)
+apt-get install <pacote>: instala o pacote indicado (necessário permissão sudo)
+htop (pacote): gerenciador de tarefas mais completo
+vi <arquivo>: abre o arquivo para edição
+    - ESC: interrompe o momento de escrita
+    - Para salvar o conteúdo, basta pressionar esc e em seguida :wq ou :x
+    - :q! ignora as alterações e sai do arquivo
+    - A tecla I inicia o modo de inserção
+    - A tecla D pressionada duas vezes apaga a linha selecionado
+    - :n pula para a linha n do arquivo
+    - /<texto> busca pelo texto indicado no arquivo
+        - Enter vai navegando entre as próximas ocorrências
+sudo shutdown -r now: reinicia o computador
+sudo shutdown -h now: desliga o computador
+exit: sai do terminal
+
+CHMOD X CHOWN
+chmod: altera as permissões de um arquivo ou pasta
+    chmod 777 arquivo.txt
+    7 7 7:
+          dono   grupo  todos
+          4 2 1  4 2 1  4 2 1
+          r w x  r w x  r w x
+    max :   7      7      7
+    chmod +x: dá permissão de execução para todas as categorias
+    - O parâmetro -R faz com que seja recursivo, alterando todo o conteúdo interno de uma pasta indicada
+    - O parâmetro * altera tudo no diretório atual ou indicado
+chown: altera o dono/grupo do arquivo
+    chown <dono>:<grupo> <nome_arquivo>
+
+Shell script (arquivos .sh):
+    - Para executar arquivos shell, é necessário usar o comando bash <arquivo.sh>
+    - Para executá-los diretamente, é necessário incluir o seguinte código na primeira linha do arquivo:
+        #!/bin/bash     -> indica que utilizará o bash para executar os próximos comandos
+    ./<arquivo.sh>: executa o arquivo

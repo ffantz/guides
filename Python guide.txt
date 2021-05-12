@@ -1,0 +1,1226 @@
+Python 3
+
+-Jupyter: utilizado para os data sciences
+-Anaconda: arquivos para o Python
+
+-Instalação:
+	-Jupyter:
+		cmd: 
+			pip install jupyter
+			pip3 install jupyter
+			
+			jupyter notebook	-> Exibe o bloco de notas no seu navegador local
+			http://localhost:8888/tree
+			
+-Executando códigos Python no cmd:
+	-Salvar arquivos com extensão .py
+	cmd:
+		python arquivo.py
+		
+-Jupyter notebook:
+	-Linahs de comandos passam pelo Kernel
+	-Operações com células
+		shift+enter				-> Roda a linha selecionada
+		alt+enter				-> Roda a linha selecionada e adiciona uma linha extra
+		dd (d 2x)				-> Deleta a linha
+		tab: 					-> Sugere métodos
+		shift+tab:				-> Descrição do método
+		
+	-Tipos de células:
+		code: 				linhas de código interpretado pelo Kernel
+		markdown: 			comentários
+			# comentário: 		título
+			**comentário**: 	negrito
+			
+-Comentários em Python: 
+	#comentario	
+	'''	
+	bloco
+	de
+	comentarios	
+	'''
+	
+-help(objeto):
+	-Exibe uma ajuda do Python em relação àquele objeto
+	
+-Git:
+	-Software local para controle de versão para grandes projetos trabalhado em equipe
+	https://guides.github.com/activities/hello-world/
+	https://help.github.com/articles/git-and-github-learning-resources/
+	http://try.github.io/
+	
+-Objetos básicos de Python:
+	-Números:
+		-Inteiros e pontos flutuantes
+			type(1)			-> int
+			type(3.1)		-> float
+			
+		-Divisão de int/int gera float
+			5**8			-> Potência
+			5**0.5			-> Raiz quadrada
+			
+		-Variáveis:
+			a = 5;
+			
+			-Os nomes não podem começar com um número
+			-Não pode haver espaços no nome. Use _ em vez disso
+			-Não é possível usar nenhum desses símbolos: '", <> /? | \ ()! @ # $% ^ & * ~ - +
+			-É considerada a melhor prática (PEP8) que os nomes são minúsculos
+			
+	-Strings:
+		-Armazenam texto
+			' ' ou " "
+			type("")		-> str
+		
+		-Sequências de caracteres, onde cada item tem uma posição
+		-Mesclar aspas simples e duplas para imprimir ambas
+			print( <string> )						-> Imprime um texto
+			print(variavel, "texto", variavel)		-> Imprime já com espaços antes e depois de "texto"
+			\n 										-> Quebra de linha
+			\t 										-> Insere um tab de espaçamento
+			len( <string > )						-> Tamanho da string (qtd. de caracteres)
+			
+		-Indexação:
+			-Acessar posição dos elementos usando []
+			minha_string = "Olá mundo!"
+			minha_string[2]					-> Retorna o objeto na posição número 2 (array inicia por 0)
+			minha_string					-> Todo o objeto
+			minha_string[:]					-> Todo o objeto
+			minha_string[ n :]				-> Puxa tudo a partir da posição n, incluindo n
+			minha_string[: m]				-> Imprime até a posição m, excluindo m
+			minha_string[n:m]				-> Imprime da posição n até a posição m-1
+			minha_string[-m]				-> Imprime a partir do final (trás pra frente), sendo o último o -1
+			minha_string[:-m]				-> Imprime a partir do final, exceto a última letra
+			minha_string[::]				-> O item após o segundo ponto indica o espaçamento que será retornado entre cada elemento da indexação
+				-Padrão é um, indicando que irá pegar os elementos de 1 em 1
+
+			minha_string[::2]				-> Retorna de 2 em 2 elementos
+			minha_string[::-1]				-> Retorna de trás pra frente (passos negativos)
+			
+		-Strings são imutáveis
+			minha_string[0] = 'G'			-> Produz erro
+			
+		-Strings são concatenáveis
+			minha_string + "teste"			-> Concatena duas strings
+			minha_string * n				-> Imprime a string múltiplas (n) vezes
+			
+		-Strings possuem métodos
+			minha_string.lower()			-> Converte para caixa baixa mas sem alterar a variável original
+			minha_string.upper()			-> Converte para caixa alta mas sem alterar a variável original
+			minha_string.split()			-> Divide o elemento em elementos individuais, usando o " " como padrão para separação
+			minha_string.split(',')			-> Divide o elemento em elementos individuais, usando o parâmetro para separação (não inclui o parâmetro)
+			minha_string.replace(" ", "")	-> Substitui toda ocorrência do primeiro parâmetro na string pelo segundo
+			minha_string.startswith(c)		-> Verifica se a string inicia com o caractere c
+			
+			carac = '-'
+			sequencia = ["a", "b", "c"]
+			carac.join(sequencia)			-> "a-b-c"
+			
+		-Import:
+			import string
+			string.ascii_lowercase			-> Retorna uma string com o alfabeto inteiro em letras minúsculas
+
+-Formatação:	
+	'Insira uma outra string nas chaves: {}'.format('texto para as chaves')
+		-Gera: 
+		'Insira uma outra string nas chaves: texto para as chaves'
+		
+		-Format gera uma estrutura de dicionário (chaves)
+		
+		minha_string = 'One {a}, Two {b}, Three {c}'.format(a = 1, b = "2", c = 3)		-> Substitui as variáveis nos locais certos, desconsiderando os tipos
+				
+	print('Uma %s auxiliar' %(minha_string))		-> imprime o valor de minha_string, no lugar da %
+		-As letras após a % indicam o tipo que será impresso
+		
+	print('Pontos flutuantes: %1.2f' %(13.144))		-> Imprime o número com o formato m.f, onde M é o espaço total (considerando casas decimais) e f o número de casas decimais, preenchidos com espaços em branco
+	
+		%s usa a função str()
+		%r usa a função repr()
+		
+		a1 = 50
+		a2 = 'texto'
+		print('Temos um numero aqui: %r e uma string aqui %s' %(a1, a2))
+		
+-Listas:
+	-Semelhantes a Arrays
+		minha_lista = [1, 2, 3]
+		type(minha_lista)		-> list
+		
+	-Tamanho não é constante e aceita múltiplos tipos de dados
+		minha_lista = [1, "dois", 3.5]
+		
+	-Elementos retornados pela indexação
+	-É possível juntar as duas listas sem alterá-las originalmente
+		minha_lista + minha_lista2						-> Une a segunda lista no fim da primeira
+		minha_lista + ["quarto elemento"]				-> Adiciona no fim da lista
+		len(minha_lista)								-> retorna o tamanho da lista
+		minha_lista * n									-> Retorna a lista n vezes
+		[0] * 3											-> Retorna uma lista [0, 0, 0]
+		
+	-Métodos:
+		minha_lista.append( item )						-> Adiciona um item ao fim da lista
+		minha_lista.pop()								-> Remove o último item da lista e o retorna
+		minha_lista.pop(n)								-> Remove o item de posição n da lista e o retorna
+															-> Produz erro se não existir o índice informado
+															
+		minha_lista.reverse()							-> Inverte a ordem dos itens permanentemente
+		minha_lista.sort()								-> Ordena os itens (altera a lista em si)
+		sorted(minha_lista)								-> Ordena os itens (não altera o valor da lista)
+		
+		elemento in minha_lista							-> Retorna True se o elemento estiver presente na lista
+		
+-Matriz:	
+	lst_1=[1,2,3]
+	lst_2=[4,5,6]
+	lst_3=[7,8,9]
+	
+	matriz = [lst_1, lst_2, lst_3]						-> Lista de listas
+	len(matriz[0])										-> Retorna o tamanho da matriz ou do item dentro dela
+	matriz[0][1]										-> Acessa o item 1 da lista 0 dentro da matriz
+	
+	primeira_coluna = [row[0] for row in matriz]		-> Pega o elemento 0 em cada coluna na matriz
+	
+-Dicionários:
+	-Não são classificáveis
+	-Semelhantes a hash tables
+		dicionario = {'chave1':'valor1','chave2':'valor2'}		-> Cria um dicionário com chaves e valores
+		dicionario['chave1']									-> Retorna o valor da respectiva chave
+		type(dicionario)		-> dict
+		
+	-Não existe uma sequência nos dicionários
+	-Os valores de um dicionário podem ser listas
+			
+		dicionario = {'chave1': [12, 23, 34], 'chave2':'valor2'}		-> Cria um dicionário com lista em um dos valores
+		dicionario['chave1'][0]											-> Acessa um elemento daquele item presente naquela chave
+		dicionario['chave1'][0].upper()									-> Chama métodos de lista naquele elemento dentro do dicionário
+			
+	-É possível alterar os valores:
+		dicionario['chave1'][0] -= 12									-> Realiza operações com o elemento daquela chave
+		dicionario['chave1'] += 470										-> Realiza operações com o elemento daquela chave
+			
+	dicionario = {}											-> Cria um novo dicionario
+	dicionario['animal'] = 'cao'							-> Cria um novo elemento por associação
+		
+	-Dicionários aninhados:
+		d = {'key1':{'nestkey':{'subnestkey':'value'}}}					-> Insere um dicionário dentro de outro
+		d['key1']['nestkey']['subnestkey']								-> Acessa as chaves mais internas
+		
+	-Métodos:
+		dicionario.keys()												-> Retorna as chaves no formato de dict_keys
+		list(dicionario.keys())											-> Retorna uma lista com todas as chaves daquele dicionário
+			['key3', 'key2', 'key1']
+			
+		list(dicionario.keys())[2]										-> Retorna um elemento específico da lista gerada
+			['key1']
+			
+		dicionario.values()												-> Retorna os valores no formato de dict_values
+		list(dicionario.values())										-> Retorna uma lista com todos os valores daquele dicionário
+			[3, 2, 1]
+			
+		dicionario.itens()												-> Retorna os itens no formato de dict_items			
+		list(dicionario.itens())										-> Retorna as tuplas dos itens daquele dicionário
+			[('key3', 3), ('key2', 2), ('key1', 1)]
+			
+	-Estrutura semelhante ao JSON
+	
+-Tuplas:
+	-Imutáveis
+	-Listas iniciam com [] e tuplas com ()
+		tupla = (1, 'one', 3, [1, 3, "string"])
+		type(tupla)			-> tuple
+		tupla[0]			-> 1
+		len(tupla)			-> Retorna o tamanho da tupla 
+		
+	-Métodos básicos:
+		tupla.index(elemento)				-> Retorna o index de tal elemento
+		tupla.count(elemento)				-> Retorna o número de vezes que o elemento aparece na tupla
+		
+	-Tuple unpacking:
+		var1, var2 = (1, 2)					-> Transfere o primeiro valor da tupla para var1 e o segundo para var2
+		
+	-Não pode usar append nem modificar nenhum elemento
+	-Usado somente quando dados precisam ter maior integridade
+	
+-Arquivos:
+	-Arquivos são iteráveis
+	-Arquivos como .pdf ou .csv podem precisar de bibliotecas externas
+		pwd										-> Indica o diretório raiz do Jupyter
+		
+		my_file = open('arquivo.txt')
+		my_file.read()							-> Lê o que o arquivo tem
+		my_file.readline()						-> Lê até a próxima linha a partir do cursor atual
+		my_file.seek(position)					-> Move o cursor para uma posição específica (0 é o início)
+		
+		for line in my_file						-> Percorre o arquivo linha a linha (não necessariamente precisa ser line)
+			print(line)
+			
+	-Escrevendo em arquivos:
+		my_file = open("arq.txt", 'w+')			-> Modo de escrita
+		my_file = open("arq.txt", 'w')			-> Modo de escrita
+		my_file = open("arq.txt", 'r')			-> Modo de leitura
+		my_file = open("arq.txt", 'a')			-> Modo de anexação (escreve sem apagar o conteúdo)
+		my_file.write("Nova linha")				-> Escreve no arquivo
+		my_file.writelines(<list>)				-> Escreve uma lista de strings como linhas
+			
+-Sets e booleanos:
+	-Sets são conjuntos de dados com valores únicos
+		x = set()
+		type(x)					-> set
+		
+		x.add(1)				-> {1}
+		x.add(2)				-> {1, 2}
+		
+		-Caso exista uma lista com muitos valores repetidos - e até mesmo desordenados - é possível passar ela como parâmetro do método set
+			-Isso retornará um set com os valores únicos - incluindo os que se repetem mas mostrando uma só vez - e ordenados
+			
+			lista = [1, 1, 1, 2, 3, 22, 11, 4, 5, 22, 11, 11, 11, 22]
+			set_lista = set(lista)
+			print(set_lista)						-> {1, 2, 3, 4, 5, 11, 22} 
+			
+			-Convertendo em lista novamente:
+				lista = list(set(lista))
+			
+	-Booleanos são verdadeiros ou falsos
+		a = True
+		b = False
+		
+-Operadores de comparação:
+	-Retorna verdadeiro ou falso
+		==							Igual
+		!=							Diferente
+		<>							Diferente
+		>							Maior que
+		<							Menor que
+		>=							Maior ou igual
+		<=							Menor ou igual
+	
+	-Operadores de comparação em cadeia:
+		and							Verdadeiro se todas as expressões forem verdadeiras
+		or							Verdadeiro se uma das expressões forem verdadeiras
+		
+-Declarações:
+	-Em outras linguages:
+		if(a > b){
+			a = 0;
+			b = 1;
+		
+		}
+		
+	-Em Python:
+		if a > b:
+			a = 0
+			b = 1
+			
+	-Python é baseado em identação
+	
+-If, elif, else:
+	-Executa a ação dentro do caso se o mesmo for verdadeiro
+	-Caso não seja, desce a estrutura até achar uma condição que se encaixe
+	-Else é o último dos casos, executado se nenhuma das condições anteriores forem verdadeiras
+	
+		if case1:
+			action
+		
+		elif case2:
+			action
+			
+		else:
+			action			
+	
+-For:
+	-Atua como iterador - rodando em objetos iteráveis
+	-"item" recebe o valor atual do object
+
+		for item in object:
+			action
+	
+	-Módulo:
+		-Retorna o resto de uma divisão
+			%
+			
+	-Tuple unpacking:
+		list = [(1, 2), (3, 4), (5, 6)]
+		for (i1, i2) in list:					-> Define que as variáveis serão inicializadas com os números de cada tupla em cada iteração
+			print(i1 + 12)
+			
+	-Iterando sobre dicionários:
+		-A iteração retorna a chave
+		-Para retornar os itens, use dicionario.items()
+			for item in dicionario.items()
+				print(item)						-> (chave, valor)
+			
+			-Retorna tuplas de chave, item
+			
+		-Utilize a quebra de tuplas para pegar somente o item
+			for (key, valor) in dicionario.items():
+				print(valor)
+				
+-While:
+	-Em Python o while pode ter um bloco else, caso a condição do teste seja falsa
+		while teste:
+			action
+		else:
+			action
+			
+	-Break:
+		-Funciona em for e while; usado para parar o loop
+			while teste:
+				if condition
+					break
+		
+	-Continue:
+		-Pula a iteração atual; para no comando e reinicia o loop na próxima iteração
+		
+-Range():
+	-Permite a criação de listas pré-determinadas
+	-3 parâmetros:
+		range(x, y, z)
+		type(range)				-> range
+		x:						-> Onde começa a criar a lista
+		y:						-> Até onde irá (= y-1)
+		z:						-> Indica o passo (intervalo), sendo opcional
+		
+	-Cria um gerador; utilizar o método list() para converter
+		list(range(0, 10))
+		
+	-Possível utilizar valores negativos
+	-Possível combinar com o for:
+		for i in range(0, 100):
+			
+	-Diferente da lista, possibilita maior controle das iterações, já que não carrega todos os elementos (no caso de um range muito grande)
+	-Gera o iterador ao acessar, não é inicializado previamente
+	
+-Compreensão em lista:
+	-Criação de listas
+		x = []
+		for i in range(0, 30):
+			x += [i]
+			#x.append(i)		
+		
+		-O valor da lista é sempre a primeira variável (i, neste caso)
+			x2 = [i for i in range(0, 30)] 					-> Cria a lista em uma única linha
+			
+			-O valor será i para cada i dentro do range
+		
+		-É possível criar regras matemáticas seguindo o range para cada elemento da lista:
+			x3 = [i*2 + 10 for i in range(0, 15)]
+			
+		-Possível adicionar apenas valores que passem em um if:
+			x = []
+			for i in range(0, 20)
+				if i % 2 == 0
+					x += [i]
+					
+			x4 = [i for i in range(0, 20) if i % 2 == 0]
+			
+		-Possível utilizar com strings:
+			li = [letter for letter in 'palavra']				-> Desmembra a string
+			
+		-Exemplo de iteração sobre outra lista:
+			-Conversão de graus Celsius para Fahrenheint:
+				celsius = [0, 10, 20, 50, 100]
+				fahrenheint = [((temp * 9 / 5) + 32) for temp in celsius]
+				
+-Funções:
+	-Agrupar comandos semelhantes para reuso
+	-Utilizar o "def" para definir funções
+		def nome_funcao(<parametros>):
+			pass 												-> Não faz nada
+			action
+			
+		type(nome_funcao)										-> function
+			
+	-O bloco de comentários com 3 aspas duplas indica a descrição da função
+		def funcao():
+			"""
+			Essa função não faz nada
+			"""
+	
+	-Os parâmetros não precisam ter seus tipos declarados, assim como as funções também não precisam
+		def funcao(num1, num2):
+			return num1 + num2
+			
+	-Parâmetros padrões:
+		def funcao(num = 1):		-> Caso nenhum parâmetro seja passado ao chamar a função, o valor dele por padrão vira 1 (ou outro definido)
+			
+	-É possível definir funções dentro de funções:
+		def funcao1():
+			def funcao2():
+				pass
+			
+			funcao2()
+			pass
+			
+	-Em uma linha: 
+		def funcao(num): return num ** num
+			
+-Métodos:
+	-Funções próprias de objetos
+	
+-Lambda:
+	-Funções temporárias que existem em apenas uma linha
+	-Não precisa de nome
+		lambda num: num ** 2
+		
+	-É possível definir ela a uma variável para reuso
+		square = lambda num: num ** 2
+		square(2)										-> 4
+		
+		par = lambda x: x % 2 == 0
+		par(3)											-> False
+		
+		primeira_letra = lambda s: s[0]
+		primeira_letra("teste")							-> t
+		primeira_letra([1, 2, 3])						-> 1
+		primeira_letra([1, 2, 3])						-> 1
+		
+		inverter = lambda s: s[::-1]
+		inverter("ola")									-> alo
+		
+-Declarações aninhadas e escopo:
+	-Escopos são os locais em que cada variável é enxergada, bem como seus valores
+	-4 tipos de escopos:
+		-Local						-> Nomes atribuidos dentro de funções
+		-Enclosing functions		-> Funções que vivem dentro de funções
+		-Global						-> Nível superior, declarados como global
+		-Built-in					-> Pré-estabelecidos no módulo (Python)
+		
+	-Segue a ordem anterior de prioridade (LEGB)
+	-Para definir uma variável como global:
+		x = 50
+		def func(x):
+			global x
+			x = 2
+			
+		print(x)					-> 2
+		
+-Orientação a objetos:
+	-Tudo em Python são objetos
+	-Classes:
+		-Tipos de dados
+			class Sample(object):
+				pass
+				
+			x = Sample()
+			
+		-Atributos:
+			-Variáveis que vivem dentro de classes
+			
+		-Função de inicialização (Construtores):
+			class Dog(objetc):
+				species = "mamifero"
+			
+				def __init__(self, raca):					-> Obrigatoriamente deve-se passar o self (funciona como o this)
+					self.raca = raca
+					
+				def latir(self):							-> O self sempre deve ser passado como parâmetro
+					print("Au au")
+					
+			cachorro = Dog("Boxer")
+					
+		-Utilizar um . para acessar métodos e atributos de classes
+		
+		class Circulo(object):
+			pi = 3.14										-> Define um atributo (pode ser alterado)
+			
+			def __init__(self, raio = 1):
+				self.raio = raio
+				
+			def area(self):
+				return self.raio ** 2 * self.pi
+
+			def defRaio(self, raio):
+				self.raio = raio
+				
+			def obtemRaio(self):
+				return self.raio
+	
+	-Herança:
+		-Para herdar uma classe basta passar ela como parâmetro na declaração da classe, ao invés de object
+			class Animal(object):
+				def __init__(self):
+					print("Animal criado")
+					
+				def comer():
+					print("comendo...")
+				
+			class Cachorro(Animal):						-> Herda características de Animal
+				def __init__(self):
+					Animal.__init__(self)
+					
+			cachorro.comer()							-> Possível usar já que herda todas as informações
+			
+	-Special methods:
+		-São métodos já existentes que são adaptados para nossas classes, como o print por exemplo
+			class Livro(object):
+				def __init__(self, titulo, paginas):
+					self.titulo = titulo
+					self.paginas = paginas
+					
+				def __str__(self):						-> Função print
+					return "Título: {s}".format(a = self.titulo)
+					
+				def __len__(self):						-> Função len
+					return "self.paginas
+					
+				def __del__(self):						-> Quando o objeto for deletado
+					print("Livro deletado")
+					
+					
+			livro1 = Livro("Anjos e demônios", 1000)
+			print(livro1)
+			len(livro1)
+			del livro1
+	
+-Erros e exceções:
+	-Usamos o try e except para tratar códigos que podem gerar erros
+		try:
+			action
+			
+		except Exception1:							-> Não necessariamente precisa ter um erro, pode usar somente except
+			action
+		
+			-Se causar o erro Exception1, executa o que estiver aqui
+			
+		else:
+			action
+			
+			-Se não houver erros
+			
+		finally:
+			action
+			
+			-Sempre executado, independente de erros ou não
+			
+	-Exemplo:
+		try:
+			file = open("arquivo", "w")
+			file.write("Testando")
+			
+		except IOError:								-> Erro relacionado à manipulação de arquivos
+			print("Erro ao tratar o arquivo")
+			
+		else:
+			print("Não houve erro")
+
+-Módulos, pacotes e imports:
+	-Importando bibliotecas padrões:
+		import <nome_biblioteca>					-> Carrega todos os métodos da biblioteca
+			import math
+			math.sqrt(2)
+		
+		from <nome_biblioteca> import <nome_método>
+			from math import sqrt
+			sqrt(4)
+		
+	-Instalando bibliotecas de terceiros:
+		-cmd:
+			pip install <nome_biblioteca>
+			
+	-Criar os próprios pacotes:
+		https://docs.python.org/3/tutorial/modules.html#packages
+		
+		-Criar o arquivo .py
+		-Executar o import
+		
+		-Agrupar mais de um módulo é necessário inserir em uma pasta
+		-Defina um arquivo __init__.py para que os módulos sejam considerados
+			-Isso cria um pacote
+			
+			sound/						-> Top-level package
+			__init__.py					-> Initialize the sound package
+			formats/					-> Subpackage for file format conversions
+					__init__.py
+					wavread.py
+					wavwrite.py
+					aiffread.py
+					aiffwrite.py
+					auread.py
+					auwrite.py
+					...
+			effects/					-> Subpackage for sound effects
+					__init__.py
+					echo.py
+					surround.py
+					reverse.py
+					...
+			filters/					-> Subpackage for filters
+					__init__.py
+					equalizer.py
+					vocoder.py
+					karaoke.py
+					
+			-Importando sub-módulos
+				import sound.effects.echo
+				sound.effects.echo.echofilter(input, output, delay=0.7, atten=4)
+			
+			-Importando sub-módulos sem usar seu nome completo:
+				from sound.effects import echo
+				echo.echofilter(input, output, delay=0.7, atten=4)
+				
+				from sound.effects.echo import echofilter
+				echofilter(input, output, delay=0.7, atten=4)
+					
+		-O arquivo init é necessário para que o Python trate como pacotes e não confunda nomes, como string
+		-Pode ser um arquivo vazio ou conter a variável "__all__"
+			-Arquivo __init__.py:
+				__all__ = ["echo", "surround", "reverse"]				-> Indica quais módulos devem ser importados com o comando from package import *
+				
+				
+			-Sem isso, todos os módulos não serão necessariamente carregados
+				import sound.effects.echo
+				import sound.effects.surround
+				from sound.effects import *
+					
+					-echo e surroung serão importados por já estarem carregados na namespace
+					
+-Métodos embutidos:
+	map():
+		-Executa funções em iteráveis (lista, strings, etc)
+			list(map(funcao, lista))
+			
+			-Aponta para a função e executa em cada membro dentro dela
+			-Possível utilizar com lambda:
+			
+			list(map(lambda t: (9/5) * t + 32, lista_temperaturas))				-> Devolve uma lista de temperaturas convertidas
+			
+	-reduce():
+		-Reduz o iterável a um único valor baseado em uma função que for passada a ele
+			from functools import reduce
+			
+			lista = [47, 11, 42, 13]
+			
+			reduce(lambda x,y: x + y, lista)									-> Soma todos os elementos da lista
+
+			max_find = lambda a, b: a if (a > b) else b
+			reduce(max_find, lista)
+			
+	-filter():
+		-Filtra todos os elementos de um iterável na qual uma função retornou positivo (filtrar elementos pares, por exemplo)
+		
+		filter(lambda x: x % 2 == 0, lista)
+		
+	-zip():
+		-Capaz de unir (condensar) duas listas retornando uma lista de tuplas
+		-O zip terá o valor da menor lista, já que combina o e1 da lista 1 com e1 da lista 2 e assim por diante, até que uma delas termine
+		
+			lista1 = [1, 2, 3]
+			lista2 = [4, 5, 6]
+			list(zip(lista1, lista2))			-> [(1, 4), (2, 5), (3, 6)]
+			
+		-Pode ser usado como um iterável de tuplas
+		-Zipando dicionários temos uma tupla com as chaves
+			-É necessário zipar chave1, d2.values() (isso troca as chaves e os valores)
+			
+	-enumerate():
+		-Retorna uma tupla contendo (posicao_elemento, elemento) de uma lista passada
+			lista['a', 'b', 'c']
+			
+			enumerate(lista)					-> (0, 'a')
+			
+	-all() e any():
+		-all(lista) retorna True se todos os elementos da lista passada forem verdadeiros ( [True, True, True, False, True] retorna False)
+		-any(lista) retorna True se ao menos um dos elementos da lista passada forem verdadeiros ( [False, False, True, False, False] retorna True)
+		
+-Decoradores:
+	-Alteram comportamentos de outras funções
+		locals()								-> Retorna os métodos que estão no escopo local onde a função foi chamada em forma de dicionário
+		globals()								-> Retorna os métodos que estão no escopo global em forma de dicionário
+		
+	-É possível igualar uma variável a um nome de uma função, como se estivesse recebendo seu retorno mas sem os parênteses
+	-Assim é  possível apagar a função antiga (del nome_funcao) e usar pelo novo nome (novo_nome())
+	-É possível retornar funções internas:
+		
+		def funcao1():
+			def funcao2():
+				pass
+				
+			return funcao2						-> Sem parênteses devido só retornar a função, sem executá-la
+			
+		-Ainda é possível usar esse retorno para uma variável e chamá-la posteriormente como função
+			var = funcao1()
+			var()
+			
+		-Podemos passar outras funções como parâmetros:
+			def hello():
+				return 'Hi Jose!'
+
+			def other(func):
+				print('Other code would go here')
+				print(func())
+				
+			other(hello)
+			
+	-Decorador:
+		def novo_decorador(func):
+			def funcao_interna():
+				print("Print antes de chamar a função")
+				funct()
+				print("Print depois de chamar a função")
+				
+			return funcao_interna
+			
+		def precisa_decorar():
+			print("Essa função precisa de decorador")
+			
+		precisa_decorar = novo_decorador(precisa_decorar)					-> Isso irá mudar o comportamento da função, redefinindo suas intruções
+		
+		-Basta usar a notação do Python:
+			@novo_decorador													-> Indica que é um decorador e que a próxima função será decorada
+			def precisa_decorar():
+				print("Essa função precisa de decorador")
+				
+-Criando geradores:
+	type: 								-> generator
+	-São iteradores mas que não são pré-carregados na memória
+		
+		def gencubes(n):									-> A função passa a se comportar como um iterável
+			for num in range(n)
+				yield num ** 3								-> Pausa temporariamente onde fez a última conta e retorne sempre q for chamado
+				
+		-Equivalente a uma função que retornaria uma lista no seu fim
+		
+		def genfib(n):
+			a = 1
+			b = 1
+			for i in range(n):
+				yield a
+				a, b = b, a + b
+				
+		-Possui o método next(), que parte do primeiro valor e percorre o novo iterável
+		-O método iter() transforma uma sequência em iterador
+			string = 'hello'
+			s = iter(string)
+			next(s)						-> h, e, l, l...
+			
+	-Compreensão de geradores:
+		gencomp = (item for item in my_list if item > 3)			-> Capaz de inicializar um gerador em uma única linha
+	
+-Módulos avançados:	
+	-Coleções:
+		-Counter:
+			-Permite contar elementos dentro de um iterável
+				from collections import counter
+				type: 									-> collections.Counter
+				
+				list = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+				print(Counter(list))					-> Retorna uma estrutura parecida com dicionário, informando quantas vezes cada elemento aparece
+				
+			-Contar número de palavras em uma string:
+				Counter(string.split())
+				
+			-Pegar os elementos que mais se repetem:
+				c = Counter(lista)
+				c.most_commom(n)						-> Retorna os n elementos mais comuns
+				c.values()								-> Retorna uma lista com a contagem respectiva de cada elemento
+				c.clear()								-> Redefine contagens
+				c.items()								-> Transforma numa lista de pares no modelo elemento, contagem
+				c.most_commom()[-n:-1]					-> Retorna os elementos menos comuns
+				
+		-Defaultdict:
+			-Não retorna erro ao tentar acessar uma chave que não existe, preenchendo com o que for passado em seu parâmetro
+				from collections import defaultdict
+				dict = defaultdict(object)
+				d = {}
+				d['one']								-> Erro
+				dict['one']								-> Retorna "object" (o parâmetro passado na criação)
+				
+			-Se um lambda for passado como argumento, ao acessar uma chave inexistente o valor de retorno desse lambda será definido à chave
+			
+		-Namedtuple:
+			-Semelhante a uma classe, permite parâmtros que podem ser acessados como índices
+				from collections import namedtuple
+				Dog = namedtuple('Dog', 'age breed name')			-> Cada parâmetro deve ser separado por espaço dentro da segunda string
+				sam = Dog(age = 2, breed = "Boxer", name = "Sam")
+				sam.age												-> Acesso de acordo com os índices
+				sam[1]
+				
+	-Datetime:
+		import datetime
+		
+		-Timestamp: objeto de tempo
+			t = datetime.time(hora, minuto, segundo)
+			t.hour/minute/second/microsecond/tzinfo					-> Timezone
+			datetime.time.min/max									-> Retorna o tempo mínimo e máximo
+			datetime.time.resolution								-> Microsegundo (semelhante a um delta); pode ser adaptado para variar em 1 dia, por exemplo
+			datetime.date(ano, mes, dia)							-> Define uma data
+			datetime.date.today()									-> Data atual
+			
+			today = datetime.date.today()
+			today.ctime()											-> Informações mais completas sobre a data
+			today.year
+			today.month
+			
+			datetime.datetime(ano, mes, dia, hora, minuto)
+			strftime() e strptime()									-> String para data e data para string
+			
+			data = datetime.date(2018, 21, 12)
+			string = data.strftime('%d/%m/%Y')						-> '21/12/2018'
+			
+			t = datetime.time(4, 20, 1)
+			print(t)												04:20:01
+			print('hour  :', t.hour)								4
+			print('minute:', t.minute)								20
+			print('second:', t.second)								1
+			print('microsecond:', t.microsecond)					0
+			print('tzinfo:', t.tzinfo)								none
+			
+			print('Earliest  :', datetime.time.min)					00:00:00
+			print('Latest    :', datetime.time.max)					23:59:59.999999
+			print('Resolution:', datetime.time.resolution)			0:00:00.000001
+			
+			today = datetime.date.today()
+			print(today)											2018-01-31
+			print('ctime:', today.ctime())							Wed Jan 31 00:00:00 2018
+			print('tuple:', today.timetuple())						time.struct_time(tm_year=2018, tm_mon=1, tm_mday=31, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=2, tm_yday=31, tm_isdst=-1)
+			print('ordinal:', today.toordinal())					736725
+			print('Year:', today.year)								2018
+			print('Mon :', today.month)								1
+			print('Day :', today.day)								31
+			
+			print('Earliest  :', datetime.date.min)					0001-01-01
+			print('Latest    :', datetime.date.max)					9999-12-31
+			print('Resolution:', datetime.date.resolution)			1 day, 0:00:00
+			
+			1 = datetime.date(2015, 3, 11)
+			print('d1:', d1)										2015-03-11
+
+			d2 = d1.replace(year = 1990)
+			print('d2:', d2)										1990-03-11
+			
+-Python debugger:
+	import pdb
+	pdb.set_trace()													-> Libera um espaço no código, saindo do fluxo principal para testes
+	
+-Timeit:
+	-Mede o tempo de execução de uma determinada linha de código
+		import timeit
+		timeit.timeit(<string sendo uma linha de código>, number = n)	-> n é o número de vezes que a linha de código passada deve ser executada
+		timeit.timeit('"-".join(str(n) for n in range(101))', number = 10000)	-> Executa o código passado 10 mil vezes
+		
+		pip install line_profiler
+		
+		-Disponibiliza um método para análise e estatística dos códigos
+		
+-Expressões regulares - RE:
+	https://docs.python.org/3/howto/regex.html
+	-São padrões de correspondência de texto, usada pra identificar, separar ou procurar; conhecido também por regex
+		import re
+		
+		patterns = ['term1', 'term2']
+		text = 'this is a string with term1. another one with term2'
+		
+		re.search(patterns[0], text)					-> Procura dentro de text a ocorrência do conteúdo no índice passado, retornando uma tupla com a posição de início e fim
+		match = re.search(patterns[0], text)
+		match.start()									-> Retorna a posição inicial
+		match.end()										-> Retorna a posição final
+		match.group()									-> Retorna o padrão
+		match.span()									-> Retorna uma tupla com a primeira ocorrência
+		
+		re.search: retorna um match do padrão em qualquer lugar da string
+		
+	-Split:
+		# Termo onde realizaremos a divisão
+		split_term = '@'
+
+		phrase = 'What is the domain name of someone with the email: hello@gmail.com'
+
+		# Divide a frase
+		re.split(split_term,phrase)
+		['What is the domain name of someone with the email: hello', 'gmail.com']		-> Lista retornada com os elementos após a remoção
+		
+	-Findall:
+		re.findall('match','test phrase match is in middle')
+		['match']																		-> Retorna uma lista com todas as correspondências por um certo termo divididas em substrings
+	
+	-Sintaxe de repetição:
+		() representa um grupo
+			"(teste)"			-> "teste" é o grupo a ser afetado pelo padrão
+			
+			"a(bc)(de)(f(g)hi)"
+				group(0) or group() retorna todos os grupos
+					abcdefghi
+					abcdefghi
+					
+				group(n) retorna o n-ésimo grupo partindo da esquerda					
+				group(1)
+					bc
+					
+				group(2)
+					de
+					
+				groups() retorna todos os grupos partindo do primeiro
+				groups()
+					bc, de, fgh, g
+					
+			-Grupos nomeados:
+				(?P<name>...) 	-> "name" representa o nome daquele grupo; podem ser acessados por índice ou por group(name)
+				
+			-Grupos não-capturados:
+				(?:...)			-> Não é acessível
+				"(?P<fisrt>abc)(?:def)(ghi)"
+				group(first)		"abc"
+				groups()			'abc', 'ghi'
+				
+			-Ou:
+				(a|b)			-> Busca pelos caracteres "a" ou "b"
+				"gr(a|e)y"		-> Match em "gray" e "grey"
+	
+		* representa um padrão aparecendo 0 ou mais vezes
+			"egg(span)*"		-> Começa com "egg" seguido de 0 ou mais "span"
+		
+		+ representa um padrão aparecendo 1 ou mais vezes (pelo menos uma vez)
+			"g+"				-> 1 ou mais "g"
+			
+		? representa um padrão aparecendo 0 ou 1 vez
+			"ice(-)?cream"		-> Identifica 0 ou 1 "-"
+			
+		{x, y} representa um padrão de intervalo, aparecendo z vezes entre x e y vezes
+			"9{1,3}$"			-> Entre 1 e 3 "9"
+			
+		test_phrase = 'sdsd..sssddd...sdddsddd...dsds...dsssss...sdddd'
+
+		test_patterns = [ 'sd*',     	# s seguido de zero ou mais d's
+						'sd+',          # s seguido de um ou mais d's
+						'sd?',          # s seguido por zero ou um d
+						'sd{3}',        # s seguido por três d's
+						'sd{2,3}',      # s seguido de dois a três d's
+						]
+
+		multi_re_find(test_patterns,test_phrase)
+		Searching the phrase using the re check: 'sd*'
+		['sd', 'sd', 's', 's', 'sddd', 'sddd', 'sddd', 'sd', 's', 's', 's', 's', 's', 's', 'sdddd']
+
+
+		Searching the phrase using the re check: 'sd+'
+		['sd', 'sd', 'sddd', 'sddd', 'sddd', 'sd', 'sdddd']
+
+
+		Searching the phrase using the re check: 'sd?'
+		['sd', 'sd', 's', 's', 'sd', 'sd', 'sd', 'sd', 's', 's', 's', 's', 's', 's', 'sd']
+
+
+		Searching the phrase using the re check: 'sd{3}'
+		['sddd', 'sddd', 'sddd', 'sddd']
+
+
+		Searching the phrase using the re check: 'sd{2,3}'
+		['sddd', 'sddd', 'sddd', 'sddd']
+
+	-Conjunto de caracteres:
+		-Os conjuntos de caracteres são usados quando você deseja combinar qualquer grupo de caracteres na entrada
+		-Os colchetes são usados para construir entradas de conjunto de caracteres. Por exemplo: a entrada [ab] procura as ocorrências de a ou b
+			test_phrase = 'sdsd..sssddd...sdddsddd...dsds...dsssss...sdddd'
+
+			test_patterns = [ '[sd]',    # s ou d
+						's[sd]+']   # s seguido de um ou mais s ou d's
+						
+
+			multi_re_find(test_patterns,test_phrase)
+			
+			Searching the phrase using the re check: '[sd]'
+			['s', 'd', 's', 'd', 's', 's', 's', 'd', 'd', 'd', 's', 'd', 'd', 'd', 's', 'd', 'd', 'd', 'd', 's', 'd', 's', 'd', 's', 's', 's', 's', 's', 's', 'd', 'd', 'd', 'd']
+
+
+			Searching the phrase using the re check: 's[sd]+'
+			['sdsd', 'sssddd', 'sdddsddd', 'sds', 'sssss', 'sdddd']
+			
+	-Exclusão:
+		-Podemos usar ^ para excluir termos incorporando-os na notação de colchetes. Por exemplo: [^ ...] irá combinar qualquer caracter que não esteja nos colchetes
+		-Use [^!.? ] para verificar se há correspondências que não são !,.,? ou espaço
+		-Adicione o + para verificar se a correspondência aparece pelo menos uma vez, isso basicamente se traduz em encontrar as palavras.
+			test_phrase = 'This is a string! But it has punctuation. How can we remove it?'
+			re.findall('[^!.? ]+',test_phrase)
+			['This', 'is', 'a', 'string', 'But', 'it', 'has', 'punctuation', 'How', 'can', 'we', 'remove', 'it']
+
+	-Intervalos de caracteres:
+		[inicio-fim]
+		test_phrase = 'This is an example sentence. Lets see if we can find some letters.'
+
+		test_patterns=[ '[a-z]+',      # sequências de letras minúsculas
+						'[A-Z]+',      # sequências de letras maiúsculas
+						'[a-zA-Z]+',   # sequências de letras maiúsculas ou minúsculas
+						'[A-Z][a-z]+'] # uma letra maiúscula seguida de letras minúsculas
+						
+		multi_re_find(test_patterns,test_phrase)
+		
+		Searching the phrase using the re check: '[a-z]+'
+		['his', 'is', 'an', 'example', 'sentence', 'ets', 'see', 'if', 'we', 'can', 'find', 'some', 'letters']
+
+
+		Searching the phrase using the re check: '[A-Z]+'
+		['T', 'L']
+
+
+		Searching the phrase using the re check: '[a-zA-Z]+'
+		['This', 'is', 'an', 'example', 'sentence', 'Lets', 'see', 'if', 'we', 'can', 'find', 'some', 'letters']
+
+
+		Searching the phrase using the re check: '[A-Z][a-z]+'
+		['This', 'Lets']
+		
+		-Usar "^" no início do intervalo (no primeiro dígito) inverte seu sentido: todos os caracteres quem não fazem parte do grupo especificado retornam match
+			[^A-Z]			-> Todos os caracteres minúsculos
+		
+	-Substituição:
+		re.sub(pattern, string_replace, original_string, max = 0) 	-> Substitui todas as ocorrências a menos que o "max" seja definido
+		
+	-Metacaracteres:
+		"gr.y"			-> O "." define que qualquer caractere pode ser substituído naquele local
+			gray e grey retornam match
+		
+		"^gr.y$"		-> "^" define início da string, "$" define final
+			gray e grey retornam match, stingray não
+			
+-StringIO:
+	-Trata strings como se fossem arquivos
+		import io
+		message = 'this is a normal string'
+		f = io.StringIO(message)
+		f.seek(0)
+		f.read()
+		f.write('another one')
+		
+-Números avançados:
+	hex(123)			-> Converte em hexadecimal
+	bin(123)			-> Converte em binário
+	pow(2, 3)			-> Eleva um número ao segundo argumento
+	round(3.5, n)		-> Arredonda para o número mais próximo, podendo ter n casas decimais
+	
+-Strings avançadas:
+	s = 'hello world'
+	s.capitalize()			-> Transforma a primeira letra da string em maiúscula
+	s.count('n')			-> Conta o número de vezes que um determinado caractere aparece
+	s.find('n')				-> Retorna a posição de um determinado caractere
+	s.center(20, 'z')		-> Centraliza a string de modo que ela tenha o tamanho do primeiro argumento, preenchendo sua volta com o segundo argumento
+		'zzzzhello worldzzzz'
+		
+	s.isalnum()				-> Verifica se todos os caracteres são alfanuméricos
+	s.isalpha()				-> Verifica se todos os caracteres são alfabéticos
+	s.islower()				-> Verifica se todos os caracteres são minúsculos
+	s.isupper()				-> Verifica se todos os caracteres são maiúsculos
+	s.endswith('n')			-> Verifica se a string termina com determinado caractere
+	s.startswith('n')		-> Verifica se a string começa com determinado caractere
+	s.split('e')			-> Separa a string no argumento
+		'h', 'llo'
+	
+	s.partition('e')		-> Semelhante ao split, separando no argumento mas sem removê-lo da lsita
+		'h', 'e', 'llo'
+		
+-Conjuntos/sets avançados:
+	s = set()
+	set.clear()					-> Limpa o set
+	c = set.copy()				-> Copia o set para o novo
+	set.difference(c)			-> Retorna a diferença entre os dois sets
+	s1.difference_update(s2)	-> Mantém no s1 apenas a diferença entre ele e o s2
+	s1.discard(2)				-> Retira o elemento passado como argumento do set
+	s1.intersection(s2)			-> Interseção entre os dois sets
+	s1.intersection_update		-> Mantém no s1 apenas a interseção
+	s1.union(s2)				-> União dos dois sets
+	
+-Dicionários avançados:
+	-Suportam compreensão
+		{x : x**2 for x in range(5)}
+			{0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+			
+	-Iteração sobre chaves, valores e itens:
+		d = {'k1': 1, 'k2': 2}
+			for k in d.keys():
+				print(k)			-> k1, k2
+				
+			for k in d.values():
+				print(k)			-> 1, 2
+				
+			for k in d.itens():
+				print(k)			-> ('k1', 1), ('k2', 2)
+				
+-Listas avançadas:
+	list.count(n)					-> Quantas vezes n aparece na lista
+	list.extend([1,2,3])			-> Diferente do append, que adicionaria a lista inteira no mesmo índice, o extend quebra a lista passada em elementos e adiciona um em cada índice
+	list.index(n)					-> Retorna o elemento de index n
+	list.insert(n, item)			-> Insere o item na posição n
+	list.pop()						-> Exclui e retorna o último valor da lista
+	list.remove(n)					-> Remove a primeira ocorrência do valor n
+	list.reverse()					-> Inverte a lista
+	list.sort()						-> Ordena a lista
+	
+-Introdução a GUI's:
+	-Interact:	
+		from ipywidgets import interact, interactive, fixed
+		from IPython.display import display
+		import ipywidgets as widgets
+		
+		def f(x):
+			return x
+			
+		interact(f, x = 10,)			-> Gera um slider (IntSlider, FloatSlider se os argumentos forem floats)
+		interact(f, x = True,)			-> Gera um checkbox
+		interact(f, x = "String",)		-> Gera uma caixa de texto
+		interact(f, x = (2, 2))			-> Gera um dropdown menu se uma tupla ou dicionário forem passados como argumentos
+		
+		def h(p, q):
+			return (p, q)
+			
+		interact(h, p = 5, q = fixed(20))	-> Gera um slider sem alterações no valor
+		interact(h, p = 5, q = 20)			-> Gera dois sliders
+		
+		-Widgets:
+			w = interact(f, x = widgets.IntSlider(min = -10, max = 30, step = 1, value = 10))			-> Define um slider com as configurações
+			display(w)
+			w.value()
+			w.close()
+			w.keys()
+			w.description()
+			w.disable()
+			
+				-O value passado no argumento de um novo IntSlider define o valor inicial
+			
+	-Widgets básicos:
+		from traitlets import link
+		a = FloatText()
+		b = FloatText()
+		
+		display(a, b)
+		my_link = link((a, 'value'), (b, 'value'))			-> Gera duas caixas de texto cujos valores são iguais e atualizados automaticamente
+		my_link.unlink()									-> Retira o link
+		my_link.dlink((a, 'value'), (b, 'value'))			-> O segundo é alterado quando o primeiro é alterado, já o contrário não acontece (link unidirecional)
+		
+	-Eventos de widgets:
+		import ipywidgets as widgets
+		widgets.Button.on_click.__doc__						-> Exibe a documentação do evento especificado
+		
+		from IPython.display import display
+		button = widgets.Button(description = "Click me!")
+		display(button)
+		def on_click_button:
+			print("Clicou")
+			
+		button.on_click(on_click_button)
+		
+		text = widgets.Text()
+		def handle_submit(sender):
+			print(text.value)
+			
+		text.on_submit(handle_submit)							-> Chamado ao pressionar enter
+		
+		int_range = widgets.IntSlider()
+		def on_value_change(name, value):
+			print(value)
+			
+		int_range.on_trait_change(on_value_change, 'value')		-> Define as modificações de valores do slider
+		
+	-Widget list:
+		orientation (argumento para slider): 'vertical'
+		widget.FloatProgress()
+		widget.BoundedFloatText()								-> Limita os valores até o máximo passado como argumento (max = n)
+		widget.ToggleButton(description, Boolean)
+		widget.Checkbox(description, Boolean)
+		widget.valid(value = True)
+		widget.Dropdown(options = {})
+		widget.RadioButtons(options = [])
+		widget.Select(options = [])
+		widget.SelectMultiple(options = [])
+		widget.Text(options = [])
+		widget.Textarea(options = [])
+		widget.HTML(value = "< html code >")
+		

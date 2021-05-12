@@ -1,0 +1,777 @@
+SQL
+
+SGBDs (Sistemas Gerenciadores de Bancos de Dados)
+
+Basic concepts (conceitos básicos):
+	-Introduction to Databases (introdução à banco de dados):
+		-Database is a collection of data that is organized in a manner that facilitates ease of access, as well as efficient management and updating (conjunto de dados/
+		informações que são organizados de maneira que facilita o acesso, mantendo eficiência na manipulação e atualização)
+		-Is made up of tables that store relevant information (feito de tables que armazenam informações relevantes)
+		
+	-Database tables (tabeles do banco de dados):
+		-A table stores and displays data in a structured format consisting of columns and rows that are similir to those seen in Excel spreadsheets (uma tabela armazena e 
+		mostra informações em um formato estruturado consistindo de linhas e colunas de maneira similar às planilhas do Excel)
+		-Databases often contain multiple tables, each designed for a specific purpose (banco de dados contém múltiplas tabelas, cada uma projetada para um propósito)
+	
+	-Primary keys (chaves primárias):
+		-A primary key is a field in the table that uniquely identifies the table records (campo em uma tabela que identifica unicamente os registros dela)
+		-The primary key's main features (características principais): 
+			-It must contain a unique value for each row (deve ter somente um valor único para cada linha)
+			-It cannot contain NULL values (não tem valores nulos)
+		
+		-Tables are limited to one primary key each (limite de uma chave primária por tabela)
+		-The primary key's value must be diffent for each row (o valor da chave deve ser diferente para cada linha)
+		
+	-SQL:
+		-Is used to access and manipulate a database (usado para acessar e manipular banco de dados)
+		-Can insert, update or delete records in a database; create new databases, table, stored procedures, views; retrieve data from a database (pode inserir, atualizar, 
+		deletar; criar novos bancos, tabelas, procedimentos, views)
+		-Is an ANSI (American National Standards Institute - "instituto de padrão nacional americano") but there are different versions of the SQL language (contém diferentes 
+		versões)
+		-Most programs have their own proprietary extensions in addition to the SQL standard, but all of them support the major commands (a maioria dos programas tem suas
+		extensões próprias somadas do padrão SQL, mas todas elas suportam os comandos majoritários)
+		
+	-SQL statements (comandos):
+		-SHOW: 
+			-Display information contained in the database and its tables (mostra a informação contida no banco e nas tabelas)
+			-Lets you keep track of your database contents and remind yourself about the structure of your tables (permite monitorar o conteúdo e se lembrar da estrutura das
+			tabelas)
+				SHOW DATABASES 				-> lists the databases managed by the server (lista os bancos administrados pelo servidor)
+				SHOW TABLES 				-> display all of the tables in the currently selected database (lista as tabelas do servidor selecionado atualmente)
+				SHOW COLUMNS FROM <table>	-> display information about the columns in a given table (informações de colunas em uma determinada tabela)
+					-Field: column name (nome)
+					-Type: column data type (tipo de informação)
+					-Key: indicates whether the column is indexed (indica se uma coluna é indexada)
+					-Default: default value assigned to the column (valor padrão atribuído à coluna)
+					-Extra: may contain any additional information that is available about a given column (pode conter informação adicional que é disponível na dada tabela)
+					
+		-SELECT:
+			-Used to select data from a database (seleciona informações de bancos)
+			-The result is stored in a result table, which is called the result-set (resultado armazenado numa tabela própria, chamada de result-set)
+			-A query may retrieve information from selected columns or from all columns in the table (uma consulta deve buscar informações de colunas selecionadas ou de todas)
+				SELECT <column_list> FROM <table_name>
+					column_list: includes one or more columns from which data is retrieved (inclui uma ou mais colunas de onde a informação é buscada)
+					table_name: name of the table from which the information is retrieved (nome da tabela onde a informação é buscada)
+					
+	-SQL syntax rules (regras de sintaxe):
+		-Multiple queries (múltiplas consultas):
+			-SQL allows to run multiple queries or commands at the same time (permite múltiplas consultas ou comandos ao mesmo tempo)
+				SELECT <column1>, <column2> FROM <table1>;
+				SELECT <column1>, <column4> FROM <table3>;
+				
+				-End each statement with a semicolon to indicate that the statement is complete and ready to be interpreted (termine cada comando com o ponto e vírgula para indicar
+				que o comando está completo e pronto para ser interpretado)
+				
+		-SQL is case insensitive, but it's commom practice to write all SQL commands in upper-case (SQL não é case sensitive - o mesmo comando ou variáveis podem ser escritos 
+		com etras maiúsculas ou minúsculas, mas é comum usarmos caixa alta para os comandos)
+		-A single statement can be placed on one or more text lines and multiple statements can be combined on a single text line (um único comando pode ser escrito em várias
+		linhas e vários comandos podem ser escritos na mesma linha)
+		-White spaces and multiple lines are ignored in SQL, but is recommended to avoid unnecessary white spaces (linhas em branco e múltiplas linhas são ignoradas no SQL mas
+		é recomendado evitar)
+		-If you will select more than one column, don't put a comma after the last (se for selecionar mais de uma coluna, não coloque vírgula após a última)
+		-To retrieve all of the information contained in your table, place an asterisk (*) sign after the SELECT command, rather than typing in each column name separately (para
+		selecionar todas as informações contidas na tabela, use o asterísco após o select, ao invés de digitar todos os nomes)
+		-Asterisk means all (asterísco (*) significa "todos")
+		
+	-DISTINCT and LIMIT (distinto e limite):
+		-The DISTINCT keyword:
+			-In situations in which you have multiple duplicate records in a table, it might make more sense to return only unique records, instead of fetching the duplicates
+			(em situações que há mais de um registro duplicado talvez seja melhor retornar somente um deles, ao invés de buscar as cópias)
+			-The DISTINCT keyword is used in conjunction with SELECT to eliminate all dupicate records and return only unique ones (o comando é usado para eliminar repetições
+			e retornar somente uma chave daquele registro)
+				SELECT DISTINCT <column> FROM <table>
+				
+		-The LIMIT keyword:
+			-By default, all results that satisfy the conditions specified in the SQL statement are returned, but sometimes we need to retrieve just a subset of records (por padrão,
+			todos os resultados que satisfazem as condições são retornadas, as vezes precisamos de buscar somente uma parte dos registros)
+			-This is accomplished by using the LIMIT keyword (é feito com o LIMIT)
+				SELECT <column1>, <column2> 
+				FROM <table>
+				LIMIT <number of records>; //Número de registros
+				
+			-You can also pick up a set of records from a particular offset (pode escolher um grupo de registros particular)
+				-Example: pick 4 records, starting from the third position:
+					SELECT <column1>, <column2> 
+					FROM <table>
+					LIMIT <position>,<number of records>;  (posição / número de registros)
+					
+	-Sorting results (resultados classificados/ordenados):
+		-Fully qualified names (nomes completos):
+			-In SQL, you can provide the table name prior to the column name, by separating them with a dot (pode fornecer o nome da tabela em prioridade do nome da columa,
+			separando-os por um ponto)
+			-The following statements are equivalent (os comandos a seguir são equivalentes):
+				SELECT <column> FROM <table>;
+				SELECT <table>.<column> FROM <table>;
+				
+				-The term for the above-mentioned syntax is called the "fully qualified name" of that column (o termo da sintaxe mencionado acima é o nome completo da coluna)
+				
+			-The form of writing is especially useful when working with multiple tables that may share the same column names (a forma de escrever é útil ao trabalhar com muitas
+			tabelas que compartilham de um mesmo nome de tabela)
+			
+		-Order by (ordenar por):
+			-ORDER BY is used with SELECT to sort the returned data (usado com o SELECT para organizar as informações retornadas)
+				SELECT * FROM <table>
+				ORDER BY <column> -> Rows are ordered alphabetically by the <column> (colunas são ordenadas de forma alfabética)
+				
+			-By default, the ORDER BY keyword sorts the result in ascending order (por padrão, ordena de forma crescente)
+			
+		-Sorting multiple columns (ordenando múltiplas colunas):
+			-ORDER BY can sort retrieved data by multiple columns, separating the list to follow the command with commas (o comando pode ordenar a informação recebida por múltiplas
+			colunas, separando a lista após o comando com vírgulas)
+			-When using two columns, if the first one have two equal values, the second column will order that in ascending form (ao usar duas colunas, se a primeira tiver dois
+			valores iguais, a segunda vai ordenar de forma crescente)
+			-The ORDER BY command starts ordering in the same sequence as the columns, it will order by the first column listed the by the second, and so on (começa ordenando na
+			mesma sequência que foram listadas as colunas, pela primeira, segunda, etc)
+			
+Filtering, functions and subqueries (filtro, funções e subconsultas):
+	-The WHERE statement (o comando WHERE):
+		-The WHERE statement (o comando WHERE):
+			-The WHERE clause is used to extract only those records that fulfill a specified criterion (a cláusula é usada para extrair somente os registros que cumprem ao critério
+			especificado)
+				SELECT <column> FROM <table> WHERE <condition>;
+				
+		-SQL operators (operadores):
+			-Comparison operators and logical operators are used in the WHERE clause to filter the data to be selected (operadores de comaparção e lógica são usados na cláusula
+			do WHERE para filtrar a informação a ser selecionada)
+				=				Equal
+				!=				Not equal
+				>				Greater than
+				<				Less than
+				>=				Greater than or equal
+				<=				Less than or equal
+				BETWEEN			Between an inclusive range
+				
+		-The BETWEEN operator (operador "entre"):
+			-This operator selects values within a range; the first value must be lower bound and the second value, the upper bound (seleciona valores em um campo, limite, com o
+			primeiro valor sendo o menor limite e o segundo valor o maior limite)
+				SELECT <column> FROM <table> WHERE <column> BETWEEN <value1> AND <value2>;
+				
+		-Text values (textos/strings):
+			-When working with text columns, surround any text that appears in the statement with single quotation marks " ' " (ao trabalhar com colunas de texto, use as aspas simples
+			ao redor de todo texto que aparecer no comando)
+				SELECT <column> FROM <table> WHERE <column> = '<text>';
+			
+	-Filtering with AND, OR (filtro com "e", "ou"):
+		-Logical operators (operadores lógicos):
+			-Can be used to combine two Boolean values and return a result of true, false or null (podem ser usados combinando dois valores bool e retornando verdadeiro, falso
+			ou vazio)
+				AND					TRUE if both expressions are TRUE (verdadeiro se ambas as expressões forem verdadeiras)
+				OR					TRUE if either expressions are TRUE (verdadeiro se uma das expressões forem verdadeiras)
+				IN					TRUE if the operand is equal to one of a list of expressions (verdadeiro se o operando for igual a uma em uma lista de expressões)
+				NOT					TRUE if the expression isn't TRUE (verdadeiro se a expressão for falsa)
+				
+			-Use the logical opertaor in the WHERE clause to combine multiple conditions (use os operadores lógicos no WHERE para combinar mais de uma condição)
+			-If you want to select rows that satisfy all of the given conditions, use the AND operator (se quiser que as colnas selecionadas satisfaçam todas as condições, use
+			o "e")
+			-You can combine as many conditions as needed to return the desired results (pode combinar quantas condições quiser para retornar o resultado desejado)
+			
+		-OR ("ou"):
+			-If you want to select rows that satisfy at least on of the given conditions, use the OR operator (se quiser que sejam selecionadas colunas que obedeçam pelo menos
+			uma das condições, use o OR)
+				Condition1	Condition2	Result
+				TRUE		TRUE		TRUE
+				TRUE		FALSE		TRUE
+				FALSE		TRUE		TRUE
+				FALSE		FALSE		FALSE
+				
+		-Combining AND & OR (combinando "e" e "ou"):
+			-The SQL AND and OR conditions may be combined to test multiple conditions in a query; these two operators are called conjunctive operators (os comandos "e" e "ou"
+			talvez sejam combinados para testar múltiplas condições em uma consulta; os operadores são chamados de operadores conjuntivos)
+			-When combining these conditions, it is important to use parentheses, so that the order to evaluate each condition is known (ao combinar as condições, é importante
+			o uso dos parênteses, mantendo a ordem de avaliação conhecida)
+			-You can nest as any condiitons as you need (pode encaixar quantas condições precisar)
+			
+	-IN, NOT IN operator ("entre, não está entre"):
+		-The IN operator is used when you want to compare a column with more than one value (é usado quando quer comaprar a coluna com mais de um valor)
+		-Use this instead of multiple OR conditions (use IN ao invés de múltiplas condições com OR)
+			SELECT <column> FROM <table> WHERE <column> IN('<value1>','<value2>',<value3>); -> Will select the records with this values (seleciona registros com esses valores)
+			
+			-Note the  use of the parentheses in the syntax (note o uso dos parênteses na sintaxe)
+			
+		-The NOT IN operator allows you to exclude a list of specific values from the result set (permite a exclusão de valores específicos no grupo de resultados)
+		-If we add the NOT keyword before IN in our query, the values in the parentheses will be excluded (se adicionarmos o NOT antes do IN na consulta, os valores do parênteses
+		serão excluídos)
+			SELECT <column> FROM <table> WHERE <column> NOT IN('<value1>','<value2>',<value3>);		-> "<value3>" isn't a string/text (value3 não é texto/string)
+			
+	-Custom columns (colunas peersonalizadas/customizadas):
+		-The CONCAT function (função "concatenar"):
+			-This function is used to concatenate two or more text values and returns the concatenating string (é usada para concatenar dois ou mais valores de texto e retorna
+			uma só string com as informações)
+				SELECT CONCAT(<column1>,'<some_optional_text>',<valueX>,<column2>) FROM <table>; -> (coluna1, 'texto opcional', valor específico, coluna2, etc)
+				
+		-The AS keyword (comando "as" -> "como"):
+			-A concatenation result in a new column, the column name will be the CONCAT function (a concatenação resulta em uma nova coluna, recebendo o nome pela função)
+			-You can assign a custom name to the result column using the AS keyword (você pode definir um nome para a coluna de resultados usando o comando AS)
+				SELECT CONCAT(<column>,',',<column2>) AS <new_column_name> FROM <table>;
+
+		-Arithmetic operators (operadores aritméticos):
+			-Perform arithmetical operations on numeric operands (realiza operações aritméticas em operandos numéricos)
+			-Include addition (+), subtraction (-), multiplication (*) and division (/)
+			
+	-Functions (funções):
+		-The UPPER function (função "upper", "alto", "superior"):
+			-The UPPER function converts all letters in the specified string to uppercase (converte todas as letras da string para maiúsculas)
+			-The LOWER function converts all letters in the specified string to lowercase (converte todas as letras da string para minúsculas)
+				SELECT <column1>, UPPER(<column2>) AS <new_name> FROM <table>;
+				
+				-The function have no effect on characters that aren't letters (a função não tem efeito em caracteres que não são letras)
+		
+		-SQRT and AVG (raiz quadrada e média):
+			-The SQRT function returns the square root of given value in the argument (retorna a raiz quadrada do valor dado como argumento)
+				SELECT <column1>, SQRT(<column2>) FROM <table>;
+			
+			-Similary, the AVG function returns the average value of a numeric column (retorna a média dos valores de uma coluna numérica)
+				SELECT AVG(<column1>) FROM <table>;
+			
+		-The SUM function (soma):
+			-Used to calculate the sum for a column's value (calcula a soma dos valores de uma coluna)
+				SELECT SUM<column1> FROM <table>;
+			
+	-Subqueries (subconsultas):
+		-Subqueries are queries in another query (são consultas dentro de uma consulta)
+		
+		*The DESC keyword sorts the results in descending order; ASC keyword sorts the results in the ascending order (ordenam, respectivamente, de forma decrescente e crescente)
+		-Using a single subquery (usando uma simples subconsulta):
+			SELECT <column1>, <column2> FROM <table>
+			WHERE <column2> > (SELECT AVG(<column2>) FROM <table>) 	-> 	This is the subquery, gets the AVG of the column (for example) and use in the main query (isso é uma
+			ORDER BY <column2> DESC;								  	subconsulta, pega a média de uma coluna, por exemplo, e usa na consulta principal)
+			
+			-Enclose the subquery in parentheses (envolva a subconsulta em parênteses)
+			-Also, note that there are no semicolon at the end of the subquery, as it is part of our single query (no entanto, perceba que não há ponto e vírgula no fim da 
+			subconsulta, já que ela faz parte da consulta principal)
+			
+	-LIKE and MIN:
+		-The LIKE keyword is useful when specifying a search condition within your WHERE clause (é uma palavra-chave útil a set usada quando especificamos uma condição de busca
+		dentro da cláusula do WHERE)
+			SELECT <column1> FROM <table>
+			WHERE <column2> LIKE <pattern>;	->	SQL pattern matching enables you to use "_" to match any single character and "%" to match an arbitrary number of characters,
+			including 0 characters (o modelo - pattern - de combinação permite o uso do underline para retornar o resultado que combinam com um único caractere e a porcentagem
+			combina uma série de caracteres, incluindo 0)
+				
+			-Example: selecting names that begin with the letter A:
+				SELECT <column1> FROM <table>
+				WHERE <column2> LIKE 'A%';
+					
+			-Example: selecting names that end with the letter s:
+				SELECT <column1> FROM <table>
+				WHERE <column2> LIKE '%s';
+					
+			-The % wildcard can be used multiple times within the same pattern (o símbolo pode ser usado múltiplas vezes dentro do mesmo modelo)
+			
+		-The MIN function is used to return the minimum value of an expression in a SELECT statement (usada para retornar o valor mínimo de uma expressão em um comando SELECT)
+			SELECT MIN(<column1>) FROM <table>;
+		
+		*All of the SQL functions can be combined together to create a single expression (todas as funções podem ser combinadas juntas para criar uma única expressão)
+		
+JOIN, table operations ("junção", operaçoes de tabelas):
+	-Joining tables (juntando tabelas):
+		-One of the most beneficial features of SQL is the ability to combine data from two or more tables (uma das características de maior benefício do SQL é a possibilidade
+		de unir informações de duas ou mais tabelas)
+		-"Joining tables" means combining data from two or more tables, creating a temporary table showing the data from the joined tables (significa combinar duas ou mais tabelas,
+		criando uma temporária com informações das duas tabelas unidas)
+		-Rather than storing the same name in two tables, the second table contains a reference to the name ID that appears in the first table (ao invés de registrar dois nomes
+		em duas tabelas, a segunda contém uma referência ao ID do nome que aparece na primeira tabela)
+		-This approach is more efficient, as opposed to storing the same text values in both tables (essa junção é mais eficiente do que armazenar o mesmo valor em duas tabelas)
+		-To join the two tables, specufy them as a comma-separated list in the FROM clause (para juntar, especifique as tabelas, separadas por vírgulas, na cláusula do FROM)
+			SELECT <table1>.<column1>, <table1>.<column2>, <table2>.<column1>, <table2>.<column2> FROM <table1>, <table2>
+			WHERE <table1>.<column1> = <table2>.<column1>
+			ORDER BY <table1>.<column1>;
+			
+			-Use the fully qualified name to join (use os "nomes completos")
+			
+	-Types of join (tipos de junção):
+		-Custom names can be used for tables as well; you can shorten the join statements by giving the tables "nicknames" (nomes personalizados podem ser utilizados para tabelas;
+		você pode encurtar os comandos de junção dando "apelidos" para as tabelas)
+			SELECT <nick1>.<column1>, <nick1>.<column2>, <nick2>.<column1>, <nick2>.<column2> FROM <table1> AS <nick1>, <table2> AS <nick2>
+			WHERE <nick1>.<column1> = <nick2>.<column1>
+			ORDER BY <nick1>.<column1>;
+			
+		-Types of join (tipos):
+			-The following are the types of JOIN that can be used in MySQL (os tipos a seguir são os que podemos usar em MySQL na junção):
+				-INNER JOIN
+				-LEFT JOIN
+				-RIGHT JOIN
+				
+			-INNER JOIN is equivalent to JOIN, it returns rows when there is a match between the tables (equivalente ao JOIN, retorna colunas quando ocorre correspondência entre
+			as tabelas)
+				SELECT <column> FROM <table1> INNER JOIN <table2>
+				ON
+				<table1>.<column> = <table2>.<column>
+				
+				-Note the ON keyword for specifying the inner join condition (o ON especifica a condição do inner join - "junção interna")
+				-INNER JOIN is like an intersection between two tables (é uma interseção entre duas tableas)
+				-Only the records matching the join condition are returned
+		
+			-LEFT JOIN returns all rows from the left table, even if there are no matches in the right table (retorna todas as colunas da tabela da esquerda, mesmo se não houver
+			combinações correspondentes na direita)
+				-This means that if there are no matches for the ON clause in the table on the right, the join will still return the rows from the first table in result (significa 
+				que se não houver combinações pela cláusula ON na tabela da direita, o join ainda vai retornar as colunas da primeira tabela no resultado)
+					SELECT <table1>.<column1>, <table2>.<column2> 
+					FROM <table1> LEFT OUTER JOIN <table2> 	-> The OUTER keyword is optional and can be omitted (OUTER é opcional e pode ser omitido, oculto)
+					ON
+					<table1>.<column1> = <table2>.<column1>
+				
+					-LEFT JOIN returns the intersection between the two tables/the first table (retorna a interseção de duas tabelas/a primeira delas)
+					-If no match is found for a particular row, NULL is returned (caso não haja nenhuma combinação de uma célula/linha/fileira, retorna NULL)
+				
+			-RIGHT JOIN returns all rows from the right table, even if there are no matches in the left table (retorna todas as colunsa da tabela da direita, mesmo se não houver
+			combinações correspondetes na esquerda)
+				SELECT <table1>.<column1>, <table2>.<column2> 
+				FROM <table1> RIGHT OUTER JOIN <table2> 	-> The OUTER keyword is optional and can be omitted (OUTER é opcional e pode ser omitido, oculto)
+				ON
+				<table1>.<column1> = <table2>.<column1>
+					
+			*There are other types of joins in the SQL language, but they aren't supported by MySQL (existem outros tipos de junção no SQL, mas não são suportados no MySQL)
+		
+		-UNION (união):
+			-Set operation
+				-Occasionally, you might need to combine data from multiple tables into one comprehensive dataset; this may be for tables with similar data within the same 
+				database or maybe there is a need to combine similar data across databases or even across servers (ocasionalmente, você talvez precise juntar informações de 
+				múltiplas tabelas em uma compreensiva base; talvez para tabelas com informações semelhantes dentro de um mesmo banco, ou talvez precise juntar informaçoes entre 
+				bancos ou entre servidores)
+				-To accomplish this, use the UNION and UNION ALL opertators (para fazer isso, use os operadores UNION e UNION ALL)
+				-UNION combines multiple datasets into a single dataset and removes any existing duplicates (combina múltiplos conjuntos de dados e remove duplicatas, se tiverem)
+				-UNION ALL do the same, but doesn't remove duplicate rows (faz o mesmo mas não remove linhas repetidas)
+				-UNION ALL is faster than UNION, as it doesn't perform the duplicate removal operation over the data set (UNION ALL é mais rápido por não executar a operação
+				de exclusão de informações repetidas)
+				
+			-UNION:	
+				-All SELECT statements within the UNION must have the same number of columns; the columns must also have the same data types; also, the columns in each SELECT
+				statement must be in the same order (todos os comandos de select dentro do union devem ter o mesmo número de colunas, além das colunas terem o mesmo tipo de
+				informação e as colunas no select devem estar na mesma ordem)
+				SELECT <column> FROM <table1>
+				UNION
+				SELECT <column> FROM <table2>;
+				
+				-If your columns don't match exactly across all queries,you can use a NULL value such as (se suas colunas não combinam exatamente em todas as consultas, pode
+				usar um valor nulo como):
+					SELECT <column1>, <column2>, <column3> FROM <table1>
+					UNION
+					SELECT <column1>, <column2>, NULL FROM <table2>;
+			
+			-UNION ALL:
+				-Selects all rows from each table and combines them into a single table (seleciona todas as linhas de cada tabela e combina elas em uma única)
+					SELECT <column1>, <column2>, <column3> FROM <table1>
+					UNION ALL
+					SELECT <column1>, <column2>, <column3> FROM <table2>;
+			
+	-The INSERT element (elemento "inserir"):
+		-Inserting data (inserindo informação):	
+			-The INSERT INTO statement is used to add new rows of data to a table in the database (o insert adiciona novas linhas de informações para as tabelas no banco)
+				INSERT INTO <table>
+				VALUES (<value1>, <value2>, <value3>,...);
+				
+				-Make sure the order of the values is in the same order as the columns in the table (certifique-se que a ordem dos valores estão na mesma ordem da colunas)
+			-You must provide a value for every column that doesn't have a default value or doesn't support NULL (deve inserir um valor para todas as tabelas que não têm valor 
+			padrão ou não suportam valor nulo)
+			-Alternatively, you can specify the table's column names in the INSERT INTO statement (ou então, você pode especificar o nome das colunas da tabela):
+				INSERT INTO <table>(<column1>, <column2>, <column3>,...)
+				VALUES (<value1>, <value2>, <value3>,...);
+				
+				-You can specify your own column order, as long as the values are specified in the same order as the columns (você pode especificar as colunas em qualquer ordem,
+				desde que os valores estejam especificados na mesma ordem)
+				
+			-It's also possible to insert data into specific columns only, the other will receive the default value (também é possível inserir informações em somente algumas 
+			colunas, as outras irão receber o valor padrão)
+			
+	-UPDATE and DELETE statement:		
+		-Updating data (atualizando informações):
+			-The UPDATE statement allows us to alter data in the table (possibilita alterar informações em uma tabela)
+				UPDATE <table>
+				SET <column1> = <value1>, <column2> = <value2>
+				WHERE <condition>;
+				
+				-You specify the column and its new value in a comma-separated list after the SET keyword (especifique a coluna e seu novo valor em uma lista separada por 
+				vírgulas após a palavra-chave SET)
+			
+			-If you omit the WHERE clause, all records in the table will be updated (caso omita a cláusula WHERE, todos os registros serão atualizados)
+			-It's also possible to UPDATE multiple columns at the same time by comma-separating them (é possível atualizar múltiplas colunas ao mesmo tempo separando elas por 
+			vírgula)
+			-You can specify the column order any way you like in the SET clause (você pode especificar a ordem das colunas de qualquer forma na cláusula do SET)
+				
+		-Deleting data (deletando informações):
+			-The DELETE statement is used to remove data from your table (o comando delete é usado para remover informação da sua tabela)
+				DELETE FROM <table>
+				WHERE <condition>;
+				
+			-If you omit the WHERE clause, all records in the table will be deleted (caso omita a cláusula WHERE, todos os registros serão deletados)
+			-The DELETE statement removes the data from the table permanently (remove as informações permanentemente)
+				
+	-Creating a table (criando uma tabela):
+		-SQL tables (tabelas SQL):
+			-The CREATE TABLE statement is used to create a new table (o comando é usado para criar novas tabelas)
+			-Creating a basic table involves naming the table defining its columns and each column's data type (criar uma tabela básica envolve nomear a tabela e definir as
+			colunas e os tipos de cada uma)
+				CREATE TABLE <table>(
+					<column1> <data_type>(size),	-> The "<column>" specify the name of the column (especifica o nome da coluna)
+					<column2> <data_type>(size),	-> The "<data_type>" specify what type of data the column can hold (especifica o tipo de informação da coluna)
+					<column3> <data_type>(size)		-> The "size" specify the maximum lenght of the table's column (especifica o tamanho máximo da coluna)
+				);
+				
+				INT: type of integer numbers (números inteiros) - can be unsigned (pode ser não assinado)
+				
+				FLOAT(M,D): floating-point number, can't be unsigned, you can optional define the lenght (m) and the number of decimals (d) (não pode ser não-assinado, 
+				especifique o tamanho e o número de casas decimais)
+				
+				DOUBLE(M,D): double precision, can't be unsigned, can optional define the lenght (m) and the number of decimals (d) (não pode ser não-assinado, especifique o 
+				tamanho e o número de casas decimais)
+				
+				DATE: YYYY-MM-DD format (formato ano-mês-dia)
+				
+				DATETIME: date and time YYYY-MM-DD HH:MM:SS format (data e hora no formato ano-mês-dia hora-minuto-segundo)
+				
+				TIMESTAMP: timestamp calculated from midnight, January 1, 1970 (marca temporal calculada a partir de meia noite, primeiro de janeiro de 1970)
+				
+				TIME: stores the time in HH:MM:SS format (armazena o tempo no formato hora-minutos-segundos)
+				
+				CHAR(size): fixed-lenght character string, max 255 bytes (número fixo de caracteres, máximo de 255 bytes)
+				
+				VARCHAR(size): type of characters, specify the number in the parentheses after the type (tamanho variado de caracteres, especifique o tamanho máximo no parênteses 
+				após o tipo)
+				
+				BLOB - "Binary Large Objects" and are used to store large amounts of binary data, such as images or other types of files (objetos largos binários, são usados
+				para armazenar largas quantidades de informações binárias, como imagens ou outro tipo de arquivos)
+				
+				TEXT - large amount of text data (grandes quantidades de texto)
+				
+				-Choosing the correct data tipe for your columns is the key to good database design (escolher o tipo de informação correto para as colunas é a chave para um bom
+				banco)
+				
+				TINYINT - menor valor para inteiro
+				
+		-Primary key (chave primária):
+			-Define a column as primary key during table creation, using the PRIMARY KEY keyword (defina uma coluna como primária no momento da criação da tabela)
+				CREATE TABLE <table>(
+					<column1> <data_type>(size),	
+					<column2> <data_type>(size),	
+					<column3> <data_type>(size)
+					PRIMARY KEY(<column1>)		-> Specify the column name in the parentheses of the PRIMARY KEY (especifique o nome da coluna a ser primária no parênteses)
+				);
+				
+			
+	-NOT NULL and AUTO-INCREMENT (não-nulo e auto-incrimentar):
+		-SQL constraints (restrições):
+			-SQL constraints are used to specify rules for table data (restrições são usadas para especificar regras para as informações da tabela)
+				NOT NULL: indicates that a column can't contain any NULL value (colunas não podem conter nenhum valor nulo)
+				
+				UNIQUE: doesn't allow to insert a duplicate value in a column (não permite a inserção de valores duplicados)
+				
+				PRIMARY KEY: enforces the table to accept unique data for a specific column and this constraint create a unique index for accessing the table faster (impõe a 
+				tabela a aceitar uma informação única para uma coluna esecífica e a restrição cria um índice único para acessar a tabela rápido)
+				
+				CHECK: determines whether the value is valid or not from a logical expression (determina se o valor é válido ou não por uma expressão lógica)
+				
+				DEFAULT: while inserting data into a table, if no value is supplied to a column, then the column gets the value set as DEFAULT (ao inserir informação, se nenhuma
+				informação for fornecida para a coluna, ela recebe o valor definido pelo default - padrão)
+				
+				-During table creation, specify column level constraint(s) after the data type of that column (durante a criação da tabela, especifique o nível de restrição após
+				o tipo de informação da coluna)
+					<column> <data_type> NOT NULL 
+			
+		-AUTO INCREMENT (auto-incrimentar):	
+			-Allows a unique number to be generated when a new record is inserted into a table (permite que um único número seja gerado quando um novo registro for inserido)
+			-The starting value is 1 and it will increment by 1 for each new record (por padrão, o valor inicial é 1 e acrescenta 1 a cada registro novo)
+			-Often, we would like the value of the prmary key field to be created automatically every time a new record is inserted (as vezes queremos que o valor da chave
+			primária seja acrescida automaticamente sempre que um novo registro for inserido)	
+				id int NOT NULL AUTO_INCREMENT
+				
+		-Using constraints (usando as restrições):
+			-Example:
+				CREATE TABLE Users(
+					id int NOT NULL AUTO_INCREMENT,
+					username varchar(40) NOT NULL,
+					password varchar(10) NOT NULL,
+					PRIMARY KEY(id)
+				);
+			
+				-When inserting a new record into the Users table, it's not necessary to specify a value for id column; a unique new value will be added automatically (ao inserir
+				um novo registro nessa coluna não é necessário especificar um valor para a coluna de id; um novo valor único será adicionado automaticamente)
+				
+	-ALTER TABLE (alterar tabelas):
+		-Used to add, delete or modify columns in an existing table (usado para adicionar, deletar ou modificar colunas em uma tabela existente)
+		-You would also use the ALTER TABLE command to add and drop varius constrants on an existing table (pode também adicionar ou remover restrições em tabelas existentes)
+			ALTER TABLE <table> ADD <column> <data_type>;
+			
+			-All rows will have the default value in the newly added column, which is NULL (todas as linhas terão um valor padrão na mais recente coluna - muitas vezes nulo)
+			
+		-Dropping:
+			-Demonstrating how to delete a column:
+				ALTER TABLE <table>
+				DROP COLUMN <column>;
+				
+				-The column, along with all of its data, will be completely removed from the table (a coluna, junto com todas as suas informações, serão completamente removidas)
+			-To drop the entire table, use the DROP TABLE command (para deletar a coluna inteira: DROP TABLE)
+				DROP TABLE <table>;
+				
+		-Renaming (renomeando):
+			ALTER TABLE <table>
+			CHANGE <column> <new_name> <data_type>;
+			
+			-To rename the entire table:
+				RENAME TABLE <table> TO <new_name>;
+				
+	-Views ("visões"):
+		-VIEWS:
+			-A VIEW is a virtual table that is based on the result-set of an SQL statement (tabela virtual é baseado no resultado recebido de um comando SQL)
+			-A view contains rows and columns, just like a real table; the fields in a view are fields from one or more real tables in the database (uma view contém linhas e 
+			colunas, como uma tabela; o campo em uma view são campos de uma ou mais tabelas reais em uma tabela)
+			-Views allow us to (visões nos permite):
+				-Structure data in a way that users or classes of users find natural or intuitive (estruturar informação de maneira que o usuário ache natural ou intuitivo)
+				-Restrict access to the data in such a way that a user can see and - sometimes - modify exactly what they need and no more (restringe o acesso à informação de 
+				maneira que o usuário pode ver e, as vezes, modificar exatamente o que ele precise e não mais)
+				-Summarize data from various tables and use it to generate reports (resume informação de várias tabelas e usa para gerar relatórios)
+					CREATE VIEW <view_name> AS
+					SELECT <column>
+					FROM <table>
+					WHERE <condition>;
+					
+					-The select query can be as complex as you need it to be; it can contain multiple JOINS and other commands (a consulta select pode ser tão complexa quanto 
+					você precis; pode conter múltiplos JOINS e outros comandos)
+		
+		-Creating views (criando views):
+			-Example:
+				Table:	"Employees"
+				Columns: ID, FirstName, LastName, Age, Salary
+					
+				-Creating a view that displays each employee's FirstName and Salary (criando uma view que mostra o nome e salário de cada empregado)
+					CREATE VIEW List AS
+					SELECT FirstName, Salary
+					FROM Employees;
+					
+					-Then, you can query the List view as you would query an actual table (assim, podemos consultar a lista quando quiser consultar a tabela atual)
+					SELECT * FROM List;
+					
+					-A view always shows up-to-date data (a view sempre mostra a informação)
+					-The database engine uses the view's SQL statement to recreate the data each time a user queries a view (o motor do banco usa o comando da view para recriar
+					a informação cada vez que o usuário consultar a view)
+					
+		-Updating a view (atualizando a view):
+			-You can update a view by using the following syntax (você pode atualizar a view usando a seguinte sintaxe)
+				CREATE OR REPLACE VIEW <name> AS
+				SELECT <column>
+				FROM <table>
+				WHERE <condition>;
+				
+			-You can delete a view (deletar a view):
+				DROP VIEW List;
+	
+########## - SoloLearn app ends here :) (app SoloLearn termina aqui) - ##########
+
+Engines (mecanismos):
+	-São componentes, podem suportar diferentes tipos de operações SQL para diferentes tipos de tabelas e podem gerenciar o banco. InnoDB é o motor de armazenamento mais usado,
+	sendo o mecanismo padrão a partir do MySQL 5.5. Diferentes engines (mecanismos) são usadas para diferentes tipos. 
+		InnoDB:			providencia transação segura ACID, suporta restrições de integridade de chaves estrangeiras; suporta commit, rollback e recuperação de crash para proteger
+						os dados; suporta bloqueio no nível de linha; aumenta o desempenho em um ambiente multiusuário através da "leitura consistente sem bloqueio"; armazena
+						dados em índices agrupados que reduzem entrada e saída para consultas com base em chaves primárias
+						
+		MyISAM:			manuseia tabelas sem transações; providencia alta velocidade de armazenamento e busca; suporta busca por textos completos
+		MEMORY:			providencia um HEAP para tabelas; armazena os dados na RAM para fácil acesso se comparado ao armazenamento no disco, útil para busca rápida por referência
+						e outros dados idênticos
+		MERGE:			agrupa mais de uma tabela MyISAM para serem tratadas como uma única, pode manusear tabelas sem transações, incluídas por padrão
+		EXAMPLE:		permite criar tabelas mas não armazenar dados. Usada para ensinar aos desenvolvedores como criar uma nova engine
+		ARCHIVE:		armazena grande quantidades de dados, não suporta índices
+		CSV: 			armazena informações no formato "Comma Separated Value" em um arquivo txt 
+		BLACKHOLE: 		aceita informações para armazenar mas sempre retorna vazio
+		FEDERATED: 		armazena informações em bancos remotos
+		
+Charset:
+	-Conjunto de caracteres usados para armazenar os dados em fomrma de texto, onde cada caractere recebe um número
+	-Caso indique o charset como a tabela ASCII, por exemplo, somente os 256 caracteres da tabela serão reconhecidos
+	-O charset parão é UTF-8, com 1.114.112 caracteres, incluindo chinês e japonês
+	
+Collation (COLLATE):
+	-Define o conjunto de regras  que o servidor irá usar para ordenação e comparação entre textos, ou seja, como funcionarão os operadores "=", "<", ">", order by, entre outros
+	-Podem ocorrer conflitos entre tabelas com collation diferentes, já que a ordenação dos caracteres varia
+	-Pode diferenciar caracteres acentuados ou ser case sensitive
+		<charset>_general_ci_as: case sensitive, acentue sensitive
+		<charset>_general_ci: case insensitive 	-> "teste" retorna também "Teste" e "TESTE", por exemplo
+		<charset>_general_cs: case sensitive	-> "teste" retorna somente "teste", por exemplo
+		<charset>_swedish_ci: não é case sensitive nem acentue sensitive -> "Intuição" pode ser retornado ao procurar por "intúicao", por exemplo 
+	
+CREATE TABLE <nome>(
+	<colunas>
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_general_ci;
+
+Trigger (gatilho):
+	-Função disparada mediante uma ação
+	-Sintaxe:
+		CREATE TRIGGER <nome>
+		ON <tabela>
+		<FOR/AFTER/INSTEAD OF> <INSERT/UPDATE/DELETE]>
+		AS
+			<corpo>
+			
+			FOR: valor padrão; faz com o que o gatilho seja disparado junto da ação
+			AFTER: faz com que o disparo se dê somente após a ação que o gerou ser concluída
+			INSTEAD OF: faz com que o trigger seja executado no lugar da ação que o gerou
+			
+			INSERT/UPDATE/DELETE: uma ou várias dessas opções (separadas por vírgula) devem ser indicadas para informar ao banco qual é a ação que disparará o gatilho
+			
+	-Exemplo:
+		CREATE TRIGGER TGR_VENDAS_AI
+		ON VENDAS
+		FOR INSERT
+		AS
+		BEGIN
+			DECLARE							-> Declara as seguintes variáveis, existindo dentro da trigger através da tabela INSERTED
+			@VALOR  DECIMAL(10,2),
+			@DATA   DATETIME
+
+			SELECT @DATA = DATA, @VALOR = VALOR FROM INSERTED		-> INSERTED é uma tabela temporária
+
+			UPDATE CAIXA SET SALDO_FINAL = SALDO_FINAL + @VALOR
+			WHERE DATA = @DATA
+		END
+		GO
+		
+Stored procedures (procedimentos armazenados - rotinas):
+	-Rotinas definidas no banco de dados, identificadas por um nome pelo qual podem ser invocadas (basicamente, funções)
+	-Um procedimento desses pode executar uma série de instruções, receber parâmetros e retornar valores
+	-Sintaxe:
+		DELIMITER $$
+		CREATE PROCEDURE <nome_procedimento> (<parâmetros>) 			-> Parâmetros devem seguir o padrão: (<MODO nome TIPO>, <MODO nome TIPO>, <MODO nome TIPO>)
+		BEGIN		
+			DECLARE <nome_variável> <tipo> <DEFAULT> <valor_padrao>;	-> Declara variáveis no corpo do procedimento
+			<corpo>	
+		END $$															-> "DEFAULT" é opcional, como visto anteriormente
+		DELIMITER ;
+		
+			TIPO: tipo de dado do parâmetro (int, varchar, decimal, etc)
+			MODO: indica a forma como o parâmetro será tratado no procedimento, se será apenas um dado de entrada, apenas de saída ou se terá ambas as funções
+			-Modos possíveis:
+				IN: indica que o parâmetro é apenas para entrada/recebimento de dados, não podendo ser usado para retorno
+				OUT: usado para parâmetros de saída. Para esse tipo não pode ser informado um valor direto (como 'teste', 1 ou 2.3), deve ser passada uma variável por 
+				referência
+				INOUT: como é possível imaginar, este tipo de parâmetro pode ser usado para os dois fins (entrada e saída de dados). Nesse caso também deve ser informada uma 
+				variável e não um valor direto
+			
+	*O padrão do SQL para delimitar comandos é o ponto e vírgula, no entanto, os procedimentos necessitam de delimitar seus comandos também. A fim de evitar que o procedimento
+	se encerre (já que o ponto e vírgula termina comandos), modificamos o delimitador padrão do SQL (para "$$" nesse caso)
+		DELIMITER <novo_delimitador>
+		
+		*Note que no exemplo o ";" é definido como delimitador novamente
+		
+	-Chamar uma stored procedure:
+		CALL <nome_procedimento>(<parâmetros>);
+		
+	-Exemplo - IN:
+		DELIMITER $$												-> Modifica o delimitador
+		CREATE PROCEDURE Selecionar_Produtos(IN quantidade INT)		-> Define como parâmetro de entrada uma variável "quantidade" do tipo inteiro
+		BEGIN
+			SELECT * FROM PRODUTOS
+			LIMIT quantidade;										-> Limita a quantidade de resultados a serem mostrados pelo número passado no parâmetro
+		END $$														-> Encerra a trigger
+		DELIMITER ;													-> Retorna o delimitador padrão
+			
+		CALL Selecionar_Produtos(2);								-> Chama a função com parâmetro "2", limitando os resultados à essa quantidade
+		
+	-Exemplo - OUT:
+		DELIMITER $$
+		CREATE PROCEDURE Verificar_Quantidade_Produtos(OUT quantidade INT)	-> Retorna a quantidade de registros da tabela "PRODUTOS", passando o valor para
+		BEGIN																   a variável "quantidade"
+			SELECT COUNT(*) INTO quantidade FROM PRODUTOS;	
+		END $$
+		DELIMITER ;
+		
+		CALL Verificar_Quantidade_Produtos(@total) 		-> O "@" funciona como referência ao endereço da variável, possibilitando que ela receba os valores 
+														   dentro da função e retorne com eles para fora, podendo ser usado no restante do código
+					
+	-Exemplo - INOUT:
+		DELIMITER $$
+
+		CREATE PROCEDURE Elevar_Ao_Quadrado(INOUT numero INT) 	-> Recebe a variável e a altera
+		BEGIN
+			SET numero = numero * numero;
+		END $$
+		DELIMITER ;
+		
+		SET @valor = 5;											-> Declara a variável para ser usada como entrada e saída
+		CALL Elevar_Ao_Quadrado(@valor);
+		SELECT @valor;
+		
+	-A declaração de variáveis deve ser feita no início do corpo da procedure, para as que serão usadas em todo o procedimento, ou dentro de um bloco "BEGIN-END" para que
+	funcionem somente nesse escopo
+	-Ao definir o valor de uma variável, podemos usar: 
+		SET: passagem direta de valor (como no exemplo anterior, que modifica e retorna o valor da própria variável nela mesma)
+		INTO: associa os valores dentro de consultas (como no exemplo do "OUT", que define o valor de quantidade dentro de uma query - consulta)
+		
+	-Variáveis declaradas com o "@" são chamadas de variáveis de sessão, que duram enquanto a sessão for válida
+	
+Stored procedures e funções com auxílio do PhpMyAdmin:
+	-Exemplo de uma rotina:
+		rotina_1 {
+		UPDATE tabela_x SET registro_1 = (registro_1 + 3) WHERE registro_2 > 10;
+		DELETE FROM tabela_x WHERE registro_1 < 5;
+		UPDATE tabela_y SET registro_1 = (SELECT MAX(registro_1) FROM tabela_x);
+		}
+		   
+		--Executando a rotina_1
+		CALL rotina_1
+
+	-Procedimentos só podem ser chamados utilizando a palavra-chave "CALL", além de não retornarem nada
+	-Funções podem retornar e podem ser chamadas dentro de um "SELECT", por exemplo
+	-Exemplo de função:
+		#Criando FUNCTION
+		DELIMITER $
+		CREATE FUNCTION func() RETURNS CHAR(100)	-> Define como retorno uma variável CHAR com tamanho máximo de 100 caracteres 
+		BEGIN
+			RETURN "hello from func";
+		END
+		$
+		   
+		#Chamando func()
+		SELECT func(); 
+		
+Udemy:
+	-Cláusulas de consulta:
+		-GROUP BY: agrupa conjuntos de dados
+		-HAVING: expressa a condição que deve satisfazer cada grupo
+		*Demais cláusulas já especificadas - WHERE, FROM, SELECT, ORDER BY
+		
+	-Funções:
+		MAX: retorna o valor máximo
+		MIN: retorna o valor mínimo
+		
+-Criar bancos:
+	CREATE DATABASE <database_name>;
+	USE <database_name>;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

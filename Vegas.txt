@@ -1,0 +1,31 @@
+Sony Vegas
+
+-O aplicativo funciona em camadas, sendo a primeira de vídeo e a segunda de som
+-É possível manipular o vídeo na camada, arrastando ela para os lados, o que determina a duração do vídeo
+-A "camada" total é chamada de timeline
+-Por ser sistema de camadas, se você tiver mais de uma de vídeo, é lido de cima para baixo; ou seja, o item mais acima aparece sempre na frete no seu vídeo
+-Mantenha sempre os vídeos e pedaços o mais a esquerda possível, já que é como se fosse um filme, lido da esquerda para a direita
+-Espaços vazios entre os vídeos na timeline geram espaços vazios no vídeo
+-Para realizar o serviço que você quer:
+	Cortar um vídeo (separar em duas partes): tecla S
+		-Isso separa seu vídeo em duas ou mais partes; para cortar uma parte, divida o início e o fim da parte desejada a retirar e simplesmente a exclua com del, unindo
+		as duas restantes arrastando
+		
+	Colocar logomarca:
+		-Criar uma camada de vídeo acima do vídeo principal e colocar a imagem da logo; estender a camada da sua logo até o fim do vídeo
+			-Basta clicar e segurar na borda direita da camada e ir arrastando que expande ela
+		-Diminua a opacidade dela clicando na camada superior e arrastando para baixo, será visto uma linha horizontal em toda a camada, indicando a opacidade
+		
+	Redimensionar o vídeo, "cortando" a barra de tarefas:
+		-Na camada de vídeo, há dois ícones na extrema direita inferior da camada
+		-Clicar no segundo ícone da direita pra esquerda, abrindo uma janela com o vídeo, chamada de Video Event FX
+			-Redimensionar as diagonais do vídeo a fim de cortar o desejado
+			
+	Renderizar (salvar):
+		-Selecione todas as camadas, como se estivesse selecionando arquivos no computador
+		-É importante selecionar tudo e nada mais, qualquer espaço a mais resulta em tela preta no vídeo, conteúdo vazio
+		-Renderizar nas opções, perto de salvar
+		-Recomendado o formato wmv, 720p, mas note que não é possível aumentar a qualidade nem os FPS do seu vídeo
+			Ex: se seu vídeo é 480, 25 qps (quadros por segundo, FPS, frames por segundo), é impossível renderizá-lo a 480p 30fps
+			
+-Dúvidas me comunique no whatsapp, posso demonstrar de noite caso queira

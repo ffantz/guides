@@ -1,0 +1,44 @@
+Defrag
+
+// defrag C: -f -v
+// defrag D: -f -v
+
+Parâmetros
+
+Volume
+A letra da unidade ou um ponto de montagem do volume que será desfragmentado.
+/a
+Analisa o volume, exibe um resumo do relatório de análise e indica se o volume deve ser desfragmentado.
+/v
+Exibe a análise completa e os relatórios de desfragmentação. Quando usado junto com /a, exibe somente o relatório de análise. Quando usado sozinho, exibe a análise e os 
+relatórios de desfragmentação.
+/f
+Força a desfragmentação do volume quando resta pouco espaço livre.
+/?
+Exibe ajuda no prompt de comando.
+
+Comentários
+
+Um volume deve ter pelo menos 15% de espaço livre para que o comando defrag o desfragmente total e adequadamente. Defrag utiliza esse espaço como uma área de classificação 
+dos fragmentos de arquivo. Se um volume tiver menos de 15% de espaço livre, defrag o desfragmentará apenas parcialmente. Para aumentar o espaço livre em um volume, exclua 
+os arquivos desnecessários ou mova-os para outro disco.
+Você não pode desfragmentar volumes que o sistema tenha marcado como sujos, o que indica que podem estar corrompidos. Você deve executarchkdsk em um volume com problemas 
+antes de desfragmentá-lo. Para determinar se há problemas em um volume, use o comando fsutil dirty query. Para obter mais informações sobre chkdsk e fsutil dirty, consulte 
+Tópicos Relacionados.
+Enquanto defrag analisa e desfragmenta um volume, ele exibe um cursor intermitente. Quando defrag termina de analisar e desfragmentar o volume, ele exibe o relatório de 
+análise, o relatório de desfragmentação, ou ambos, e sai do prompt de comando.
+Por padrão, defrag exibirá um resumo dos relatórios de análise e de desfragmentação se você não especificar os parâmetros /a ou /v.
+É possível enviar os relatórios para um arquivo de texto digitando >Nome_do_Arquivo.txt, onde Nome_do_Arquivo.txt é o nome de arquivo que você especificar. Por exemplo:
+defragVolume/v>Nome_do_Arquivo.txt
+Para interromper o processo de desfragmentação, na linha de comando, pressione CTRL+C.
+
+Exemplos
+
+Para analisar a unidade C, digite:
+defrag C: /a
+Para analisar a unidade C e exibir o relatório de análise, digite:
+defrag C: /a /v
+Para desfragmentar a unidade C, digite:
+defrag C:
+Para desfragmentar a unidade C e exibir o relatório de desfragmentação, digite:
+defrag C: /v

@@ -1,0 +1,68 @@
+Photoshop
+
+x: muda cor (primeiro e segundo plano)
+b: pincel
+e: borracha
+v: mover
+h: hand
+t: texto
+w: varinha magica
+l: laço poligonal
+u: formas geometricas
+s: carimbo
+[: diminui pincel
+]: aumenta pincel
+
+ctrl + mouse1 (camada): seleciona o objeto
+
+alt + ctrl + r: select and mask
+	-segunda camada: "refina" a mascara (cabelos, por exemplo)
+	-alt + mouse1: indica onde não refinar
+	-output settings:
+		-"layer mask"
+	+deixa a camada original escondida, enquanto cria uma cópia com a máscara aplicada
+
+*adicionar camada, geralmente na inferior, de cor sólida ajuda a encontrar locais para aplicar mascara
+
+ctrl + s: salvar
+ctrl + o: abrir arquivo
+ctrl + w: fecha arquivo
+ctrl + n: novo arquivo
+ctrl + t: transformaçao livre
+ctrl + i: inverte seleção (?)
+ctrl + alt + i: redimensionar imagem -> resolução
+ctrl + h: exibir pixels
+ctrl + shift + i: inverte a seleção (?)
+ctrl + alt + i: tamanho da imagem
+alt + scroll: zoom
+ctrl + u: níveis de matriz/saturação
+ctrl + l: níveis da imagem
+shift + alt: aumenta proporcionalmente uma imagem
+ctrl + j: desmembra região selecionada (cópia da camada)
+alt + mouse2 + direçao: 
+	-vertical: dureza
+	-horizontal: tamanho
+ferramenta caneta: 
+	-ctrl + enter: cria seleção
+	-alt + delete: preenche com a cor de primeiro plano
+	-ctrl + delete: cor de segundo plano
+	
+-layers: "channels"
+	-mascaras baseadas em RBG, facilita na criaçao de camadas protegidas
+	-preto oculta, branco mostra
+	-dois cliques sobre a mascara de camada abre a area de trabalho "select in mask"
+		-shift edge: expande ou diminui a area da mascara
+		-feather: suaviza
+		-opçao "on layers" volta ao normal
+	-shift + clique na mascara desabilita
+	-apagar os pixels protegidos pela mascara: "apply layer mask"
+
+-camada de objeto inteligente: camada que preserva propriedades da imagem original, aplicando filtros controlados
+	*metodo de ediçao nao destrutiva
+	-filter: blur: radial blur
+	*aplicando o objeto inteligente, os filtros podem ser editados apos aplicados
+	*gera uma mascara de camada com o filtro e o efeito separados
+	
+-clarear uma imagem:
+	-duplicar a camada
+	-ajustar o blending da camada para "screen" (divisão)

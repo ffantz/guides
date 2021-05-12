@@ -1,0 +1,11 @@
+Youtube API 3.0
+
+-Crição da credencial e chave de acesso:
+	-Criar uma credencial de acesso à API de developer
+	-Habilitar serviços vinculados a credencial
+	-Criar chave de acesso
+	-Definir a plataforma que utilizará a aplicação
+	-Dados acessados (público, privado)
+	-Definir se funcionará em qualquer URL ou não
+	
+Key: AIzaSyCXEcbVF5WgrqXWvHXbo_sTCPyjYYmg50I

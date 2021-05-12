@@ -1,0 +1,182 @@
+SEO
+
+-Organização de arquivos de um site:
+	-Pasta raiz:
+		index.html
+		
+		eventos.html			-> uma solução é colocar o arquivo em uma pasta chamada eventos e renomear para index .html
+		depoimentos.html
+		menu.html
+		dvd.html
+		local.html
+		info.html
+		
+		-Pasta css				-> colocar um underline nas pastas que possuem arquivos, diferindo das pastas que possuem arquivos de conteúdo
+		-Pasta js
+		-Pasta img
+		
+	
+	-Pasta raiz:					-> isso faz com que o site seja acessado de forma mais clara
+		index.html					-> supondo que o site seja www.cafe.com.br
+		
+		-eventos/index.html			-> o acesso a essa página fica como www.cafe.com.br/eventos/
+		-depoimentos/index.html
+		-menu/index.html
+		-dvd/index.html
+		-local/index.html
+		-info/index.html
+		
+		-Pasta _css
+		-Pasta _js
+		-Pasta _img
+		
+-Programa Dreamweaver: refaz os caminhos dos arquivos, inserindo uma nova referência ao mudá-los de pasta
+
+-Itens a dar atenção:
+	-URL
+	-Title
+	-Meta Tag - description
+	-Headers
+	-Body text
+	-Images
+	
+	-URL:
+		-Colocar nomes claros nas URL's
+		-Usar hífen - ou traço - para separar as palavras
+		-Não deve conter espaços entre as palavras
+		-Não deve colocar caracteres especiais
+		-Usar textos com letras minusculas
+		
+	-Title/headers:
+		-Tanto no título quanto no h1 da página, é importante colocar do que se trata a mesma
+		
+	-Meta tag:	
+		<meta name="description" content="Descrição da página, chaves para busca">
+		
+	-Imagens:
+		alt: importante colocar para que uma busca no Google, por exemplo, seja encontrado através do texto colocado na tag
+		nome: colocar o nome do que se trata a imagem para também facilitar na busca
+		
+-Boa navegação:
+	-Separar o conteúdo em seções intuitivas e bem organizadas, facilitando a navegação do usuário
+	
+-Links internos:
+	-Links de navegação: guiam o usuário e ajudam os buscadores a separam o conteúdo por categorias
+	-Links de conteúdo: guiam a navegação do usuário conforme a navegação
+	
+	-Evitar o uso de "clique aqui" para links, melhor usar uma frase como "veja tal conteúdo <a>aqui</a>"
+		
+-Informações sobre a localização:
+	-Meta tags
+		<meta name="geo.region" content="FR-75" /> 	País
+		<meta name="geo.placename" content="" /> 	Cidade
+		<meta name="geo.position" content="" />		Latitude/longitude
+		<meta name="geo.ICBM" content="" />			Latitude/longitude
+		
+		-Ideal ser colocado em todas as páginas
+		-Utilizar o site http://www.geo-tag.de/generator/en.html para preencher as tags
+		
+-Site map
+	-Robots.txt:
+		-Usar quando desejar NÃO indexar certas pastas (deixar públicas)
+		-Deve ficar na raiz do site
+		-User-agent
+			-Rastreadores: Googlebot, Googlebot New, Googlebot Images, Googlebot Video, Googlebot Mobile, Bingbot
+			-Mais comum usar o * para falar com todos os rastreadores
+			
+		-Allow: permite
+		-Disallow: não permite
+		
+		Exemplo de robots.txt:
+			User-agent: *
+			Disallow: /admin/
+			Disallow: /cache/
+			Disallow: /css/
+			Disallow: /includes/
+			Disallow: / 			-> desabilita todas as pastas
+			
+		-Via META-TAG para uma página específica:
+		<meta name="ROBOTS" content="noindex,nofollow"> para os links não serem seguidos
+		
+		-Desativar todos os arquivos pdf:
+			User-agent: *
+			Disallow: / .pdf$
+		
+	-XML site maps:
+		-Arquivos para usuários ou mecanismos de busca
+		-Utilizar o robots.txt para referenciar o site map
+			User-agent: *
+			Disallow: /admin/
+			Disallow: /cache/
+			Disallow: /css/
+			Sitemap: http://www.seusite.com.br/sitemap.xml
+			
+		-Criador de site map xml:
+			www.xml-sitemap.com
+			-Baixar o arquivo.xml e colocar e fazer upload na pasta raiz do seu site
+			-Checar com www.site.com/sitemap.xml
+			
+		-Site map para usuário: 
+			-Funciona como index para o usuário, com a lista de páginas disponíveis
+			
+		-Submeter o site map para o Google
+			google.com/webmasters
+			
+			-Indicar seu site no google
+			-Baixar o arquivo verificador e fazer upload no site
+			-Confirmar sucesso visitando a página com o arquivo do google
+			-Não deve remover o HTML, mesmo após verificação
+			
+			-Maneiras alternativs: meta tag, domain name provider, google analytics, google tag manager
+			
+-Links externos:
+	-Como criar links para o site?
+		-Acessoria de imprensa
+		-Responder fórum de discussão da área de negócio
+		-Sites de amigos e parceiros
+		link:site.com: mostra quantos links foram feitos para tal site
+		majestic.com: mesmo funcionamento
+		
+	-Link perfeito:
+		-Links em textos, não imagens
+		-Evitar "clique aqui", "saiba mais", nome da empresa, etc
+		-Atributo title no link (<a>)
+		-O link do parágrafo tem melhor aparência para SEO do que links do menu
+		-Links com boas keywords
+		-Em página estática, não dinâmica
+		
+		-A maioria das redes sociais vem com atributo rel="nofollow", o que não aumenta seu PageRank
+		-Saber se o link vem com o atributo nofollow: extensão NoFollow no Chrome, revelando quais links tem essa classificação
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	

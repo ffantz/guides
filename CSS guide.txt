@@ -1,0 +1,734 @@
+CSS 3
+	
+Udemy:
+	-Estruturar o HTML apenas para conteúdo
+	-Manter o código limpo, organizado e bem indentado
+	-Nomear o ID com # antes de sua declaração (CSS)
+	-Nomear a classe com . antes (CSS)
+	-Não utilizar caracteres especiais nos nomes
+	-É possível aplicar mais de uma classe ao mesmo elemento, basta separá-los  por espaço
+		-Exemplo:
+			<p class="destaque vermelho">		-> recebe características da classe destaque e classe vermelho
+			
+	-É possível aplicar uma ID e uma classe ao mesmo elemento
+		<p id="destaque" class="vermelho">		-> recebe características da ID destaque e da classe vermelho
+		
+	-Navegadores leem os seletores da direita pra esquerda
+		#principal div p a 			-> procura por um a dentro de um p, dentro de uma div cujo ID do elemento seja #principal
+		
+	-Propriedade de cascata do CSS:
+		-Lê primeiro o arquivo externo, seguido do estilo incorporado e por último o inline, sendo o último o que será definitivo se todos modificarem uma mesma propriedade
+		
+	-CSS é basicamente feito de estilos
+		-Estilos é uma coleção de regras de formatação
+		-A regra é composta da seguinte forma: seletor{ declaração}
+			seletor{
+				propriedade: valor;
+			}
+			
+		-Pode ser incorporado no HTML da seguinte forma:
+			<html>
+				<head>
+					<style>
+						
+						body{									-> define estilização na tag body
+							background:	#f0f0f0;				-> aplica cor de fundo
+							font-family: Arial, sans-serif;		-> configura fonte da tag
+							color: white;						-> define a fonte na cor branca
+						}
+				
+						*Incorporado - serve apenas para essa página
+					</style>
+					
+					<link href="estilo.css" rel="stylesheet">	-> externo
+				</head>
+				<body>
+					...
+				</body>
+			</html>
+			
+		-Pode ser usado "inline", dentro de uma tag específica, funcionando apenas para aquela tag
+			<p styl="propriedade: valor;"> Tag com estilo inline</>
+			
+	-É possível usar mais de um seletor para a mesma regra e mais de uma propriedae: valor; na mesma linha:
+		p, li, a{ color: white; background-color: blue;}
+				
+	-Classes:
+		-Definidas usando um . e o nome
+		-Usado caso a regra CSS for aplicada a mais de um elemento; caso contrário ID deve ser utilizado
+			-Exemplo:
+				.classe-teste{
+				
+				}
+			
+			-Uso:
+				<p class="classe-teste">Teste</p>
+				
+	-ID:
+		-Usa o # antes do nome
+		-Aplicado a um único elemento, não deve de maneira alguma ser usado em mais de um; caso contrário, classe deve ser utilizada
+			-Exemplo:
+				#teste{
+				
+				}
+				
+			-Uso:
+				<p id="teste">Teste</p>
+				
+	-Valor de atributo:
+		-Atribui estilo para as tags que possuem um valor específico para um atributo específico
+			-Exemplo:
+				<input type="text">
+				
+				-CSS:
+					input[type="text"]{
+					
+					}
+				
+	-Seletor em grupo:
+		-Separa os elementos quer compartilharão da mesma regra por vírgula
+			p, li, a{
+				
+			}
+		
+	-Seletor em elemento específico:
+		-Ao utilizar da classe, é possível fazer modificações específicas mesmo que todas as tags compartilhem regras
+			p, li, a{
+				
+			}
+			
+			.destaque{
+			
+			}
+			
+			li.destaque{
+			
+			}
+		
+	-Seletor descendente:
+		-Afeta elementos que estão dentro do primeiro
+			div p{		-> afeta todos os <p> dentro de alguma <div>
+			
+			}
+			
+	-Seletor adjacente:
+		-Atribui a regra ao primeiro elemento que estiver logo em seguida de outro
+			h2+p{		-> afeta o primeiro <p> que aparece depois do <h2>
+				
+			}
+
+	-Fontes:
+		-Fontes do sistema
+			-Fontes instaladas em quase todos os dispositivos
+			-Necessitam estar instaladas no dispositivo do cliente
+			-Recomenda-se colocar mais de uma opção de fonte na propriedade font-family, já que caso a primeira delas não existir no computador, as próximas são testadas
+			
+		-Fontes da web
+			-Embute fontes nos arquivos usando o método @font-face
+			-Permite que qualquer fonte seja usada sem preocupação
+			-Utilizar fontes:
+				*google fonts
+				-Copiar para o head o <link rel> da fonte escolhida
+				-Abrir a tag style e especificar o uso em alguma regra:
+					p{
+						font-family: 'nome_da_fonte', sans-serif;
+					}
+					
+			@font-face{
+				font-family: "test";
+				src: url("test.tff");
+			}
+					
+		-Definir o tamanho:
+			-Unidade relativa
+				-Depende do tamanho do documento
+				-Unidade em é proporcional
+				
+			-Unidade absoluta
+				-Exibida do tamanho solicitada, sem depender de contexto
+				
+			font-size: 110% | 1em (relativas), 18px (absoluta);
+			font-weight: normal | bold | bolder | lighter | 100 ~ 900 | inherit;
+			font-style: normal | italic | oblique | inherit;
+			font-variant: normal | small-caps | inherit;
+			text-align: left | right | center | justify
+			vertical-align: top | middle | bottom		-> alinha verticalmente um elemento
+			line-height: 2em; (espaço entre as linhas)
+			text-indent: 2em; (indentação)
+			text-decoration: underline | overline | line-through | none | blink
+			text-transform: capitalize | uppercase | lowercase
+			text-indent: 2cm | em | px | % | inherit
+			text-shadow: 5px 2px 4px grey (distância em x, distância em y, blur, cor)
+			
+		-Espaçamento entre letras e palavras:
+			letter-spacing: -0.1em; (espaçamento entre letras)
+			word-spacing: 2em; (espaçamento entre palavras)
+			white-spacing: normal | inherit | nowrap | pre | pre-line | pre-wrap
+			
+	-Atribuição de cores:
+		-Especificação:
+			-Texto: red, green, blue
+			-Hexadecimal: #FF0000, #00FF00, #0000FF
+			-RGB: (255,0,0), (0,255,0), (0,0,255)
+			
+		-A transição de hexadecimal para RGB ocorre através de uma tabela simples, numerada de 0 a 255 em linhas e colunas de 0 a F
+		
+			0	1	2	3	4	5	6	7	8	9	A	B	C	D	E	F			*Uma cor em hexadecimal é transferida através de pares
+		0	0	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15			*Exemplo:	
+		1	16	17	18	19	20	21	22	23	24	25	26	27	28	29	30	31				#FFABCC é separado em 3 pares: FF, AB e CC
+		2	32	33	34	35	36	37	38	39	40	41	42	43	44	45	46	47				-Segue a ordem R,G,B, ou seja, FF é equivalente a R e assim por diante
+		3	48	49	50	51	52	53	54	55	56	57	58	59	60	61	62	63				-A primeira letra do par corresponde a coluna e a segunda à linha
+		4	64	65	66	67	68	69	70	71	72	73	74	75	76	77	78	79				-FF é 255, AB é 186, CC é 204, formando o rgb(255,186,204)
+		5	80	81	82	83	84	85	86	87	88	89	90	91	92	93	94	95				
+		6	96	97	98	99	100	101	102	103	104	105	106	107	108	109	110	111	
+		7	112	113	114	115	116	117	118	119	120	121	122	123	124	125	126 127
+		8	128	129	130	131	132	133	134	135	136	137	138	139	140	141	142	143
+		9	144	145	146	147	148	149	150	151	152	153	154	155	156	157	158	159	
+		A	160	161	162	163	164	165	166	167	168	169	170	171	172	173	174	175	
+		B	176	177	178	179	180	181	182	183	184	185	186	187	188	189	190	191	
+		C	192	193	194	195	196	197	198	199	200	201	202	203	204	205	206	207	
+		D	208	209	210	211	212	213	214	215	216	217	218	219	220	221	222	223	
+		E	224	225	226	227	228	229	230	231	232	233	234	235	236	237	238	239	
+		F	240	241	242	243	244	245	246	247	248	249	250	251	252	253	254	255
+		
+		-Hexadecimal abreviado:
+			-Quando os pares forem dois algarismos iguais é possível escrevê-los abreviado, usando só uma das letras
+			*Exemplo: #FFCC00 pode ser escrito como #FC0
+			
+		-RGB em porcentagem:
+			-Valores inteiros: rgb(255,128,00)
+			-Valores percentuais: rgb(100%,50%,0%)
+	
+		-HSL color:
+			-Hue:
+				-0 a 360, globo de cores usando graus
+				*0 graus representa vermelho, 120 graus verde e 240 graus azul
+				
+			-Saturation:
+				-Define intensidade da cor, do 0 ao 100%, de sem a com intensidade
+				
+			-Lightness
+				-Brilho, 50% sua cor verdadeira, maior fica próximo do branco e menor próximo do preto
+				
+		-RGBa e HSLa - Controle alpha:
+			-Define a opacidade, o alpha
+				rgba(255,128,0,0.5)
+				hsla(120,50,0,0.5)
+				
+	-Box model:
+		-Cada elemento de uma página é considerado uma caixa
+			padding 		-> dá uma distância entre a caixa e o conteúdo
+				padding-top: 30px;					30px de distância entre a parte de cima da caixa e o conteúdo
+				padding-right: 30px;				30px de distância entre a direita da caixa e o conteúdo
+				padding-bottom: 30px;				30px de distância entre a parte de baixo da caixa e o conteúdo
+				padding-left: 30px;					30px de distância entre a esquerda da caixa e o conteúdo
+				padding: 30px 30px 30px 30px;		define 30px à todas as direções, no sentido horário, respectivamente
+				padding: 30px;						define 30px para todas as direções
+				padding: 30px 20px;					define 30px para cima/baixo e 20px para esquerda/direita
+				padding: 30px 20px 10px;			define 30px para cima, 20px para direita/esquerda e 10px para baixo
+				padding: auto; 						define o maior tamanho possível de forma proporcional
+			
+			margin 			-> distancia a caixa em relação à outros elementos
+				-Caso não especifique o lado que a margem acrescenta os pixels, todos os lados serão acrescidos
+				margin-top: 30px;					30px de distância em relação à cima
+				margin-right: 30px;					30px de distância em relação à direita
+				margin-bottom: 30px;				30px de distância em relação à baixo
+				margin-left: 30px;					30px de distância em relação à esquerda
+				margin: 30px 30px 30px 30px;		define 30px à todas as direções, começando de cima, direita, baixo e esquerda (sentido horário)
+				margin: 30px;						define 30px para todas as direções
+				margin: 30px 20px;					define 30px para cima e baixo e 20px para os lados
+				margin: 30px 20px 10px:				30px para cima, 20 para os lados e 10 para baixo
+				margin: auto; 						define o maior tamanho possível de forma proporcional
+			
+			padding/margin: 0; 	-> remove qualquer padding e/ou margem relacionada ao elemento
+			
+		-Propriedades de posicionamento:
+			position: absolute | relative | fixed | static
+			
+			static: posicionamento natural
+			relative: reconhece outros valores, não só margens
+				-Possibilita o uso de top, bottom, left e right como definições de "margens", sendo relativas ao elemento anterior e podendo sobrepor outros elementos
+				
+			absolulte: caso não haja determinação de posicionamento de outros elementos, é relativo à limites da página
+				-Ignora posicionamento estáticos ou sem determinação
+				-Quando há um elemento absoluto e valores serão atribuídos, deve ser criado dentro de outro elemento com posicionamento relativo, absoluto ou fixo
+				
+			z-index: quanto maior o valor, mais a frente o elemento fica em relação a outros elementos
+			fixed: identifica o elemento "pai total", ou seja, reconhece a página e não o pai imediato dele. Em uma barra de rolagem, por exemplo, o elemento continua na mesma
+			posição, sem se mover ao rolar a página.
+			
+			-Ao trabalhar com elementos absolutos, o último criado sempre fica mais "próximo", menos profundo na página
+			-No caso de mais de um elemento com o mesmo z-index, fica na frente o último criado
+			
+			
+		-Flutuação:
+			float: left | right | none | inherit -> herda característica de elemento pai
+			-Quando um elemento externo ao float não fica na dimensão correta, aplicar a seguinte regra:
+			elemento/id/class:after{
+				content: "";
+				display: table;
+				clear: both;
+			}
+			
+				-Quando uma DIV (pai), tem dentro dela uma ou mais DIV's (filhas) com propriedade float e não tem nenhuma propriedade que determine sua altura (height), ela 
+				perde  a referência de conteúdo interno. Logo, perde a altura. Por isso, temos que forçar a criação de um conteúdo interno depois (after) para que ela volte 
+				a ter a  compreensão do espaço que precisa ocupar. 
+				-A regra funciona para o elemento que vem depois, o primeiro deles. Os demais não são afetados
+				
+			clear: left; 		-> impede que tenha elementos à sua esquerda
+			clear: right; 		-> impede que tenha elementos à sua direita
+			clear: both; 		-> impede que tenha elementos em qualquer dos seus lados
+			
+			overflow: hidden	-> corrige o problema de elementos filhos retirarem a altura do pai, impedindo que qualquer conteúdo restante seja visto
+			overflow: visible	-> deixa tudo visível, como se não houvesse overflow
+			overflow: auto		-> esconde sobras, limitando um elemento pai e gerando um scroll para vizualizar o conteúdo
+			overflow: scroll	-> semelhante ao auto, mas podendo aparecer a barra mesmo sem necessidade
+			
+		-Máscaras:
+			clip: rect(0 170px 170px 0);	-> define uma área: posicial inicial da largura - final da largura - tamanho da altura - posição final
+	
+	-Bordas:
+		-Ao redor da "caixa" dos elementos
+			border-style: solid | dashed (tracejada) | dotted (pontilhada) | inset | ridge | outset | double | groove
+			border-width: thin | medium | trick
+			border-color: green | #F00
+			border-radius: 20px -> define arestas arredondadas
+			border-radius: 0 0 20px 20px (top-left, top-right, bottom-right, bottom-left)
+			border-radius: (heigth/2) -> cria um círculo, se a width = height e o border-radius é a metade desse valor
+			
+		-Propriedades individuais:
+			border-_side_-style/width/color
+			*Exemplo:
+				border-top-style: solid;
+				border-left-width: 2px;
+				
+			border: style width color;
+			*Exemplo:
+				border: solid 2px red;
+				
+		-Imagem:
+			border-image: url('caminho') 30 30 round;
+			
+	-Background:
+		background-color: #F00 | rgb(255,120,59) | red;	-> define cor de fundo
+		background-image: url('caminho') -> repete a mesma imagem até completar todo o fundo	
+		background-repeat: no repeat (não repete a imagem) | repeat-x (repete apenas na horizontal)
+		background-attachment: fixed (caso tenha barra de rolagem, a imagem não se movimenta)
+		background-position: top (centraliza) | right (à esquerda e um pouco acima do limite da tela) | right top (esquerda superior)
+			
+			|	left top		|	center top		|	right top		|
+			|					|					|					|
+			|	left center		|	center center	|	right center	|
+			|					|					|					|
+			|	left bottom		|	center bottom	|	right bottom	|
+			
+		background-blend-mode:	
+		background-origin:	
+		background-clip: especifica uma área pintadada do plano de fundo
+		background-clip: border-box | padding-box | content-box
+		background-size: contain | cover (escala uma imagem para o contâiner / imagem é cortada se o contâiner tiver um tamanho diferente) 
+		
+	-Sombra:
+		box-shadow: 10px 10px 5px #999; (o primeiro valor determina o lado da sombra; positivo = direito, negativo = esquerdo; o segundo valor determina a direção vertical,
+		positivo = baixo; negativo = cima; o terceiro valor determina um blur - intensidade, menor mais sólida, maior borra mais; quarto valor determina a cor)
+			*Se os dois primeiros valores forem = 0, atribui uma sombra ao redor do objeto
+		
+			-Existe um quarto valor antes da cor, definindo um spread (distância expandida da sombra)
+			-inset no início faz com que a sombra fique dentro do elemento, as mesmas direções mas lados invertidos (sombra pra direita fica na esquerda, por exemplo)
+			-É possível criar mais de uma sombra separando os comandos com vírgulas
+			
+		text-shadow:
+			-Mesmos valores
+			
+	-Browser prefixes:
+		Firefox					-moz-
+		Chrome					-webkit-
+		Safari					-webkit-
+		Opera					-o-
+		Internet Explorer		-ms-
+			
+	-Gradientes:
+		background: linear-gradient (right, blue, red); (gradiente vai para a direita, cor inicial azul, cor final vermelha)
+		background: linear-gradient (90deg, blue, red);	(grau final, os graus crescem no sentido horário, com o 0 sendo a extrema cima)
+		background: (browser-prefix)-linear-gradient (blue, yellow, green, pink, white); (várias cores)
+		Background: (browser-prefix)-linear-gradient (blue 20%, yellow 30%, green 85%); (a cor para na posição especificada para cada cor)
+		background: (browser-prefix)-repeating-linear-gradient (blue, yellow, green, pink, white); (repete o gradiente)
+		
+		-No internet explorer >9: filter:progid:DXImageTransform.Microsoft.gradient(startColorstr= #0066CC,endColorstr=#99CC66,GradientType=0);
+		
+		-Gradiente radial:
+			background: radial-gradient(blue, red); (sai de um ponto central para suas arestas, do azul para vermelho)
+			
+		-É possível adicionar mais de uma cor
+		-Para dar mais foco em uma cor colocando uma porcentagem na frente da cor (bllue 50% por exemplo)
+	
+	-Larguras:
+		1em = 100%
+		-em é relativo ao tamanho em pixels do elemento pai
+		-Utilizar unidades fluidas, como porcentagem
+		-Soma de margens, internas e externas, com a soma da largura dos elementos não deve ultrapassar 100%
+		-Exemplo:
+			*2 elementos, lado a lado, devem ser fluidos e possuir margin e padding;
+			e1{
+				width: 37%;					-> 37 + 1 (margin) + 2 (padding) = 40%
+				padding: 1%;
+				margin-left: 1%;
+			}																					-> 40 + 60 = 100
+			
+			e2{								-> 57 + 1 (margin) + 2 (padding) = 60%
+				width: 57%;
+				padding: 1%;
+				margin-left: 1%;
+			}
+			
+	-Layout fixo:
+		-Define quais elementos compõem sua página, em um planejamento
+		-Define uma largura geral de início e dos elementos que compõem a página
+		-Maioria dos sites são baseados em larguras fixas:
+			Resolução 640x480px
+			Resolução 800x600px
+			Resolução 1024x768px
+			Resolução 1280px de largura
+			Resolução 1366px de largura
+			
+		-Prós:
+			-Mais fáceis de criar e administrar
+			-Desenhar para um tamanho específico significa menos tempo para planejar problemas específicos
+		
+		-Contras:
+			-Não se adapta a diferentes tamanhos de resolução de aparelhos
+			-Pode cortar conteúdo
+			-Pode parecer pequeno um conteúdo em uma resolução maior
+			
+		-Aplicar CSS grid:
+			-Utiliza o software Fireworks para determinar o tamanho de cada elemento e sua composição na página
+			-Outros softwares podem ser utilizados para essa construção, como o Photoshop
+			
+	-Layout flexível:
+		-Tag main determina o tamanho máximo dos elementos
+		-Trabalhar com valores percentuais para tamanhos, de modo que sejam adaptáveis
+		min-width: x px;	-> define um tamanho mínimo para o layout
+		max-width: x px;	-> define um tamanho máximo para o layout
+		
+		-Redimensionar imagens: 
+			-Trabalhar com percentual na sua largura, sem determinar altura
+			-Determinar somente uma altura, de modo a diminuir ou aumentar a visibilidade ao ser redimensionada
+			
+	-Listas:
+		list-style: estilo de uma lista
+		list-style: type position image (inserindo valores correspondentes)
+		list-style: none;
+		list-style-type: armenian, circle, decimal..., etc
+		list-style-image: url(pasta/arquivo)
+		list-style-position: inside		-> joga a ordenação dos itens para dentro da lista
+		
+	-text-decoration: define decoração, como underline, por exemplo
+		text-decoration: none;
+		text-decoration: underline;
+		text-decoration: overline;
+		
+	-display: block; 			-> faz com que cada elemento tenha seu devido espaço, pegando 100% da largura do navegador
+	-display: inline; 			-> ignora qualquer definição de largura e/ou altura e mantém os elementos "colados", sem espaço de linha, por exemplo
+	-display: inline-block; 	-> o elemento é formatado como inline mas possiblita a aplicação de altura e largura
+	-display: table; 			-> o elemento se comporta como uma tabela
+
+	-color: modifica a cor de um texto
+		color: white;
+				}
+				
+	-cursor: auto | crosshair | default | move | help | wait | n/s/ne/sw/nw/se/e/w-resize | pointer | progress | not-allowed | no-drop | vertical-text | all-scroll
+	col-resize | row-resize
+	
+	-visibility: visible | hidden (define se um elemento vai ser visto ou escondido)	
+	-opacity: 1 | 0.5 | 0.25 (opacidade de um elemento)
+	-filter: alpha(opacity=50); (0 = 100% transparente, 100 = 100% opaco)
+	-transition: muda a propriedade de um valor para outro em uma duração específica
+	-transition-property: especifica a propriedade a ser transitada
+	-transition-duration: especifica a duração das transições
+	-transition-timing-function: duração
+		-transition-timing-function: ease | ease-in | ease-out | ease-in-out | linear
+		
+	-transition-delay: delay para a transição
+	
+	-word-wrap: quebra palavras longas em uma linha de texto para a próxima
+	word-wrap: normal | break-word
+	
+	-Pseudo-classes:
+		-hover: ao colocar como atributo de uma tag, ao definir a regra, indica a regra quando o mouse estiver por cima
+			tag:hover{
+				propriedade: valor;
+			}	
+			
+		-first-child: primeiro filho, primeiro item logo após tal elemento
+		-last-child: indica o último filho daquele elemento
+		-nth-child(x): indica mudança no filho x daquele elemento
+			-x pode ser odd (ímpar), even(par), 2n, 3n (segundo, terceiro), 2n+1(primeiro e terceiros a partir do primeiro)
+			tag:first-child, tag:last-child{
+				propriedade: valor;
+			}
+			
+		-after: indica "após" tais mudanças, ou após alguma modificação, definindo a aparência após toda a transformação e/ou estilização da página
+			tag:after{
+				propriedade: valor;
+			}
+			
+	-Pseudo-elementos:
+		-first-of-type:first-letter: pega o primeiro do tipo e a primeira letra, a primeira letra ocorrente no conteúdo daquela tag, no caso
+			tag:first-of-type:first-letter{
+				propriedade: valor;
+		}
+			
+		::first-line		-> primeira linha do texto em um seletor
+		::first-letter		-> primeira letra
+		::selection			-> porção de elemento selecionada pelo usuário
+		::before			-> insere conteúdo antes do elemento
+		::after				-> insere conteúdo após elemento
+	
+Booststrap 3
+
+Inicializando o bootstrap:
+	<link href="css/bootstrap.css" rel="stylesheet">
+	-Deve-se incluir a pasta do css e js na mesma pasta do projeto
+	
+	-Container:
+		-Pode ter mais de um, de diferentes considerações ou considerar ele o elemento principal
+		-Cria diferentes "pontos de resolução"; 
+			class="container"			-> contém "pontos de parada"
+			class="container-fluid"		-> se mantém da largura do navegador
+			
+		-Pode ser dividido em rows
+			
+	-Grid:
+		-Contém 12 colunas imaginárias
+		-Pontos do grid:
+							extra small 	 small			medium			large				-> n é o número de colunas do grid, de 1 a 12
+			container:		Auto			750px			970px			1170px
+			class prefix:	.col-xs-n		.col-sm-n		.col-md-n		.col-lg-n
+			dispositivos:	smartphone		tablet			desktop			desktop
+			
+		-Media query:
+			-Extra small:
+				@media (min-width: @screen-xs-min) {...}
+				
+			-Small:
+				@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {...}
+				
+			-Medium:
+				@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {...}
+				
+			-Large:
+				@media (min-width: @screen-lg-min) {...}
+				
+			-Caso escolha um tamanho e use a janela em um maior, todos os tamanhos maiores do que o escolhido terão a mesma característica
+				-Exemplo: se definido um sm de um certo tamanho, todos os maiores que esse terão as mesmas características
+
+		-Corrigir problemas:
+			<div class="clearfix"></div>
+			
+			-Para um determinado tamanho:
+			<div class="clearfix visible-sm-block"></div>	-> corrige quando há problema no tamanho sm
+			
+			-Para correção de mais de um tamanho, adicionar o comando logo após o elemento que dá problema ou em determinada visualização
+
+		-O grid trabalha junto com container e com as rows, ficando dinâmico
+		
+	-Centralizar elementos com offset:
+		<div class="col-tamanho_escolhido-offset-tamanho_de_cada_lado">		-> o elemento fica organizado na página com tamanho_de_cada_lado em cada lado do tamanho ocupado
+		pelo tamanho_escolhido, que fica centralizado
+			-A medida do tamanho de cada lado é a metada do espaço que sobra
+			
+	-Adicionando classes:
+		-Alguns elementos de destaque não funcionanm quando estão dentro de outros. O h3, por exemplo, não surte efeito se colocado dentro de um p
+		-Para corrigir isso existe o uso das classes do bootstrap, no exemplo anterior, basta colocar o conteúdo que seria h3 dentro da tag <span> com a class="h3"
+		-Modificações no h3 em si não afetam esse spam, deve-se modificar a classe h3 (.h3)
+		-Alinhamento de texto:
+			class="text-right"		 	-> alinha à direita
+			class="text-justify" 		-> justificar
+			class="text-center"			-> centralizar
+			class="text-left"			-> alinha à esquerda
+
+		-Aparência de listas:
+			<dl class="dl-horizontal">		-> torna a lista de definição horizontal
+			<dl class="dl-verical">			-> torna a lista de definição vertical, padrão
+			<ol class="list-unstyled">		-> remove todos os estilos da lista, como a ordenação, padding, etc
+			<ul class="list-inline">		-> mantém a lista em uma linha, como ao criar menu's horizontais
+			
+	*Os espaços dentro dos parênteses do class="" indica diferentes classes, podendo combiná-las ou usar cada uma delas separadamente
+	-Personalizar botões:
+		-É possível juntar mais de uma das classes nos botões, para um efeito em cascata
+		class="btn"								-> modifica a aparência para um botão cinza
+		class="btn btn-primary"					-> modifica a aparência para um botão com mais destaque, o principal
+		class="btn btn-secondary"				-> modifica a aparência para um botão secundário, sem destaque ao passar o mouse por cima
+		class="btn btn-success"					-> modifica a aparência para um botão verde, de sucesso
+		class="btn btn-info"					-> modifica a aparência para um botão azul, de informação
+		class="btn btn-warning"					-> modifica a aparência para um botão laranja, de aviso
+		class="btn btn-danger"					-> modifica a aparência para um botão vermelho, de perigo
+		class="btn btn-default"					-> modifica a aparência para um botão branco, padrão
+		class="btn btn-default btn-lg"			-> modifica a aparência para um botão branco, um pouco mais largo
+		class="btn btn-default btn-sm"			-> modifica a aparência para um botão branco, um pouco menor
+		class="btn btn-default btn-xs"			-> modifica a aparência para um botão branco, bem pequeno
+		class="btn btn-default btn-block"		-> modifica a aparência para um botão branco, ocupando todo o espaço
+		class="btn btn-default disabled"		-> modifica a aparência para um botão cinza, desabilitando e impedindo clique nele
+
+	-Estilo em imagens:
+		class="img-rounded"						-> cantos arredondados
+		class="img-circle"						-> imagem dentro de um círculo
+		class="img-thumbnail"					-> imagem dentro de uma borda pequena
+		class="img-responsive"					-> imagem responsiva
+		
+	-Cores de texto:
+		class="text-primary"					-> cor azul
+		class="text-success"					-> cor verde
+		class="text-info"						-> cor azul, um pouco mais escura
+		class="text-warning"					-> cor laranja
+		class="text-danger"						-> cor vermelha
+		class="bg-primary"						-> background azul
+		class="bg-success"						-> background verde claro
+		class="bg-info"							-> background azul claro
+		class="bg-warning"						-> background laranja claro
+		class="bg-danger"						-> background vermelho claro
+	
+	-Tabelas:
+		class="table"							-> muda totalmente a aparência
+		class="table table-striped"				-> muda totalmente a aparência e varia a cor das células, entre cinza e branco
+		class="table table-bordered"			-> muda totalmente a aparência e adiciona borda
+		class="table table-hover"				-> muda totalmente a aparência e adiciona destaque às células ao passar o mouse em cima
+		class="success"							-> cor verde
+		
+	-Video responsivo:
+		-Aplicar o ember na página
+		-Aplicar uma div por fora, a fim de abraçar todo o conteúdo da div
+		class="embed-responsive embed-responsive-16by9"				-> torna responsivo os vídeos na resolução 16:9
+		class="embed-responsive embed-responsive-4by3"				-> torna responsivo os vídeos na resolução 4:3
+		-Dentro da tag iframe:
+			class="embed-responsive-item"
+			
+	-Otimização de formulários:
+		class="form-control"					-> deixa o campo do tamanho do formulário, ocupando o maior espaço possível
+		class="form-group"						-> colocada em uma div que abrange cada campo, dando espaço entre eles
+		class="checkbox"						-> usado na div que cerca o checkbox, permite um espaço entre o botão e o texto
+		class="pull-right/left"					-> direciona o botão para um dos lados
+		class="form-inline"						-> dentro de uma div que abrange todo o formulário, mantém o mesmo em uma única linha
+		class="sr-only"							-> dentro das labels, retira o texto antes dos campos
+		
+		-Formulário horizontal:
+			-Labels ficam ao lado dos campos
+			class="form-horizontal"				-> mantém o formulário com os labels ao lado do campo
+			class="control-label"				-> aproxima o label do campo
+		
+		-Organizar checkbox e radio buttons:
+			class="radio"						-> div que abrange o radio
+			
+		-Tamanhos dos campos de texto:
+			class="input-lg"					-> input largo
+			class="input-sm"					-> input pequeno
+			class="input-md"					-> input médio
+			class="form-group-lg"				-> label e o campo largos (aplicar na div que possui o form-group)
+			class="col-xs-2"					-> dentro de uma div com class="row", mantém tamanhos diferentes para os campos (com o número após o tamanho variando)
+			
+		-Group input:
+			class="input-group"					-> agrupa o "label" (substituído por span) e o campo
+			class="input-group-addon"			-> coloca dentro de um campo com fundo cinza, necessário para completar o grupo do input
+			class="input-group-btn"				-> agrupa um botão e um campo, mantendo juntos
+			
+	-Dropdown menu:
+		-Abrangir todo o conteúdo, sendo ele um botão e a lista de links dentro de uma div com class="dropdown"
+		-No button, atributo data-toggle="dropdown", um id="nome_qualquer", aria-haspopup="true" e aria-expanded="true"
+		-No ul, adicionar a class="dropdown-menu" e o atributo aria-labelledby="nome_qualquer", sendo o mesmo id do button
+		-Antes de fechar o button, adicionar uma span vazia com class="caret", gerando a seta que indica que o botão expande
+		<li role="separator" class="divider"></li>		-> gera uma linha no menu, indicando divisão de conteúdo
+			
+	-Grupo de botões:
+		class="btn-group" role="group"						-> agrupa botões, compactando eles, mantendo a largura referente ao seu conteúdo
+		class="btn-group-justified"							-> aplicado na div que agrupa todos os botões, justifica eles de forma que fiquem no maior tamanho possível. Cada 
+																botão deve estar dentro de uma div com class="btn-group" e o atributo role="group"
+																
+	-Menu com nav componente:
+		-Na tag ul do menu, aplicar class="nav nav-tabs", classes que tiram os estilos da lista e deixa como menu horizontal
+		-Caso a página atual seja referente a uma seção específica do menu, para destacá-la basta usar a class="active" na li correspondente
+			-O destaque é equivalente à segunda classe aplicada na ul, ou seja, o nav-tabs aplica um certo destaque, nav-pills aplica outro
+			
+		class="nav-justified" 			-> mantém o menu justificado
+		-Adicionar a classe "navbar-nav" no lugar de "nav-tabs" e criar uma tag nav cobrindo todo o conteúdo do ul, inclusive o ul
+		-Na tag nav, incluir class="navbar navbar-default", mantendo o men superior na página mas alinhado para o canto esquerdo, além de manter o destaque da página
+		correspondente
+			-No lugar de navbar-default, navbar-inverse deixa o menu preto
+			
+		navbar-fixed-bottom				-> mantém o menu fixo como rodapé da página; na parte inferior
+		navbar-fixed-top				-> mantém o menu na parte superior da página, mas escondendo o conteúdo que ficaria logo abaixo
+		
+		*O nav fica totalmente responsivo; em menores resoluções da tela, passa a ser um menu vertical
+		*Adicionar o nav a um container centralizará ele
+		*É possível alterar a cor de fundo do menu editando a classe .navbar-default no css, definindo o background e o color para fonte
+		
+	-Marca e botões na barra de navegação:
+		-Marcas de empresas, por exemplo, geralmente vem à esquerda do menu 
+		-Dentro da div ou section que abrange toda a ul, criar div com a class="navbar-header" e um link com href="#" e class="navbar-brand" dentro dela
+			-Vale ressaltar que a div não contém a ul, fica acima
+			
+		-O texto ou imagem da marca fica mais destacado - colocar o texto como conteúdo da tag a
+		-Para um botão de login, por exemplo, na direita do menu, adicionar a tag button após a ul com as seguintes classes: class="btn btn-primary navbar-btn"
+			navbar-btn irá manter o botão à altura do menu
+			
+	-Adaptar menu para dispositivo móvel:
+		-Adicionar todo o conteúdo do menu, exceto a marca dentro de uma div com as seguintes classes: class="collapse navbar-collapse"
+			-Os comandos irão afetar quando a resolução da tela for diminuída, esocndendo o conteúdo do menu para vista mobile
+			-Criar uma id para essa div
+			-Criar um button dentro do nav header, com a class="navbar-toggle collapsed" e atributos data-toggle="collpase", data-target="#id_criada_na_div",
+			aria-expanded="false"
+			-Dentro do button (entre as tags de abertura e fechamento), criar 4 spans:
+				-O primeiro deles com a seguinte classe:
+					<span class="sr-only">Toggle navigation</span>		-> a classe sr-only irá esconder o conteúdo da tag, o "Toggle" não será exibido
+					<span class="icon-bar"></span>						-> gera os "3 traços" indicando um menu expansível
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					
+	-Alinhar o menu para a direita:
+		-Basta adicionar a class pull-right na div que contém o menu (ul)
+			
+	-Painéis:
+		-class="panel panel-default"
+		-Dividir o conteúdo em duas divs:
+			class="panel-heading"			-> gera o cabeçalho
+			class="panel-body"				-> corpo do painel
+			class="panel-title"				-> usada no título, em um h2, por exemplo
+			class="panel-footer"			-> gera um rodapé
+			-O panel-default pode ser substituído pelas classes que definem destaque, como primary, success, etc
+			
+		-Adicionando tabelas:
+			-Adicionar dentro de uma div com class="table-responsive"
+			
+	-Formando listas	
+		-Na tag ul, aplicar a class="list-group", o que reduz o padding da esquerda da lista
+		-Em cada li, aplicar a class="list-group-info", o que cria uma box em cada item da lista, tirando a ordenação e deixando semelhante a um menu
+		-Para simbolizar números na direita de cada caixa, usar um span com class="badge", ficando semelhante a notificações de email
+		class="active"		-> destaca tal parte, div, ou tag
+		
+	-Carrossel de imagens:
+		-Agrupar as imagens dentro de duas divs
+		-A primeira delas deve conter a class="carousel" e o atributo data-ride="carousel"
+		-A segunda deve conter a class="carousel-inner"; as imagens fica dentro dessa
+		-Cada imagem deve estar dentro do carrossel, inserindo cada uma dentro de uma div de class="item"
+		-Para o item aparecer, basta adicionar a class="active" no item
+		-Efeitos na troca das imagens devem ser adicionados na primeira div
+			-A classe slide, por exemplo, cria uma animação
+			
+		-Botões de passagem das imagens:
+			-Em um primeiro momento, deve-se remover o data-ride a fim de não mudar as fotos automaticamente
+			-Adicione uma id na primeira div do carrossel
+			-Logo abaixo da segunda div - entre o fim da segunda e o fim da primeira - adicione um a com class="left carousel-control" e href="#id_da_div_do_carrossel", além
+			dos atributos role="button" e data-slide="prev"
+			-Como conteúdo do a, adicionar o span com class="glyphicon glyphicon-chevron-left"
+			
+			-Para definir o botão para a próxima foto, seguir os passos desde a tag a e modificar o left por right
+			
+		-Botões de navegação:
+			-Colocado dentro do carousel mas em cima do carousel-inner, ou seja, entre as duas divs
+			-Criar uma ol com class="carousel-indicators"
+			-Adicionar um li para cada foto do carrossel com os seguintes atributos: data-target="#galeria" data-slide-to="0", sendo 0 referente a primeira foto
+			-Em cada li, substituir o número pelo equivalente da foto + 1, já que inicia a contagem do 0
+			-Para a primeira foto ficar ativa - marcada - basta adicionar a class="active"
+			-Para fazer com que o carrossel ocupe toda a página, sem limitações do container, basta colocar ele fora...
+			
+		-No CSS, determinar o tamanho máximo do carrossel permite que o usuário saiba que existe mais conteúdo embaixo
+		-Basta acessar a div.carousel-inner, que é onde as imagens ficam e determinar a propriedade max-height com o valor máximo desejado

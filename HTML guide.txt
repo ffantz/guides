@@ -1,0 +1,1319 @@
+HTML
+
+-w3.org: site com especificações de tags, consultar sempre
+-Uses scripts to perform functions, a markup language that uses tags to identify content (utiliza scripts para rodar funções, linguagem de marcação que usa tags para identificar
+o conteúdo)
+-Isn't a case sensitive (não é case sensitive, as tags não possuem diferença se sadas com letras maiúsculas ou minúsculas)
+-Espcial characteres (caracteres especiais): 
+	-Created with entities, starting with an & and ending with an ; (criado com entidades, começando com & e terminando com ;)
+	-You can create any symbol of ASCII table using the &#, the number of the symbol and ; (é possível criar qualquer símbolo da tabela ASCII usando &#, o número e ;)
+	
+	&euro;		-> adiciona um caractere de euro
+	&pound;		-> adiciona um caractere de pound
+	&eacute		-> adiciona um acento agudo no "e"
+		-Regra geral para acentos:
+			-Primeiro caractere é a letra desejada a se acentuar, da forma que se deseja - pode ser maiúscula ou minúscula, depende da necessidade
+			-A sequência de caracteres seguinte define qual acento:
+				acute:		acento agudo  				´
+				grave:		crase   					`
+				circ:		acento circunflêxo  		^
+				ring:		"grau" em cima da vogal		º
+				tilde:		tilde						~
+				uml:		trema						¨
+				cedil:		cedilha - apenas c/C	
+				lt/gt		maior que/menor que			</>
+				amp:									&
+				quot:		aspas duplas				"
+				reg:									®
+				copy:		
+				
+			
+	&nbsp; 		-> permite um "espaço em branco" adicional entre palavras ou outra coisa, o que não é considerado mais de um espaço nos textos; considera até um espaço antes e 
+	um depois do comando, mais do que isso é necessário outro
+		-Exemplo:
+			-Colocando 4 espaços em branco entre duas palavras:
+				boa &nbsp; &nbsp; tarde	-> gera "boa    tarde"
+
+	-HTML: structure (estrutura)
+	-CSS: presentation (apresentação)
+	-JavaScript: behavior (comportamento)
+	-PHP: backend (função do lado do servidor)
+	-CMS: content management (manipulação de conteúdo)
+	
+Basic HTML document structure (estrutura de um documento básico):
+	-HTML has opening and closing tags (utiliza tags de abertura e fechamento)
+		<html>
+			...
+		</html>
+	
+	-The head of an HTML contains all of the non-visual elements that help make the page work (o head contém partes não-visuais que ajudam no funcionamento da página)
+		<html>
+			<head>
+			</head>
+		</html>
+		
+		-Parte "pensante" da página
+		-Elementos do <head>:
+			<title>
+			<base>
+			<meta>
+			<link>
+			<style>		-> CSS
+		
+	-The body follows the head; visual-structural elements are contained within the body tag (o body segue o head; elementos visuais e estruturais são contidos no body)
+		<html>
+			<head>
+			</head>
+			<body>
+			</body>
+		</html>
+		
+		-Attributes:
+			bgcolor="color"			-> define uma cor para o fundo da página
+			background="filename" 	-> define uma imagem para o fundo da página
+			text="color"			-> define uma cor para o texto
+			lang="pt-BR"			-> define a linguagem da página (HTML5)
+			
+			*Colors are defined by RGB system
+		
+	-Save the files as .hmtl or .htm (salve os arquivos nessas extensões)
+	-Add a title to your page in the head section (adicione o título da página na seção head)
+		<head>
+			<title> Title <title>
+		</head>
+			
+	-Add a icon to your page with <link> tag (adicione um ícone para a página com a tag link)
+		<link rel="icon" href="(filename)" type="image/x-icon" />
+		
+HTML basics (básico):
+	-Paragraphs:
+		-Use the <p> tag
+			<body>
+				<p> Paragraph content. </p>
+			</body>
+			
+			-The browser add an empty line before and after the paragraph (o navegador adiciona automaticamente uma linha antes e depois do parágrafo)
+			
+		-Use the <br> or <br /> tag to add a single line without starting a new paragraph; this is a empty element, has no end tag (adiciona uma linha simples sem começar um
+		novo parágrafo; é um elemento vazio, sem tag de encerramento/final)
+		
+		-Use the <hr> or <hr /> tag to add an horizontal line (adiciona uma linha horizontal na página)
+		
+		-Use <!-- comments --> to add a comment in your page in a way that the browser doens't display (adiciona um comentário no documento, sem ser visível para a página)
+		
+	-Text formating (formatação do texto):
+		<p><b> bold text </b></p>						-Negrito/destaque
+		<p><big> big text </big></p>					-Maior que o comum
+		<p><i> italic text </i></p>						-Itálico
+		<p><small> small text </small></p>				-Menor que o comum
+		<p><strong> strong text </strong></p>			-Semelhante ao negrito
+		<p><sub> subscripted text </sub></p>			-Escreve embaixo (como número de moléculas - H2O, por exemplo: o 2 se localiza embaixo)
+		<p><sup> superscripted text </sup></p>			-Escreve em cima 
+		<p><ins> inserted text </ins></p>				-Sublinhado
+		<p><del> deleted text </del></p>				-Riscado
+		<p><s> texto riscado </s></p>					-Riscado
+		<pre> ... </pre>								-Mantém a formatação dada
+		
+			*HTML5*
+			<i>: usado para palavras em outra língua, termo técnico ou itálico; expressar opiniões ou falas de terceiros
+				<i lang=""> -> é possível especificar a língua do termo
+			<em>: pronúncia diferente ou simples destaque
+			<strong>: força, chamar atenção, como em avisos
+			<b>: apenas chama atenção, sem focar ou determinar força
+		
+			*Aparência nesses casos é a mesma, o que muda é a nível de interpretação do navegador
+		
+	-Headings (cabeçalhos):
+		<h1>This is heading 1</h1>		-Maior cabeçalho
+		<h2>This is heading 2</h2>
+		<h3>This is heading 3</h3>
+		<h4>This is heading 4</h4>
+		<h5>This is heading 5</h5>
+		<h6>This is heading 6</h6>		-Menor cabeçalho
+		
+		*Search engines use headings to index the web page structure and content (mecanismos de busca usam os cabeçalhos para indexar o conteúdo e estrutura das páginas)
+		
+	-Attributes (atributos):
+		-Provide additional information about an element or a tag while also modifying them (adiciona informções extras sobre um elemento ou tag enquanto modifica eles)
+		-Most attribute have a value; the value modifies the attribute (a maioria dos atributos tem um valor; o valor modifica o atributo)
+		-Attributes are always specified in the start tag; they appear in name="value" pairs (sempre são especificados na tag de abertura; aparecem no par nome="valor")
+		-Width and height (largura e altura):
+			-Modify the measurement in pixels (px) or percentages (%) (modifica a medida em pixel ou porcentagem)
+			-Example:
+				<hr width="50px" />
+				<hr width="50%" />
+				
+	-Align (alinhamento): 
+		-Specify how the text is aligned (especifica como o texto é alinhado)		
+		-Values:
+			"center"	-Centraliza
+			"right"		-Direita
+			"left"		-Esquerda
+				
+	-Images (imagens):	
+		-Insert an image (insere uma imagem)
+		-Contains only attributes and doen't have a closing tags (contém somente atributos e não possui uma tag de fechamento)
+		-The image's URL is defined using the src attribute (o endereço da imagem é definido no atributo "src")
+		-In case the image can't be displayed, the alt attribute specifies an alternate text that describes the image in words (caso a imagem não possa ser exibida, o
+		atributo especifica um texto alternativo que a descreve em palavras)
+		-Alt is required (alt é um atributo obrigatório)
+		-To define the image size, use the width and height attributes, in pixels or percentage (use os atributos de altura e largura para definir o tamanho da imagem, em
+		pixels ou porcentagem)
+		-The border attribute create a border around the image (cria uma borda em torno da imagem)
+			hspace: distancia horizontal em relação ao texto
+			vspace: distancia vertical em relação ao texto
+			<img src="filename" width="150px" height="150px" border="1px" alt="descrição da imagem" title="título da imagem">
+			alt: função de mostrar o texto enquanto a página não carrega e ajudar a softwares de leitura para auxílio a deficientes visuais
+		
+	-Links:
+		-When a user clicks on a link, he will be directed to another file or page (ao clicar em um link, o usuário é direcionado para outro arquivo ou página)
+		-Use the <a> tag and the href attribute to specify de link's destination (use o atributo "href" para especificar o destino do link)
+			<a href="google.com">Link text</a> -> Ao clicar em "link text", o link é ativado
+			
+			*Links can be either absolute or relative (links podem ser absolutos ou relativos)
+			
+		-The target attribute specifies where to open the linked document (especifica onde abrir o documento linkado)
+		-"_blank" open the link in a new window or tab (abre o link em nova janela ou guia)
+			<a href="google.com" target="_blank">Link text</a>
+			
+		-Intern links (links internos):
+			-Index of documents (indexa documentos)
+			-Can create links to inside of other documents (pode criar links para o interior de outros documentos)
+			-Anchor: <a href="#key"> ... </a>
+			-Destiny: <a href="key"> ... </a> -> use this inside of an element that you wanna link (use dentro do elemento que você quer linkar)
+	
+	-Lists (listas):
+		-Ordered lists (listas ordenadas):
+			-Starts with <ol> and each item is defined by the <li> tag (começa com a tag "ol" e cada item é definido pela tag "li")
+			-The list itens will be automatically marked with numbers (os itens serão automaticamente marcados com números)
+				<ol>
+					<li>Red
+					<li>Green
+					<li>Blue
+				</ol>
+				
+				-Attributes:
+					start="4": defines the number that start the counting (define o número que irá começar a lista/contagem)
+					type: defines the type of the ordering (define o tipo de ordenção)
+					type="A a I i 1" -> define se irá ordenar por letras maiúsculas ou minúsculas, números romanos, números, etc
+					type="disk square circle" -> define se irá ordenar pontuando discos, quadrados ou círculos
+				
+		-Unordered lists (listas desordenadas):
+			-Starts with the <ul> tag (começa com a tag "ul")
+			-The list itens will be marked with bullets (os itens serão marcados com pontos)
+				<ul>
+					<li>1
+					<li>2
+					<li>3
+				</ul>
+				
+				type="disk square circle" -> define se irá ordenar em forma de discos, quadrados, círculos, etc
+				
+		-Defined lists (listas de definição):
+			<dl>
+				<dt> term </dt>				-Termo/título
+				<dd> definition </dd>		-Definição
+			</dl>
+				
+	-Class e Id (classe e id):
+		-class: specifies the class of an element (especifica a classe de um elemento)
+		-id: specifies the id of an element (especifica o id de um elemento)
+		
+	-Font (fonte):
+		-Can modify the size and the color of a text (pode mudar o tamanho e cor do texto)
+			<font size="(+/- n)" color="color">	-> n varia de 1 a 7, 3 por padrão
+	
+	-Tables (tabelas):
+		-Are divided into rows with <tr> (divididas em linhas)
+		-Are divided into columns with <td> (divididas em colunas)
+		-Columns act as data containers within the table (colunas funcionam como containers de informação dentro da tabela)
+		-Tables can contain all sorts of HTML elements (tabelas podem ter todos os elementos HTML)
+			<table>
+				<tr>
+					<th></th>	-> Defines a title cell inside the table (define uma célula de título dentro da tabela)
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+			
+			-Attributes:
+				border="n": add a border (adiciona uma borda)
+				cellspacing="n": space between the table's cell (espaço entre as células da tabela)
+				cellpadding="n": space between the table's cell and data (espaço entre as células da tabela e as informações dentro delas)
+				colspan="n": span columns (junta colunas em questão de espaço) -> span: espaço, abranger, período
+				rowspan="n": span rows (define o tamanho da célula, podendo ocupar o espaço de outras)
+				bgcolor="color": define a background color for a row (define uma cor de fundo para uma linha)
+				
+			<tbody>, <thead>, <tfoot> define grupos para tabela, do corpo, cabeçalho e rodapé
+		
+	-Types of elements (tipos de elementos):
+		-Block level (nível de bloco):
+			-Starts from a new line (começam em uma nova linha)
+			-Example:
+				<h1>, <form>, <li>, <div>, etc
+				
+		-Inline elements (elementos na linha):
+			-Normally displayed without line breaks (normalmente dispostos sem quebra de linha)
+			-Example:
+				<b>, <a>, <strong>, <img>, etc
+				
+			*<div> can be used to style blocks of content with CSS (div pode ser usado para conteúdos em blocos de estilo com o CSS)	-> block section (seção em bloco)
+			*<span> is used as a container for some text (span é usado como contâiner de um texto)										-> inline section (seção na linha)
+				-With CSS, can style parts of the text (com o CSS, pode-se estilizar partes de um texto)
+		
+			*Inline elements can't contain block level elements, but block level can contain inline elements (elemntos de linha não podem ter elementos de bloco dentro de si, 
+			mas o contrário é possível)
+		
+		-Elements that can be used either as block level or inline elements (elemtnos que podem ser utilizados tanto como bloco ou na linha):
+			APPLET: embedded Java applet (applet java incorporado)
+			IFRAME: inline frame (frame na linha)
+			INS: inserted text (texto inserido)
+			MAP: image map (mapa de imagem)
+			OBJECT: embedded object (objeto incorporado)
+			SCRIPT: script within an HMTL document (script dentro de um documento HTML)
+			
+	-Forms (formulários):
+		-Used to collect information from the user (usado para coletar informações do usuário)
+		-Defined using the <form> element (utiliza a tag "form")
+		-Use the action attribute to point to a webpage that will load after the user submits the form (use o atributo "action" para apontar para onde a página vai carregar
+		após o usuário enviar o formulário)
+		-The "method" attribute specifies the HTTP method (get or post) to be used when forms are submitted (o atributo method especifica o método HTTP a ser usado ao enviar)
+		-The "name" attribute specifies a name for a form (especifica um nome para o formulário)
+		-To take the user input, you need the corresponding form elements, such as text fields (para pegar a entrda do usuário, é necessário elementos correspondentes do
+		formulário, como campos de textos)
+		-The <input> element has many variations, depending on the type attribute; it can be a text, password, radio, URL, submit, etc (o elemento "input" possui muitas
+		variações, dependendo do tipo de atributo; pode ser texto, senha, opção, link, envio, entre outras)
+		-The "radio" type allows it to choose only one of a number of choices (o tipo "radio" permite a escolha de uma dentre várias opções)
+		-The "submit" button submits a form to its action attribute (o botão "submit" envia o formulário para o atributo "action")
+		*After the form is submitted, the data shoud be processed on the server using a programming language, such as PHP (após o envio do formulário, a informação deve ser
+		processada no servidor usando uma linguagem de programação, como PHP)
+		<form>
+			<input type="text" name="username" />
+			<input type="password" name="password" />
+			<input type="radio" name="gender" value="male" />				-> para manter apenas uma opção, os radios devem ter o mesmo nome
+			<input type="radio" name="gender" value="female" />
+		</form>
+		
+	-HTML colors (cores):
+		-Expressed as hexadecimal values (expressados em valores hexadecimais)
+			-0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F
+			
+		-Displayed in combinations of red, green and blue light - RGB (dispostas na combinação de vermelho, verde e azul claro - RGB)
+		-Hex values are written using tthe hashtag symbol, following by either three or six hex characters (valores hexas são escritos usando #, seguido de 3 ou 6 caracteres)
+		-You can change the font color using this tag and attribute (é possível mudar a cor da fonte com a tag e atributo)
+			<font color="#FFFFFF">White line</font>
+	
+	-Frames:
+		-Defines one specific window columns within a <frameset> (define uma janela específica de colunas)
+		-Each <frame> can have different attributes (cada frame pode ter atributos diferentes)
+		-The <frameset> specifies the number of columns or rows in the frameset as well as what percentage or number of pixels of space each of them occupies (o frameset
+		especifica o número de colunas ou linhas assim como a porcentagem ou número de pixels de espaço que cada um ocupa)
+		-The <frameset> tag isn't supported in HTML5 (framset não é suportado em HTML 5)
+		-Use the "noresize" attribute to specify that a user cannot resize a <frame> element (use o atributo para especificar que o usuário não pode redimensionar o frame)
+		-Frame content should be defined using the "src" attribute (o conteúdo deve ser definido com o atributo src)
+		-<noframes> provide a way for browsers that don't support frames to view the page; can contain an alternative page, complete with body and any other elements (provê uma
+		maneira de navegadores que não suportam frames verem a página; podem conter uma página alternativa, completa com a tag body e outros elementos)
+		-Substitui-se o tag <body> por <frameset>
+		-Dentro do <frameset> só são utilizados tags <frame> e seus atributos
+		
+			<frame noresize="noresize">
+			<frameset cols="100,25%,*">
+			<frameset rows="100,25%,*">
+			
+			<html>
+				<head>
+					<title>minha home page</title>
+				</head>
+				<frameset (rows= "n1|n1%..." | cols= "n1|n1%...") [frameborder="yes|no"] [border="n"] [bordercolor="cor"]>
+					<frame src="url" [name="nomedoframe"] [marginwidth=n] [marginheight=n] [scrolling="yes|no|auto"] [frameborder="yes|no"] [noresize]>
+				</frameset>
+				<noframes> para browsers que não suportam frame </noframes>
+			</html>
+			
+			<frameset cols="20%,80%">
+				<frame src="indice.html" name="indice">
+				<frame src="nada.htm" name="frame1">
+			</frameset>
+			No documento indice.html (o Link1 anterior):
+			<li><a href="hormer.htm" target="frame1">homer</a>
+	
+	-Image maps (mapas de imagem):
+		-Usa a propriedade "usemap" da tag <img>
+		-Cada região do mapa deve ser definida através da tag <area> dentro de um <map>
+		<img src="" usemap="#nome_do_mapa">
+		<map name="nome_do_mapa">
+			<area shape="rect | circle | poly | default" target="alvo" coords="x1,y1,x2,y2,x3,y3,x4,y4..." href="" | nohref>
+		</map>
+		
+	-Metadados:
+		-São dados informativos sobre os próprios dados, sobre a própria página
+		-Deve sempre ser informado no <head>
+		-Não serão exibidos na página
+		-Normalmente são utilizados para informar a descrição da página, o autor, última modificação, codificação do texto utilizada, keywords, etc
+		-Podem ser utilizados por navegadores, máquinas de busca e outros serviços da web
+		-Deve sempre ser informado em pares nome-valor
+		<head>
+			<meta charset="UTF-8">
+			<meta name="description" content="Free Web tutorials">		-Descrição
+			<meta name="Keywords" content="HTML,CSS,XML,JavaScript">	-Conteúdo da página - para buscadores
+			<meta name="author" content="Hege Refsnes">					-Autor da página
+			<meta name="generator" content="Notepad++">					-Software que gerou a página
+			<meta http-equiv="refresh" content="3">						-Recarrega a página a cada 3 segundos (tempo no content)
+				
+		</head>
+		
+HTML 5:
+	-Introduction to HTML 5:
+		-When writing HTML 5 documents, one of the first new features that you'll notice is the doc type declaration (ao escrever um documento em HTML 5, a primeira novidade é
+		uma declaração do tipo do documento)
+			<!DOCTYPE HTML> or <!DOCTYPE html>
+			
+		-New elements (novos elementos):
+			<article>, <aside>, <audio>, <canvas>, <datalist>, <details>, <embed>, <footer>, <header>, <nav>, <output>, <progress>, <section>, <video>, etc
+		
+		-The default character encoding in HTML 5 is UTF-8 (o codificador de caracteres padrão do HTML5 é o UTF-8)
+	
+	
+	-New in HTML5 (novo):
+		-Forms:
+			-The Web Form 2.0 specification allows for the creation of more powerful forms and more compelling user experiences (especificações permitem a criação de formulários
+			mais poderosos e mais persuasivos nas experiências dos usuários)
+			-Data pickers, color pickers and numeric stepper controls have been added (coletor de informação, cor e controles numéricos foram adicionados)
+			-Input field types now include email, search and URL (tipos de campos para entrada incluem email, procura e URL)
+			-PUT and DELETE form methods are now supported (métodos PUT e DELETE são suportados)
+			
+		-Integrated API - Application Programming Interfaces (integração de API, interface de programação de aplicativos):
+			-Drag and drop
+			-Audio and video
+			-Offline web applications
+			-History
+			-Local Storage
+			-Geolocation
+			-Web messaging
+			
+	-Content Models (modelos de conteúdo):
+		-Elements typically belonged in either block level or inline content model (elementos normalmente estão no modelo de nível de bloco ou de linha)
+		-HTML5 introduces seven main content models (HTML5 apresenta sete principais moldes de conteúdo):
+			-Metadada:
+				-Sets up the presentation or behavior of the rest of the content; this elements are found in the head of the document (determina a apresentação ou 
+				comportamento do resto do conteúdo; elementos ficam no head)
+				-Elements: <base>, <link>, <meta>, <noscript>, <script>, <style>, <title>
+			
+			-Embedded:
+				-Imports other resources into the document (importa recursos para o documento)
+				-Elements: <audio>, <video>, <canvas>, <iframe>, <img>, <math>, <object>, <svg>
+			
+			-Heading:
+				-Defines a section header (define uma seção de cabeçalho)
+				-Elements: <h1>, <h2>, <h3>, <h4>, <h5>, <h6>, <hgroup>
+					<hgroup>:	agrupa textos de cabeçalho
+			
+			-Interactive:
+				-Intend for interaction (destinado a interação)
+				-Elements: <a>, <audio>, <video>, <button>, <details>, <embed>, <iframe>, <img>, <input>, <label>, <object>, <textarea>, <select> 
+			
+			-Phrasing:
+				-Has a number of inline level elements in commom with HTML 4 (tem elementos em comum com o HTML 4)
+				-Elements: <img>, <span>, <strong>, <label>, <br>, <small>, <sub> 
+			
+			-Flow:
+				-Contains the majority of HTML 5 elements that would be included in the normal flow of the document (contém a maioria dos elementos que são incluídos no 
+				fluxo do documento)
+			
+			-Sectioning:
+				-Defines the scope of headings, content, navigation and footers (define o escopo de cabeçalhos, conteúdo, navegação e rodapés)
+				-Elements: <article>, <aside>, <nav>, <section>
+			
+				*The same element can belong to more than one content model (o memso elemento pertence a mais de um modelo)
+				*the various content models overlap in certain areas, depending no how they are being used (os modelos podem se sobrepor em certas áreas dependendo de como
+				forem usados)
+				
+			-This content models are designed to make the markup structure more meaningful for both the browser and the web designer (foram desenvolvidos para deixar a estrutura
+			de marcação mais significativa para o navegador e o designer)
+			
+	-Page structure (estrutura da página):
+		-Generic structure:
+										<header> 
+								contains the brandings like logo
+								
+											<nav>
+								contains navigational section of the site
+					
+			<article>						|		<aside>
+		web page main content				|	contains extra information and related content or links
+			<section>						|
+		divided section of main content		|
+			<section>						|
+		divided section of main content
+		
+										<footer>
+			information about copyright, privacy policy, terms of use, etc
+			
+	-Header, nav e footer:
+		-The <header> element:
+			-In HTML 4 we wouuld define a header like this (em HTML 4 definiríamos o cabeçalho dessa maneira):
+				<div id="header">
+				
+			-In HTML 5, a simples <header> tag is used, instead (em HTML 5, a tag <header> é usada)
+			-Is appropriate for use inside the body tag (apropriada para uso dentro da tag <body>)
+			-<header> is different than <head> (cabeçalho é diferente do guia)
+			
+			<!DOCTYPE HTML>
+			<html>
+				<head>
+				</head>
+				<body>
+					<header>
+						<h1>Most important heading</h1>
+						<h3>Less important heading</h3>
+					</header>
+				</body>
+			</html>
+			
+		-The <footer> element:
+			-Is also widely used (amplamente usado)
+			-Generally we refer to a section located at the very bottom of the web page as the footer (geralmente nos referimos a seção mais embaixo da página como rodapé)
+			<footer>
+			</footer>
+			
+			-This information is usually provided in these tags (essas informações são providas nessa tag):
+				-Content information
+				-Privacy policy
+				-Social media icons
+				-Terms of service
+				-Copyright information
+				-Sitemap and related documents
+				
+		-The <nav> element:
+			-Represents a section of a page that links to other pages or to certain sections within the page (representa seção de uma página que linka a outras ou para uma
+			certa seção dentro da mesma página)
+			-This would be a section with navigation links (deveria ser uma seção com os links de navegação)
+			
+			<nav>
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Services</a></li>
+					<li><a href="#">About us</a></li>
+				</ul>
+			</nav>
+			
+			-Not all of the links in a document should be inside a <nav> element (nem todos os links devem estar dentro de um nav)
+			-The <nav> is intended only for major blocks of navigation links (o elemento é pretendido apenas para os blocos de navegação de links principais)
+			-Typically, the <footer> element often has a list of links that don't need to be in a <nav> element (o rodapé contém uma lista de links que não precisam estar no
+			elemento nav)
+			
+	-Article, section and aside:
+		-The <article> element:
+			-Self-contained, independent piece of content that can be used and distributed separately from the rest of the page or site (se contém; parte independente que pode
+			ser usada e distribuída separadamente do resto da página/site)
+			-The <article> element replaces the <div> that was widely used in HTML 4, along with an ID or class (substitui o div, elemento usado em HTML 4 junto de um id ou
+			classe)
+			
+			<article>
+				<h1>The artcile title</h1>
+				<p>Contents of the article element</p>
+			</article>
+			
+			-When an <article> element is nested, the inner element represents an article related to the outer element (quando um article é encaixado, o elemento interno
+			representa um article relativo ao elemento que o cobre/superior/exterior)
+		
+		-The <section> element:
+			-Is a logical container of the page or article (contêiner lógico de uma página ou article)
+			-Can be used to divide up content within an article (pode ser usado para dividir o conteúdo dentro de um artigo)
+			-Each section should be identified, typically by including a heading as a child of the section element (cada seção deve ser identificada, tipicalmente incluindo um
+			cabeçalho como filha do elemento)
+			
+			<article>
+				<h1>Welcome</h1>
+				<section>
+					<h1>Heading</h1>
+					<p>Content or image	</p>
+				</section>
+			</article>
+			
+		-The <aside> element:
+			-Secondary or tangential content which could be considered separate from but indirectly related to the main content (conteúdo secundário ou tangencial que poderia
+			ser considerado separado mas indiretamente relacionado ao conteúdo principal)
+			-Often represented in sidebars (geralmente representado em barras laterais)
+			-When this tag is used within an article tag, the content should be specifically related to that article (quando usada junto ao article, o conteúdo deve ser
+			relacionado)
+			
+			<article>
+				<h1>Gifts for everyone</h1>
+				<p>WThis website will be the best place for choosing gifts</p>
+				<aside>
+					<p>Gifts will be delivered to you within 24 hours</p>
+				</aside>
+			</article>
+			
+			-When a <aside> tag is udes outside of an <article> tag, its content should be related to the surrounding content (quando usado fora de um article, o conteúdo deve
+			ser relacionado ao conteúdo em volta)
+			
+	-The <audio> element:
+		-Audio on the web:
+			-<audio> specifies a standard for embedding audio in a web page (especifica um padrão de incorporamento de áudio no website)
+			-There are two different ways to specify the audio source file's URL (existem dois modos de especificar o arquivo fonte de áudio):
+				-The first uses the source attribute (o primeiro usa o atributo source):
+					<audio src="audio.mp3" controls>
+						Audio element not supported by your browser
+					</audio>
+					
+				-The second way uses the <source> element inside the <audio> (o segundo modo usa o source dentro do áudio)
+					<audio controls>
+						<source src="audio.mp3" type="audio/mpeg">
+						<source src="audio.ogg" type="audio/ogg">
+					</audio>
+					
+				-Multiple <source> elements can be linked to different audio files (mais de uma source pode ser linkada a diferentes arquivos)
+				-The browser will use the first recognized format (o navegador usa o primeiro formato reconhecido)
+			
+			-<audio> creates an audio player inside the browser (cria um player de áudio dentro do navegador)
+				-The text between the <audio> and </audio> tags will display in browsers that don't support this element (o texto entre as tags serão mostrados em navegadores
+				que não suportam o elemento)
+				
+		-Attributes:
+			-Controls:
+				-Specifies that audio controls should be displayed (such as play/pause button, etc) (especifica que controles de áudio deverão ser exibidos)
+				
+			-Autoplay:
+				-When this attribute is defined, audio starts playing as soon as it is ready, without asking for the visitor's permission (quando definido, o áudio toca o mais
+				cedo possível, sem a pedir permissão do visitante)
+				
+			-Loop:
+				-This attribute is used to have the audio replay every time it is finished (o áudio toca novamente sempre que termina)
+				
+			-Formats supported: MP3, WAV and OGG (formatos suportados)
+			
+	-The <video> element:
+		-Videos in HTML:
+			-Similar to the audio element, you can specify the source URL using an attribute in a video element or using source elements inside the video element (semelhante
+			ao audio, é possível especificar o endereço fonte usando um atributo ou usando o element source dentro do video)
+			
+			<video controls>
+				<source src="video.mp4" type="video/mp4">
+				<source src="video.ogg" type="video/ogg">
+			</video>
+			
+		-Attributes:
+			-Another aspect shared by both the audio and the video elements is that each has controls, autoplay and loop attributes (semelhante ao áudio, possui os controles)
+			-Current video formats supported: MP4, WebM and OGG
+			
+	-The <progress> element:
+		-The <progress> element provides the ability to create progress bars on the web (provê a habilidade de criar barras de progresso)
+		-Can be used within headings, paragraphs or anywhere else in the body (pode ser usado dentro de elementos no body)
+		-Attributes:
+			-Value: specifies how much of the task has been completed (especifica o quanto foi completado)
+			-Max: specifies how much work the task requires in total (especifica o quanto a tarefa necessita no total)
+			
+			
+	-Web storage API:
+		-HTML 5 web storage:
+			-With this, websites can store data on user's local computer (com isso, sites podem armazenar informações no computador local do usuário)
+			-Before HTML 5, we had to use JavaScript cookies to achieve this functionality (antes do HTML 5, era necessário usar cookies de JS para atingir a função)
+			-Advantages (vantagens):
+				-More secure (seguro)
+				-Faster (rápido)
+				-Stores a larger amout of data (armazena grandes quantidades de informação)
+				-Stored data isn't sent with every server request (informação armazenada não é enviada com todos os pedidos do servidor)
+				
+			-Local storage is per domain; all pages from one domain can store and access the same data (o armazenamento local é por domínio; todas as páginas de um domínio
+			pode armazenar e acessar a mesma informação)
+			
+		-Types of web storage objects:
+			-sessionStorage()
+				-Destroyed once the user closes the browser (destruída quando o usuário fecha o navegador)
+				
+			-localStorage()
+				-Stores data with no expiration date (armazena sem data de expiração)
+				
+		-Working with values:
+			-The syntax for web storage for both local and session storage is very simple and similar (a sintaxe é simples e similar nos casos de local e de sessão)
+			-The data is stored as key/value pairs (a informação é armazenada em pares chave/valor)
+			
+			-Storing a value:
+				localStorage.setItem("key1", "value1");
+				
+			-Getting a value:
+				localStorage.getItem("key1");
+				
+			-Removing a value:
+				localStorage.removeItem("key1");
+				
+			-Removing all values:
+				localStorage.clear();
+				
+			*To the session values, use the same syntax but sessionStorage instead of localStorage (para sessão a mesma sintaxe e utilizada, mas com sessionStorage no lugar)
+			
+	-Geolocation API:
+		-Used to obtain the user's geographical location (usada para obter a localização geográfica do usuário)
+		-The option isn't available unless the user aproves it (a opção não é válida até que o usuário aprove)
+		-Geolocation is much more accurate for devices with GPS (mais preciso em aparelhos com GPS)
+		-The main method is getCurrentPosition, which retrieves the current geographic location of the user's device (método principal retorna a localização atual)
+			
+			navigator.geolocation.getCurrentPosition();
+			
+		-Parameters:
+			-showLocation (mandatory): defines the callback method that retrieves location information (obrigatório - define o método que retorna informação de localização)
+			-ErrorHandler: defines the callback method that is invoked when an error occurs in processing the asynchronous call (define o método chamado quando o erro ocorre)
+			-Options: defines a set of options for retrieving the location information (define uma série de opções para buscar as informações)
+			
+		-Presenting data:
+			-User location can be presented in two ways: geodetic and civic (as informações podem ser apresentadas de duas maneiras)
+			1. The geodetic way refers directly to latitude and longitude (o meio geodético refere diretamente à latitude e longitude)
+			2. The civic representetaion is presented in a format that is more easilty read and understood by the average person (o meio cívico apresenta de forma que fique
+			mais fácil de ser lido e entendido pela maioria das pessoas)
+			
+			-Each parameter has both geodetic and civic representation (cada parâmetro tem ambas as representações geográficas e civis):
+				Attribute		Geodetic		Civic
+				position 		59.3, 18.6		Stockholm
+				elevation		10 meters		4th floor
+				heading			234 degress		City Center
+				speed			5km/h			Walking
+				orientation		45 degrees		North-East
+				
+	-Drag & drop API:
+		-Making elements draggable:
+			-The drag and drop feature lets you "grab" an object and drag it to a different location (o recurso permite que um objeto seja "agarrado" e arrastado para outro 
+			lugar)
+			-To make an element draggable, just set the attribute to true (para deixar o objeto arrastável, basta definir o atributo como verdadeiro)
+				<img draggable="true" />
+				
+			-Any element can be draggable (qualquer elemento pode ser arrastável)
+			-The API iss event-based (é baseado em evento)
+			
+			<!DOCTYPE HTML>
+			<html>
+				<head>
+					<script>
+						function allowDrop(ev){
+							ev.preventDefault();
+						}
+						
+						function drag(ev){
+							ev.dataTransfer.setData("text", ev.target.id);
+						}
+						
+						function drop(ev){
+							ev.preventDefault();
+							var data = ev.dataTransfer.getData("text");
+							ev.target.appendChild(document.getElementById(data));
+						}
+					</script>
+				</head>
+				<body>
+					<div id="box" ondrop="drop(event)" ondragover="allowDrop(event)" style="border: 1px solid black; width: 200px; height: 200px">
+					</div>
+					<img id="image" src="sample.jpg" draggable="true" ondragstart="drag(event)" width="150" height="50" alt="" />
+				</body>
+			</html>
+			
+				-What to drag (o que arrastar):
+					-When the element is dragged, the ondragstart attribute calls a funciont, drag(event), which specifies what data is to be dragged (quando o elemento é
+					arrastado, o atributo chama a função drag, que especifica qual informação será arrastada)
+					-The dataTransfer.setData() method sets the data type and the value of the dragged data (o método define o tipo de informação e o valor da informação
+					arrastada)					
+					-In that example, the data type is "text" and the value is the ID of the draggable element - "image" (no exemplo, o tipo é "text" e o valor é o ID do
+					elemento - "image")
+					
+				-Where to drop (onde largar):
+					-The ondragover event specifies where the dragged data can be dropped (o evento especifica onde a informação arrastada será largada)
+					-By default, data and elements can't ve dropped in other elements (por padrão, elementos não podem ser largados dentro de outros elementos)
+					-To allow a drop, we must prevent the default handling of the element, done by calling the event.preventDefault() method for the ondragover event (para
+					permitir a largada, é necessário previnir o manuseio padrão do elemento, feito ao chamar o método para o evento)
+					
+				-Do the drop (fazer a "largada"):
+					-When the dragged data is dropped, a drop event occurs (quando a informação arrastada é largada, o evento de largada ocorre)
+					-In that example, the ondrop attribute calls a function, drop(event) (no exemplo, o atributo chama a função)
+					-The preventDefault() method prevents the browser's default handling of the data (default is open as link on drop) (o método previne o manuseio padrão do
+					navegador da informação)
+					-The dragged data can be accessed with the dataTransfer.getData() method (a informação arrastada pode ser obtida com o método citado). This method will 
+					return any data that was set to the same type in the setData() method (o método retorna qualquer informação que foi definida ao mesmo tipo no método set)
+					-The dragged data is the ID of the dragged element - "image" (a informação arrastada é o ID do elemento arrastado)
+					-At the end, the dragged element is appended into the drop element, using the appendChild() function (no fim, o elemento arrastado é anexado ao elemento
+					largado, usando a função de anexar)
+					
+	-SVG:
+		-Drawing shapes (desenhando formas):
+			-SVG stands for Scalable Vector Graphics and is used to draw shapes with HTML-style markup (significa "vetor gráfico escalável" e é usado para desenhar formas)
+			-It offers several methods for drawing paths, boxes, circles, text and graphic images (oferece várias maneiras de desenhar formas e imagens gráficas)
+			-Ins't pixel-based, so it can be magnified infinitely with no loss of quality (não é baseado em pixel, podendo ampliar infinitamente sem perda de qualidade)
+			-An SVG image can be added to HTML code with just a basic image tag that includes a source attribute pointing to the image (uma imagem SVG pode ser adicionada
+			simplesmente como uma simples imagem que inclui o atributo source apontando para ela)
+				<img src="image.svg" alt="" height="300">
+				
+		-Drawing a circle:
+			-To draw shapes with SVG, you first need to create an SVG element tag with two attributes - widht and height (para desenhar formas SVG é preciso criar um elemento
+			SVG com largura e altura)
+				<svg width="1000" height="1000"></svg>
+			
+			-To create a circle, add the <circle> tag (para criar um círculo, adicione a tag)
+				<svg width="1000" height="1000">
+					<circle cx="80" cy="80" r="50" fill="green">
+				</svg>
+			
+				-cx pushes the center of the circle further to the right of the screen (afasta o centro do círculo da direita da tela)
+				-cy pushes the center of the circle further down from the top of the screen (afasta o centro do círculo para baixo da parte superior da tela)
+				-r defines the radius (define o raio)
+				-fill determines the color of our circle (determina a cor)
+				-stroke adds an outline to the circle (adiciona um contorno)
+				
+		-Other shape elements:
+			-<rect> defines a rectangle (define um retângulo)
+				<svg width="1000" height="1000">
+					<rect x="80" y="180" width="50" height="50" fill="green">
+				</svg>
+				
+			-<line> defines a line segment (define um segmento de linha)
+				<svg width="400" height="410">
+					<line x1="10" y1="10" x2="200" y2="100" style="stroke: #000000; stroke-linecap: round; stroke-width: 20">
+				</svg>
+			
+				-(x1,y1) defines the start coordinates, (x2,y2) defines the end coordinates (define as coordenadas de início e de fim)
+				
+			-<polyline> defines a shape built from multiple line definitions (define uma forma construída de múltiplas linhas):
+				<svg width="400" height="410">
+					<polyline style="stroke-linejoin: miter; stroke: black; stroke-width: 12; fill: none;" points="100 100, 150 150, 200 100">
+				</svg>
+				
+				-Points are the polyline's coordinates (pontos são coordenadas das linhas)
+				
+		-<ellipse> and <polygon>:
+			-Ellipse:
+				-The <elipse> is similar to the <circle>, with one exception (elipse são similares aos círculos, com uma exceção):
+				-You can independetly change the horizontal and vertical axes of its radius, using the rx and ry attributes (é possível reduzir independentemente o raio 
+				vertical e horizontal usando os atributos rx e ry)
+				
+				<svg width="400" height="410">
+					<ellipse cx="200" cy="100" rx="150" ry="70" style="fill: green;" />
+				</svg>				
+				
+			-Polygon:
+				-The <polygon> element is used to create a graphic with at least three sides (elemento usado para criar um gráfico com pelo menos 3 lados)
+				-The polygon element is unique because it automatically closes off the shape for you (automaticamente fecha a forma)
+				
+				<svg width="400" height="410">
+					<polygon point="100 100, 200 200, 300 0" style="stroke: black; fill: green;">
+				</svg>
+				
+	-SVG animations & paths:
+		-Shape animations:
+			-SVG animations can be created using the <animate> element (animações podem ser criadas usando o elemento animate)
+			-The example below creates a rectangle that will change its position in 3 seconds and will then repeat the animation twice (o exemplo cria um retângulo que irá
+			mudar sua posição em 3 segundos e depois repete duas vezes)
+			
+			<svg width="1000" height="250">
+				<rect width="150" height="150" fill="orange">
+					<animate attributeName="x" from="0" to="300" dur="3s" fill="freeze" repeatCount="2">
+				</rect>
+			</svg>
+			
+			attributeName: specifies which attribute will be affected by the animation (especifica qual atributo pela animação)
+			from: specifies the starting value of the attribute (especifica o valor inicial do atributo)
+			to: specifies the ending value of the attribute (especifica o valor final do atributo)
+			dur: specifies how long the animation runs - duration (especifica quanto tempo a animação dura - duração)
+			fill: specifies whether or not the attribute's value should return to its initial value when the animation is finished (especifica se o atributo deve resetar valor)
+				values: 
+					-remove: resets the value (reseta o valor)
+					-freeze: keeps the "to" value (mantém o valor final)
+					
+			repeatCount: specifies the repeat count of the animation (especifica o número de repetições)
+				values:
+					-indefinite: repeat the animation indefinitely (repete a animação por tempo indefinido)
+					
+		-Paths:
+			-The <path> element is used to define a path (o elemento cria um trilho(a))
+			-Commands:
+				M: moveto
+				L: lineto
+				V: vertical lineto
+				H: horizontal lineto
+				C: curveto
+				S: smooth curveto
+				Q: quadratic bézier curveto
+				T: smooth quadratic bézier curveto
+				A: elliptical arc
+				Z: closepath
+				
+			<svg width="500" height="500">
+				<path d="M 0 0 L200 200 L200 0 Z" style="stroke: #000; fill: none;" />
+			</svg>
+			
+			*M places our "virtual pen" down at the position 0, 0 (m move o pincel virtual para a posição 0, 0)
+			*L moves 200px down and to the right, then moves up to the position 200, 0 (l move 200 pixels para baixo e direita, subindo 200 pixels em seguida)
+			*Z closes the shape, which results in a triangle (z fecha a forma, resultando em um trinângulo)
+			
+			-All of the above commands can also be expressed with lower case letters (todos os comandos podem ser expressados com letras minúsculas)
+			-When capital letters are used, it indicates absolute position; lowe case indicates relative position (letras maiúsculas indicam posição absoluta; minúsuculas
+			indicam posição relativa)
+			
+	-Canvas:
+		-The <canvas> element:
+			-The HTML canvas is used to draw graphics that include everything from simple lines to complex graphic objects (usado para desenhar gráficos que incluem tudo, 
+			desde linhas simples até objetos com gráficos complexos)
+			
+			<canvas id="canvas1" width="200" height="100">
+			</canvas>
+			
+			-This is only a container for graphics; you must use a script to actually draw the graphics (é somente um contêiner para os gráficos, é necessário um script para
+			desenhá-los)
+			
+			<!DOCTYPE HTML>
+			<html>
+				<head>
+				</head>
+				<body>
+					<canvas id="canvas1" width="200" height="100">
+					</canvas>
+					
+					<script>
+						var can = document.getElementById("canvas1");
+						var ctx = can.getContext("2d");			-> returns a drawing context on the canvas (retorna um desenho no canvas)
+					</script>
+				</body>
+			</html>
+			
+		-Canvas coordinates:
+			-The HTML canvas is a two-dimensional grid (é uma grade bidimensional)
+			-The upper-left corner of the canvas has the coordinates (0, 0) (a diagonal esquerda superior tem as coordenadas 0, 0)
+			-X coordinate increases to the right (x aumenta para a direita)
+			-Y coordinate increases toward the bottom of the canvas (y aumenta para baixo)
+			
+		-Drawing shapes:
+			-The fillRect(x, y, w, h) method draws a "filled" rectangle, in which w indicates width and h indicates height; the default color is black (desenha um retângulo 
+			dimensionado, w é largura e h é altura; a cor padrão é preta)
+			
+			var can = document.getElementById("canvas1");
+			var ctx = can.getContext("2d");	
+			ctx.fillRect(20, 20, 100, 100);
+				
+				-A black 100*100 pixel rectangle is drawn on the canvas at the position (20, 20) (um retângulo preto 100x100 é desenhado no canvas na posição (20, 20))
+				
+			-The fillStyle property is used to set a color, gradient or pattern to fill the drawing (propriedade usada para definir cor, gradiente ou estampado para preencher 
+			o desenho)
+			
+			var can = document.getElementById("canvas1");
+			var ctx = can.getContext("2d");	
+			ctx.fillStyle = "rgba(0, 200, 0, 1)";		-> This draws a green rectangle (desenha um retângulo verde)
+			ctx.fillRect(20, 20, 100, 100);
+			
+			-The canvas supports various other methods for drawing (o canvas suporta ouutros métodos para desenho):
+				-Draw a line (desenhar linha):
+					moveTo(x, y): defines the starting point of the line (define o ponto inicial da linha)
+					lineTo(x, y): defines the ending point of the line (define o ponto final da linha)
+					
+				-Draw a circle (desenhar círculo):
+					beingPath(): starts the drawing (inicia o desenho)
+					arc(x, y, r, start, stop): sets the parameters of the circle (define os parâmetros)
+					stroke(): ends the drawing (termina o desenho)
+				
+				-Gradients:
+					createLinearGradient(x, y, x1, y1): creates a linear gradient (cria um gradiente linear)
+					createRadialGradient(x, y, r, x1, y1, r1): creates a radial/circular gradient (cria um gradiente circular)
+					
+				-Drawing text on the canvas (desenhar textos no canvas):
+					font: defines the font properties for the text (define propriedades de fonte para o texto)
+					fillText(text, x, y): draws "filled" text on the canvas (desenha um texto preenchido no canvas)
+					strokeText(text, x, y): draws text on the canvas, no fill (desenha texto no canvas, sem preencher)
+					
+	-SVG vs. Canvas:
+		-Canvas:
+			-Elements are drwan programmatically
+			-Drawing is done with pixels
+			-Animations are not built in
+			-High performance for pixel-based drawing operations
+			-Resolution dependent
+			-No support for event handlers
+			-You can save the result image as .png or .jpg
+			-Well suited for graphic-intensive games
+			
+		-SVG:
+			-Elements are part of the page's DOM - document object model
+			-Drawing is done with vectors
+			-Effects, such as animations are built in
+			-Based on standard XML syntax, which provides better accessibility
+			-Resolution independet
+			-Support for event handlers
+			-Not suited for game applications
+			-Best suited for applications with large rendering areas - for example, google maps
+			
+		*You can actually use both SVG and canvas on the same page, if needed; however, you can't just draw SVG onto a canvas or vice-versa (é possível usar os dois na mesma
+		página mas não um dentro do outro)
+		
+	-Canvas transformations:
+		-Working with canvas:
+			-The canvas element can be transformed; as an example, a text is written on the canvas at the coordinates (10, 30) (os canvas podem ser transformados; no exemplo,
+			um texto é escrito na coordenadas 10, 30)
+				
+				ctx.font = "bold 22px Tahoma";
+				ctx.textAlign = "start";
+				ctx.fillText("start", 10, 30);
+				
+			-The translate(x, y) method is used to move the canvas (o método é usado para mover o canvas)
+			-x indicates how far to move the grid horizontally and y indicates how far to move the grid vertically (x indica quanto moverá horizontalmente e y verticalmente)
+				
+				ctx.translate(100, 150);
+				ctx.fillText("after translate", 10, 30);
+				
+				-In this example, the canvas is moved 100px to the right and 150px down (no exemplo o canvas é movido 100 pixels para a direita e 150 para baixo)
+					
+		-The rotate() method:
+			-The rotate() method is used to rotate the HTML 5 canvas; the value must be in radius, not degrees (o método é usado para rotacionar canvas, o valor deve ser em 
+			raio, não em graus)
+			
+				ctx.fillStyle = "#FF0000";
+				ctx.fillRect(10, 10, 100, 100);
+				ctx.rotate((Math.PI/180) * 25); -> rotate 25 degrees (rotaciona 25 graus)
+				ctx.fillStyle = "#0000FF";
+				ctx.fillRect(10, 10, 100, 100);
+					
+		-The scale() method:
+			-The scale() method scales the current drawing; it takes two parameters (o método escala o desenho atual, pegando dois parâmetros):
+				-The number of times by witch the image should be scaled in the X-direction (o número de vezes que a imagem será escalada na direção x)
+				-The number of times by witch the image should be scaled in the Y-direction (o número de vezes que a imagem será escalada na direção y)
+				
+				var canvas = document.getElementById("canvas1");
+				ctx = canvas.getContext('2d');
+				ctx.font = "bold 22px Tahoma";
+				ctx.textAlign = "start";
+				ctx.fillText = ("start", 10, 30);
+				ctx.translate(100, 150);
+				ctx.fillText("after translate", 0, 0);
+				ctx.rotate(1);
+				ctx.fillText("after rotate", 0 , 0);
+				ctx.scale(1.5, 4);
+				ctx.fillText("after scale", 0, 20);
+				
+				
+	-HTML 5 forms:
+		-HTML 5 forms:
+			-Form creation is done in the same way (a criação é feita da mesma forma):
+				<form>
+					<label>Your name:</label>			-Foca no campo, ao usar o atributo for="nome", o foco funciona para o imput com id="nome"
+					<input id="user" name="username" type="text" />
+				</form>
+				
+		-New attributes:
+			-There are a new attribute called placeholder (tem um novo elemento chamado placeholder)
+			-This attribute provides a hint to the user of what information can be entered into the field (o atributo provê dica para o usuário de qual informação pode ser 
+			enviada)
+				<form>
+					<label>Your email:</label>
+					<input type="text" name="email" placeholder="email@example.com" />
+				</form>
+				
+			-The autofocus attribute makes the desired input focus when the form loads (o atributo faz o campo destacar quando o formulário carrega)
+				<form>
+					<label>Your email:</label>
+					<input type="text" name="email" autofocus />
+				</form>
+				
+		-Forms with required fields (formulários com campos requeridos):
+			-The "required" attribute is used to make the input elements required (é usado para fazer os campos obrigatórios)
+				
+				<form autcomplete="off">
+					<label for="e-mail">Your email:</label>
+				<input type="text" name="email" required />
+				<input type="submit" value="Submit" />
+				</form>
+
+				-The form will not be submitted without filling in the required fields (o formulário não será enviado enquanto não preencher os campos requeridos)
+				-The autocomplete attribute specifies whether a form or input field should have autocomplete turned on or off (especifica se o formulário deve ter autocomplete)
+				-When autocomplete is on, the browser automatically complete values based on values that the user has entered before (quando o autocomplete é ativado, o
+				navegador automaticamente completa com valores baseados nos valores que os usuários informaram antes)
+				
+			-HTML 5 added several new input types (novos tipos de entrada):
+				-color
+				-date
+				-datetime
+				-datetime-local
+				-email
+				-month
+				-number
+				-range
+				-search
+				-tela
+				-time
+				-url
+				-week
+				
+			-New input attributes in HTML 5 (novo atributos):
+				-autofocus
+				-form
+				-formaction
+				-formenctype
+				-formmethod
+				-formnovalidate
+				-formtarget
+				-height and width
+				-list
+				-min and max
+				-multiple
+				-pattern (regexp)
+				-placeholder
+				-required
+				-step
+				
+				-This aren't supported by old web browsers, will behave as input type text (não são suportados por navegadores antigos, se comportam como entrada de texto)
+			
+		-Creating a search box (criando barra de consulta):
+			-The new search input type can be used to create a search box (o novo tipo de entrada para procura pode ser usada para criar a barra de consulta)
+			
+			<input type="search" id="mysearch" name="searchitem"/>
+			
+		-Search options (opções):
+			-The <datalist> tag can be used to define a list of pre-defined options for the search field (usada para definir uma lista de opções pré-definidas para o campo)
+			
+			<input id="car" type="text" list="colors" />
+			<datalist id="colors">
+				<option value="Red">
+				<option value="Green">
+				<option value="Yellow">
+			</datalist>
+			
+			<option> defines the options in a drop-down list for the user to select (define a opção em uma lista para o usuário escolher)
+			
+			-The Id of the datalist element must match with the list attribute of the input box (o id da lista deve ser o mesmo do atributo lista)
+			
+		-Creating more fields (criando mais campos):
+			-Some other new input types include email, url and tel (outros novos inputs):
+						
+			<input id="email" name="email" type="email" placeholder="example@example.com">
+			<br>
+			<input id="url" name="url" type="url" placeholder="example.com">
+			<br>
+			<input id="tel" name="tel" type="tel" placeholder="31 1234-4321">
+			
+			-These are especially useful when opening a page on a modern mobile device, which recognizes the input types and opens a corresponding keyboard matching the 
+			field's	type (útil quando abre a página em telefones modernos, com os tipos abrindo teclados correspondentes)
+			-These new types make it easier to structure and validate HTML forms (os novos tipos deixa mais fácil a validação)
+			
+Udemy
+	-<figure>:
+		-Fora da tag image, usada junto da <figcaption> para adicionar legendas a uma imagem
+		-<figcaption> contém o texto que será a legenda da foto dentro dela
+		
+		<figure>
+			<img>
+			<figcaption>
+				Legenda/créditos da foto
+			</figcaption>
+		</figure>
+		
+	-Links relativos:
+		-Mesma pasta apenas linka o arquivo
+			<a href="arquivo.html"></a>
+			
+		-Pasta dentro do projeto:
+			<a href="pasta/arquivo.hmtl"></a>
+			
+		-Pasta pai, avô, etc:
+			<a href="../pasta/arquivo.html"></a>	
+			
+	-Links para a mesma página (navegação):
+		-Utilizar o id do elemento alvo no href do link
+			<a href="#id_elemento"> Elemento </a>
+			
+	-Listas ordenadas e desordenadas:
+		-Utilizar CSS para modificar o estilo, com as seguintes propriedades:
+			*list-style-type
+			*list-style-image
+			
+	-<main>:
+		-Basicamente uma substituição para o bloco <div id="principal">, que contém todos os outros divs da página
+		-Só é possível um main
+		
+		<html>
+			<head></head>
+			<body>
+				<main>
+					...
+				</main>
+			</body>
+		</html>
+		
+	-<header>:
+		-Cabeçalho, substituindo o bloco <div id="topo">, podendo ser usado mais de uma vez
+		<header>
+		</header>
+		
+	-<nav>:
+		-Fazer menu's, recomendado 1 por página, sendo o principal
+			
+	-<article>:
+		-Contém textos a serem lidos, como posts de fórum, texto de revista, etc
+			
+	-<section>:	
+		-Compreende áreas menores do site, funcionando como divs mas restrito a partes pequenas
+		-Poderia abranger o que seria capítulos
+		
+	-<aside>:
+		-Seção que representa informação relacionada ao conteúdo mas deve receber um certo destaque
+		-"Pull quotes", mensagem de terceiro destacada do texto, as vezes aparecendo no meio do texto de forma bem maior
+		-Sidebars dentro de notícias, por exemplo, contendo outras notícias; propagandas, etc
+		
+	-<footer>:
+		-Rodapé da página
+		-Substitui a <div id="rodape">
+		
+	-<small>:
+		-Pontos pequenos como comentários, usados para copyrights, por exemplo
+		-Comum no <footer>
+		
+	-<address>:
+		-Endereço voltado para informação de contato; endereço de página, email, etc
+			
+	-<mark>:
+		-Marcador de texto
+		
+-Tabelas:
+	-As configurações de largura, borda e outras devem ser feitas no CSS a partir do HTML 5
+	-Border deve ser uma propriedade presente na definição do estilo da tag table e td, caso contrário, só na table deixa a borda somente em volta da tabela
+	-cellspacing e cellpadding devem ser inseridos no CSS
+		-cellpading é agora padding, usado no td ou th
+		-cellspacing é agora border-space, usado no table
+		
+	-td pode ser substituído por th
+	-As tabelas agora possuem estruturas de comportamento de página: head <thead>, footer <tfoot> e body <tbody>
+	-<caption>, acima do thead, determina um título para a tabela
+	-<colgroup>, após o <caption>, agrupa colunas específicas para uma estilização delas
+		-Recebe a tag <col> dentro dela para determinar
+		-Cada <col> corresponde às colunas da tabela, iniciando pela primeira
+		-Exemplo:
+			-Para alterar as colunas 1 e 3:
+				<col>	-> coluna 1
+				<col>	-> coluna 2
+				<col>	-> coluna 3
+				
+				<col class="coluna1">	-> modificações necessárias
+				<col>					-> mantém estilo atual
+				<col class="coluna3">	-> modificações necessárias
+		
+-Formulários:
+	-Campos mais populares: 
+		input type="text"
+		input type="password"
+		input type="checkbox"
+		input type="radio"
+		input type="hidden"		-> Não mostra o campo pro usuário
+		input type="image"		-> Automaticamente define o campo como botão de envio, utilizando uma imagem como botão
+			-Ao utilizar uma imagem, ela retorna a posição que foi clicada através do nome_imagem.x e nome_imagem.y
+		select
+			option value="1"
+			option value="2" selected
+			option value="3"
+			option value="4"
+			
+	-autocomplete: permite o formulário completar automaticamente os campos
+	-Novos tipos de imput:
+		color, date, datetime, datetime-local, email, month, number, range, search, tel, time, url, week
+		
+	-Novos atributos:
+		required, placeholder, pattern, list, autofocus
+		required: não permite envio se o campo com esse atributo não estiver preenchido
+		placeholder: exibe uma mensagem dentro do campo
+		autofocus: direciona o foco da página direto para o campo, assim que é carregada
+		min/max: definindo o menor e o máximo número para um campo numérico
+		
+	-Atributos de input:
+		size: determina o tamanho do campo
+		maxlength: determina o máximo de caracteres
+		
+	-Type:
+		-Usado para dispositivos móveis, a fim de facilitar a navegação do usuário 
+		tel: para número de telefone, abrindo o teclado numérico
+		email: disponibiliza o @
+		url: websites
+		number: somente números
+		date: usado para datas
+		range: cria uma progress bar, necessitando javascript para exibir o conteúdo/valor atual em uma tag span, por exemplo
+			-onchange=""
+			
+		color: caixa com seleçao de cor
+		search: campo de pesquisa, porém, mais estético do que funcional em si
+		
+	Datalist:
+		-Funciona como um array que é associado a um campo, sugerindo e filtrando resultados
+		
+		<datalist id="lojas">	-> o id deve ser associado no atributo list, do campo relacionado
+			<option value="Centauro">Centauro</option>
+			<option value="Centro Automotivo">Centro Automotivo</option>
+			<option value="Centro Ótico">Centro Ótico</option>
+			<option value="Centro de Beleza">Centro de Beleza</option>
+		</datalist>
+		
+API Maps/Javascript: AIzaSyDHLbWaGOXK3q_bx-BQAx9fdVyMpb9J3Gs		
+
+-Adicionar um mapa na página:
+	
+	<h2>Título para o mapa</h2>
+	<div id="map"></div>
+	<script>
+		function initMap() {
+			var uluru = {lat: -19.938142, lng: -44.052541};
+			var map = new google.maps.Map(document.getElementById('map'), {	-> Adiciona dinamicamente o mapa na tela
+				zoom: 15,	-> define altura do zoom como um mapa legível
+				center: uluru
+			});
+			
+			var marker = new google.maps.Marker({
+				position: uluru,
+				map: map
+			});
+			
+		}
+	</script>
+	<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHLbWaGOXK3q_bx-BQAx9fdVyMpb9J3Gs&callback=initMap">
+	</script>
+	
+	CSS:
+	#map {
+		height: 400px;
+		width: 100%;
+	
+	}
+		
+-Definir linguagem da página:
+	<meta http-equiv="Content-Language" content="pt-br">
+	
+	-Atributo "lang" nos elementos:
+		<html lang="pt-br">
+		<p>Nós utilizamos o <span lang="en">mouse</span> para navegar na <span lang="en">web</span> por meios dos <span lang="en">browsers</span>.
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -1,0 +1,325 @@
+-NodeJS:
+	-Aplicações rodando em desktop escritas em javascript (converte em linguagem de máquina)
+	-Responde a protocolos como HTTP
+	-Cliente:
+		-Requisita serviços para o servidor (request)
+
+	-Servidor:
+		-Fornece serviços (recebe o request e envia response)
+
+	-Para que as aplicações comuniquem entre si necessitam protocolos para ditar as regras de comunicação
+	-Instalação no Linux:
+		sudo apt-get update
+		sudo apt-get install build-essential libssl-dev
+		curl –sL https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh -o install_nvm.sh
+		bash install_nvm.sh
+		nvm ls-remote								-> Lista as versões disponíveis
+		nvm install 6.11.0							-> Instala a versão especificada
+		nvm ls										-> Lista as versões e destaca a anterior como padrão
+		node -v										-> Exibe a versão do node instalado
+		npm -v										-> Lista a versão
+		node										-> Abre o terminal para node
+			.exit									-> Encerra a aplicação
+
+	-Executando javascript via node:
+		-Basta navegar até o diretório que o arquivo esteja e executar no cmd:
+			node arquivo.js
+
+	-O console.log() do nodeJS exibe as informações diretamente no shell (cmd)
+
+	-Requisições HTTP:
+		-O método require() busca informações adicionais e adaptam para o seu código
+			var http = require('http');
+
+		-É possível criar o servidor com essa variável e o método recebe uma função que tem como parâmetro uma requisição e uma resposta
+		-A resposta geralmente devolve um código HTML
+		-É necessário definir uma porta que o servidor irá "ouvir" as requisições
+
+			http.createServer(function(request, response){
+				response.end("<html><body>Página teste</body></html>");
+
+			}).listen(3000);
+
+		-É possível definir esse servidor a uma variável, definindo a porta posteriormente:
+
+			var server = http.createServer(function(request, response){
+				response.end("<html><body>Página teste</body></html>");
+
+			});
+
+			server.listen( <porta> )
+
+		-Acessando o servidor:
+			localhost:<numeroPorta>						-> Ao acessar temos como resposta o HTML definido na criação do servidor
+
+	-Respondendo requisições com base na URL:
+		-Para resgatar a url é necessário buscar o atributo do parâmetro request:
+			var categorias = request.url
+
+		-Trabalhando nessas "categorias" é possível definir diferentes respostas para a requisição
+			var categoria = request.url;												-> Corpo da função de parâmetro do createServer
+
+			if(categoria == '/tecnologia'){												-> Identifica a URL passada e devolve uma resposta
+				response.end("<html><body>Página de tecnologia</body></html>");
+
+			}else if(categoria == '/moda'){
+				response.end("<html><body>Página de moda</body></html>");
+
+			}else if(categoria == '/beleza'){
+				response.end("<html><body>Página de beleza</body></html>");
+
+			}else{
+				response.end("<html><body>Página teste</body></html>");
+
+			}
+
+
+-NPM, Express, EJS e Nodemon:
+	-Express: framework para aplicações web
+	-EJS: modelagem de HTML com javascript
+	-Nodemon: reinicia automaticamente o servidor
+	-NPM: gerenciador de pacotes
+
+	npm init												-> Gera um package.json no projeto com informações
+	npm install express --save								-> Gera as dependências retirando o comportamento temporário
+
+	-Refactoring:											-> Ajustar a codificação de acordo com as bibliotecas acrescentadas
+		var express = require('express');
+		var app = express();
+
+		app.get('/', function(request, response){			-> Rota root
+			response.send("<html><body><p>Portal de notícias</p></body></html>");
+
+
+		});
+
+		app.get('/tecnologia', function(request, response){
+			response.send("<html><body><p>Notícias de tecnologia</p></body></html>");
+
+
+		});
+
+		app.listen(3000, function(){
+			console.log("Servidor rodando com express");
+
+
+		});
+
+	npm install ejs --save
+		app.set('view engine', 'ejs');						-> Informa no projeto que as views serão organizadas pelo EJS
+
+		app.get('/tecnologia', function(request, response){
+			response.render("secao/tecnologia");			-> Ao invés de enviar uma página, renderiza uma existente (dentro de um diretório "views", "secao", arquivo tecnologia.ejs)
+
+
+		});
+
+	npm install -g nodemon
+	nodemon app
+
+-CommonJS:
+	-Formato de modulação para o NodeJS
+	-Para inserir um módulo, informar o diretório do arquivo em questão
+	-Para um arquivo no mesmo diretório:
+		var mod = require('./modulo');
+
+	-Retornar o conteúdo no arquivo do módulo:
+		module.exports = function(){};
+
+	-Encapsulando rotas:
+		-Arquivo módulo:
+			module.exports = function(app){
+				app.get('/add', function(request, response){
+					response.render("admin/form_add_noticia");
+
+
+				});
+			}
+
+		-Arquivo principal:
+			var rotaAdd = require('./app/routes/add');
+			rotaAdd(app);
+
+-Instalando mysql:
+	npm instal mysql --save
+
+	services.msc -> iniciar mysql
+	mysql -u root -p (senha)
+
+	show databases;
+	create database portal_noticias;
+	use portal_noticias;
+	show tables;
+
+	var mysql = require('mysql');
+	var connection = mysql.createConnection({
+		host: 'localhost',
+		user: 'root',
+		password: '1234',
+		database: 'portal_noticias'
+
+	});
+	GRANT ALL ON *.* TO 'root'@'localhost' IDENTIFIED BY '1234';
+	connection.query('SELECT * FROM noticias', function(erro, result){
+		//Ação com result
+		response.render("noticias/noticias", {noticias: result});			-> Tratar na página com EJS
+	});
+
+-Utilizar EJS com HTML:
+	<% for(let i = 0; i < noticias.length; i++){ %>
+		<tr>
+			<td><%= noticias[i].id_noticia %></td>
+			<td><%= noticias[i].titulo %></td>
+			<td><%= noticias[i].noticia %></td>
+		</tr>
+	<% } %>
+
+-Consign:
+	-Carrega as rotas de forma mais dinâmica
+
+	npm install consign --save
+
+	var consign = require('consign');
+
+	consign().include('app/routes').into(app);					-> Inclui no app todas as rotas (server.js)
+	consign().include('app/routes').then().into(app);			-> then inclui outro módulo
+
+	-Exige extensão para que somente o módulo seja carregado:
+		consign().include('app/routes').then('config/dbConnection.js').into(app);
+
+	-Modularizando a conexão com o banco (dbConnection.js):
+		var connMySQL = function(){
+			return mysql.createConnection({
+				host: 'localhost',
+				user: 'root',
+				password: '',
+				database: 'portal_noticias'
+			});
+		}
+
+		module.exports = function(){
+			return connMySQL;
+
+		}
+
+	-Usando:
+		var connection = app.config.dbConnection();
+
+-Criando Models:
+	-Arquivo model:
+		module.exports = function(){
+			this.getNoticias = function(connection, callback){							-> Define funções para buscas
+				connection.query('SELECT * FROM noticias', callback);
+
+			};
+
+			this.getNoticias = function(connection, callback){
+				connection.query('SELECT * FROM noticias WHERE id_noticia = 2', callback);
+
+			};
+
+			return this;
+
+		}
+
+	-Arquivo de rota:
+		var noticiasModel = app.app.models.noticiasModel;
+
+		noticiasModel.getNoticias(connection, function(erro, result){
+			response.render("noticias/noticias", {noticias: result});
+
+		});
+
+-Formulário para adicionar itens (utilizando body-parser):
+	<form action="/noticias/salvar" method="POST">
+
+	npm install body-parser
+
+	var bodyParser = require('body-parser');
+	app.use(bodyParser.urlencoded({extended: true}));
+
+	-Admin.js:
+		app.post('/noticias/salvar', function(request, response){
+			var noticia = request.body;							-> Estrutura JSON dos dados do formulário
+			response.send(noticia);
+
+		});
+
+-Inserindo no banco de dados:
+
+	-Admin.js:
+		app.post('/noticias/salvar', function(request, response){
+			var noticia = request.body;
+
+			var connection = app.config.dbConnection();
+			var noticiasModel = app.app.models.noticiasModel;
+
+			noticiasModel.salvarNoticia(noticia, connection, function(erro, result){
+				response.render("noticias/noticias", {noticias: result});
+
+			});
+
+			//salvar noticia
+			//callback
+
+		});
+
+	-Model noticias:
+		this.salvarNoticia = function(noticia, connection, callback){
+			connection.query('INSERT INTO noticias SET ? ', noticia, callback);		-> O driver do sql consegue reconhecer as colunas vindas do JSON, necessitando que tenham o mesmo nome
+		};
+
+		noticiasModel.salvarNoticia(noticia, connection, (err, result) => {
+            res.redirect('/noticias');												-> Redireciona para a página especificada
+        })
+
+-Classes JS:
+	-O atributo prototype permite acessar propridades das funções
+	-Variáveis que começam com _ significam que fazem parte do contexto da classe
+
+-Socket e websockets:
+	-Se trata de outro protocolo, podendo escutar na mesma porta que o servidor http
+	-Emit: "pedido" de execução
+	-On: ouvindo os pedidos
+	-Broadcast: envia para todos exceto aquele que emitiu
+
+MongoDB:
+	show dbs: lista as databases
+	use <database_name>: cria/seleciona uma base
+	db.<collection>.save({ attr: value }): salva a estrutura dentro da collection indicada
+	db.dropDatabase(): deleta a base selecionada com o use
+	db.createCollection(<name>): cria uma collection
+	db.getCollectionNames(): lista as collections
+	db.<collection>.drop(): remove a collection
+
+	-Operadores:
+		SQL		Operador
+		=          $eq
+		>          $gt
+		>=         $gte
+		<          $lt
+		<=         $ltr
+		!= | <>    $ne
+
+	db.<collection>.findOne(): retorna o primeiro registro
+	db.<collection>.find(): retorna todos os registros
+	db.<collection>.find().pretty(): retorna todos os registros formatados em json
+	db.<collection>.find({ attr: { $operador:"value"  } }): retorna todos os registros que cumprem aos requisitos passados
+
+	-Operadores lógicos:
+		AND:		{ attr: { $operador:"value"},attr: { $operador:"value"}, {...}  } }
+		OR			{ $or:[ {attr: { $operador:"value"}}, {attr: { $operador:"value"}} ] }
+
+	-Update:
+		update({ conditions }, { $set }, { multi:false})
+		- multi por default é false, indica que vai atualizar somente o primeiro registro que atenda as condições
+		- save() cria ou atualiza, dependendo se _id for passado na lista de argumentos
+
+		update({
+			nome: 'flavio'
+		}, {
+			$set: { nome: 'flavio caetano', attr: value }
+		})
+
+	-Delete:
+		remove({ criterio }, justone = false): false ou null remove todos os registros que atendem, 1 ou true remove somente o primeiro que atender

@@ -1,0 +1,590 @@
+Ruby
+
+-Installing:
+	gem sources -a https://rubygems.org				-> Define a source
+	gem update --system								-> Atualiza o sistema
+	gem install rails								-> Instala o Rails
+	rails new <project_name>						-> Novo projeto
+	rails -v										-> Versão atual
+	ruby -v											-> Versão atual
+	sqlite3 -version								-> Versão atual do SQLite3
+	bundle install									-> Atualiza arquivos
+	rails server									-> Inicia um servidor local na porta 3000
+	irb												-> Ruby interativo no prompt
+	Gemfile:
+		gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-gemspec"
+		bundle install
+	
+-Arquivos .rb
+-Comandos básicos:
+	puts "Hello World!"								-> Escreve na tela e insere uma nova linha
+	print "Hello World!"							-> Escreve na tela
+	
+	-Variáveis:
+		character_name = "John"
+		character_age = 35
+		pi = 3.1415
+		bool = true
+		flaws = nil (no value)
+		puts ("Hello " + character_name)
+		
+	-Strings:
+		"Imprimindo uma aspa: \""
+		puts character_name.upcase()				-> Converte para letras maiúsculas
+		puts character_name.downcase()				-> Converte para letras minúsculas
+		puts character_name.strip()					-> Retira espaços em branco do início e fim da string
+		puts character_name.length()				-> Quantidade de caracteres da string
+		puts character_name.include? "teste"		-> Retorna verdadeiro se a string incluir o parâmetro passado
+		puts character_name[0]						-> Caractere na posição 0 da cadeia
+		puts character_name[0, 3]					-> Caracteres da posição 0 até 2 (último parâmetro - 1)
+		puts character_name.index("G")				-> Retorna o index daquela letra ou o índice da primeira letra caso mais de uma seja passada
+		
+	-Math e numbers:
+		2 ** 3 = 2 ^ 3								-> Potência
+		10 % 3 										-> Módulo
+		num = 35
+		puts ("Tenho " + num.to_s + " anos")		-> Converte a variável numérica para string 
+		num.abs()									-> Valor absoluto
+		num.round()									-> Arredonda o valor
+		num.ceil()									-> Arredonda para o próximo valor mais alto
+		num.floor()									-> Arredonda para o próximo valor mais baixo
+		Math.sqrt(n)								-> Raiz quadrada de n
+		Math.log(n)									-> Log de n
+		
+		-Somando um float com int gera float
+		-Divisão de int por int gera int; int por float ou float por int gera um float
+		
+	-User input:
+		name = gets
+		name = gets.chomp()							-> Retira o "\n" inserido automaticamente
+		name = gets.chomp().to_i					-> Retira o "\n" inserido automaticamente e converte para inteiro
+		puts ("Olá " + name)
+		
+		-Informações são inseridas como string (somar dois números vindos do usuário por exemplo concatena eles)
+			num.to_i								-> Converte a variável para inteiro
+			num.to_f								-> Converte a variável para float
+			
+	-Arrays:
+		array = Array["1", "2"]
+		array = Array["1", false, 2]
+		
+		-Arrays possuem índice negativo (começando de trás pra frente)
+		array = Array.new()
+		array[0] = 1
+		array[3] = 4								-> Preenche os outros índices com vazio
+		array.length()								-> Quantidade de elementos
+		array.include? "1"							-> Retorna true se o parâmetro estiver no array
+		array.reverse()								-> Inverte a ordem do array
+		array.sort()								-> Ordena o array
+		
+	-Hashes:
+		states = {
+			1 => "NY"
+			"Oregon" => "OR"
+			:California => "CA"
+		}
+		
+		states[1]
+		states["Oregon"]
+		states[:California]
+		
+	-Funções:
+		def <name>
+			puts "Oi"
+		end
+		name
+		
+		def <name>(parâmetros = default)
+			puts "Oi"
+		end
+		name()
+		
+		def <name>(parâmetros = default)
+			return "Oi"
+		end
+		puts name()
+		
+		def <name>(parâmetros = default)
+			return "Oi", 90
+		end
+		puts name()[1]								-> Seleciona o índice retornado (quando mais de um valor é retornado)
+		
+	-If:
+		if <condition> and/or <condition>
+			puts "true"
+		else if !<condition>
+			if a != b
+				puts a
+			end
+			if a == "+"
+			end
+		else
+			puts "false"
+		end
+		
+	-Case:
+		case <var>
+		when "a"
+			<action>
+		when "b"
+			<action>
+		when "c"
+			<action>
+		else
+			<default>
+		end
+		
+	-While:
+		while <condition>
+			condition += 1
+		end
+		
+	-For:
+		for item in array
+			puts item
+		end
+		
+		array.each do |item|
+			puts item
+		end
+		
+		for index in 0..5							-> 0 a 5, incluindo 5
+			puts index
+		end
+		
+		6.times do |index|							-> 0 a 5, incluindo 5
+			puts index
+		end
+		
+	-Comentários:
+		# Comment
+		=begin
+			here is a comment
+		=end
+		
+	-Arquivos:
+		File.open("nome.txt", "r") do |file|				-> Modo de leitura dentro da variável file
+			file.read()
+			file.readline()
+			file.readchar()
+			file.foreach()
+			
+			for line in file.readlines()
+				puts line
+			end
+		end
+		
+		file = File.open("C:Users/teste.txt", "w, w+, a")	-> + indica leitura e escrita, iniciando do começo do arquivo
+		file.write("nova linha")
+		
+	-Exceptions:
+		begin
+			10 / 0
+		rescue ZeroDivisionError
+			puts "Divisão por 0"
+		rescue TypeError => e
+			puts "Wrong type"
+			puts e
+		end
+		
+	-Classes:
+		class Book
+			attr_accessor :title, :author, :pages				-> Determina atributos
+			
+			def initialize(title)								-> Construtor
+				@title = title									-> "this"
+			end
+			
+			def func
+				if @title == "HP"
+					puts "yes"
+					return true
+				end
+			end
+		end
+		class Page < Book										-> Define herança
+			
+		end
+		
+		book = Book.new()
+		book.title = "HP"
+		book.func
+		
+	-Módulos:
+		module <Título>
+			def func(name)
+				puts "hello #{name}"
+			end
+			
+		include <Titulo>
+		Titulo.func("Flávio")
+		
+		require_relative = "modulo_arquivo.rb"
+		
+-Rails:
+	-Gerando controllers:
+		rails g controller <nome> (nome no plural)
+		rails destroy controller <nome>
+		rails g controller Posts
+		
+	-Arquivos html devem ter a extensão nome.html.erb
+	-Definindo uma home page:
+		-Gerar um novo controller e a página index
+		-Definir no route a seção root
+			root 'welcome#index', as: 'home'		-> Procura pelo controller welcome e pela página index
+			
+	-Definindo outras páginas:
+		-Após criar o controller e a página, definir na rota:
+			get 'url' => 'controller#pagina'
+			get 'about' => 'pages#about'					-> Localhost:3000/about
+			
+	-Enviando dados do controller:
+		class PagesController < ApplicationController
+			def about
+				@title = "About us"							-> Variáveis podem ser acessadas na página
+				@content = "This is the about page"			-> Variáveis podem ser acessadas na página
+			end
+		end
+		
+		-Página:
+			<h1><%= @title %></h1>
+			<p><%= @content %></p>
+			
+	-Definindo recursos (criar, atualizar, remover, etc)
+		-Routes:
+			resourses :posts
+			
+			-cmd: 
+				rake routes
+				
+			-Posts controller:
+				def new										-> Permite acesso via 3000/posts/new
+					
+				end
+				
+				def show
+					@post = Post.find(params[:id])			-> Define que a página exibirá os dados específicos
+				end
+
+				def new
+					@post = Post.new
+				end
+
+				def create
+					#render plain: params[:post].inspect	-> Exibe as informações enviadas da seguinte maneira: ["title" => <informaçao inserida>, "text" => <informacao>]
+					@post = Post.new(post_params)
+
+					if(@post.save)								-> Salva os dados se forem validados (validação no model)
+						redirect_to @post						-> Redireciona
+					else
+						render 'new'							-> Renderiza o formulário novamente
+					end
+				end				
+
+				def edit
+					@post = Post.find(params[:id])
+				end
+
+				def update
+					@post = Post.find(params[:id])
+					if(@post.update(post_params))
+						redirect_to @post
+					else
+						render 'edit'
+					end
+				end
+
+				def destroy
+					@post = Post.find(params[:id])
+					@post.destroy
+
+					redirect_to posts_path
+				end
+
+				private def post_params
+					params.require(:post).permit(:title, :body)		-> Define quais campos na tabela serão preenchidos
+				end
+				
+			-Criando um formulário na página new:
+				<h1>Add post</h1>
+				<%= form_for :post, url: posts_path do |f| %>
+					<% if @post.errors.any? %>						-> Define mensagens de erro
+					<% @post.errors.full_messages.each do |msg| %>
+						<div class="alert alert-danger"> <%= msg %> </div>
+					<% end %>
+					<p>
+						<%= f.label :title %><br>
+						<%= f.text_field :title %>
+					</p>
+
+					<p>
+						<%= f.label :text %><br>
+						<%= f.text_area :text %>
+					</p>
+
+					<p>
+						<%= f.submit%>
+					</p>
+
+				<% end %>
+				
+			-Criando models:
+				rails g model <nome> title:string body:text (mesmo nome do controller mas singular)
+				rails destroy model <nome>
+				
+				rake db:migrate								-> Cria a tabela no banco de dados
+				rails d migration <nome>
+				
+				-Show page:
+					<h2> <%= @post.title %> </h2>
+					<p> <%= @post.body %> </p>
+					
+					-Link para edição
+					<%= link_to "Edit", edit_post_path(@post), :class => 'btn btn-primary' %>
+					
+					-Deletar informação
+					<%= link_to "Delete post", post_path(@post), method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
+					
+				-Página inicial:
+					application.html.erb
+					
+					<%= stylesheet_link_tag    'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' %>
+					<nav class="navbar navbar-expand-md navbar-default">
+						<a class="navbar-brand" href="#">SimpleBlog</a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+
+						<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+							<ul class="navbar-nav mr-auto">
+								<li class="nav-item active"> <%= link_to "Home", home_path %> </li>
+							</ul>
+							<ul class="nav navbar-nav navbar-right navbar-nav mr-auto">
+								<li> <%= link_to "Create Post", new_post_path %> </li>
+							</ul>
+						</div>
+					</nav>
+					
+				-Validação de dados:
+					class Post < ApplicationRecord
+						validates :title, presence: true, length: {minimum: 5}
+					end
+					
+			-Editar dados:
+				<h1>Edit post</h1>
+				<%= form_for :post, url: post_path(@post), method: :patch do |f| %>			-> Diferente de adicionar, editar recebe post_path e passa o @post como parâmetro
+					<% if @post.errors.any? %>
+						<% @post.errors.full_messages.each do |msg| %>
+							<div class="alert alert-danger"> <%= msg %> </div>
+						<% end %>
+					<% end %>
+					<p>
+						<%= f.label :title %><br>
+						<%= f.text_field(:title, {:class => 'form-controll'}) %>
+					</p>
+
+					<p>
+						<%= f.label :body %><br>
+						<%= f.text_area(:body, {:class => 'form-controll'}) %>
+					</p>
+
+					<p>
+						<%= f.submit({:class => 'btn btn-primary'}) %>
+					</p>
+
+				<% end %>
+				
+			-Excluir:				
+				<%= link_to "Delete post", post_path(@post), method: :delete, data: {confirm: 'Are you sure?'}, :class => 'btn btn-danger' %>
+
+	-Inserindo recursos na página:
+		<%= render 'comments/comments' %>					-> O arquivo deve estar salvo como _comments.html.erb
+		<%= render 'comments/form' %>						-> O arquivo deve estar salvo como _form.html.erb
+		
+	-Gerando chaves estrangeiras:
+		class Comment < ApplicationRecord
+		  belongs_to :post									-> Define a que pertence
+		end
+	
+		class Post < ApplicationRecord
+			has_many :comments								-> Indica que terá mais de um
+			validates :title, presence: true, length: {minimum: 5}
+		end
+
+	
+		class CommentsController < ApplicationController
+			http_basic_authenticate_with name: "fantz", password: "1234", only: [:destroy]		-> Define autenticação para determinada ação
+
+			def create
+				@post = Post.find(params[:post_id])
+				@comment = @post.comments.create(comment_params)
+				redirect_to post_path(@post)
+			end
+
+			def destroy
+				@post = Post.find(params[:post_id])
+				@comment = @post.comments.find(params[:id])
+				@comment.destroy
+				redirect_to post_path(@post)
+			end
+
+			private def comment_params
+				params.require(:comment).permit(:username, :body)
+			end
+		end
+		
+-Rails API:
+	rails new <project> --api --no-sprockets -d postgresql				-> Gera um projeto 100% ruby/rails
+		
+	-The --api flag will generate controllers that inherit from ActionController::API .
+	-The --no-sprockets flag will ensure that rails doesn't generate the assets compilation along with the app.
+	-We don't need assets compilation because we will handle that ourselves using webpack.
+	-Lastly the -d postgresql will configure the app to connect to PostgreSQL database.
+	
+	-Setando CRUD:
+		database.yml:
+			development:
+				adapter: postgresql
+				encoding: unicode
+				database: myapp_development
+				pool: 5
+				username: myapp
+				password: password1
+
+			test:
+				adapter: postgresql
+				encoding: unicode
+				database: myapp_test
+				pool: 5
+				username: myapp
+				password: password1
+	
+		rails db:setup
+		rails g model contacts
+		
+		-No arquivo de migration, definir os campos:
+			class CreateContacts < ActiveRecord::Migration[5.2]
+				def change
+					create_table :contacts do |t|
+						t.string :first_name
+						t.string :last_name
+						t.string :email
+						t.timestamps
+					end
+				end
+			end
+			
+		rails db:migrate
+		rails g controller v1/contacts							-> Define um namespace de v1, para primeira versão
+			def index
+				@contacts = Contact.all
+				render json: @contatus, status: :ok				-> Output básico
+			end
+			
+			routes.rb:
+				namespace :v1 do
+					resources :contacts
+				end
+				
+		rails routes
+		
+		-Definindo criação e exclusão:
+			def create
+				@contact = Contact.new(contact_params)
+
+				@contact.save
+				render json: @contact, satus: :created
+			end
+
+			def destroy
+				@contact = Contact.where(id: params[:id]).first
+				if @contact.destroy
+					head(:ok)
+				else
+					head(:unprocessable_entity)
+				end
+			end
+
+			private 
+			def contact_params
+				params.require(:contact).permit(:first_name, :last_name, :email)
+			def
+			
+		-Rack-cors gem:									-> Handling Cross-Origin Resource Sharing, torna possível o uso de AJAX
+			gemfile:
+				gem 'rack-cors', require: 'rack/cors'
+				
+			application.rb:
+				config.middleware.insert_before 0, Rack::Cors do
+				  allow do
+					origins '*'
+					resource(
+					  '*',
+					  headers: :any,
+					  methods: [:get, :patch, :put, :delete, :post, :options]
+					)
+				  end
+				end
+
+	-Devise Authentication:
+		gemfile:
+			gem 'devise'
+			
+		bundle
+		rails g devise:install
+		rails g devise user
+		
+		-Criar dentro de v1 um arquivo chamado sessions_controller.rb
+			class V1::SessionsController < ApplicationController
+				def create
+
+				end
+
+				def destroy
+
+				end
+			end
+			
+		routes.rb:
+			namespace :v1 do
+				resources :contacts
+				resources :sessions, only: [:create, :destroy]
+			end
+			
+		rails routes
+		
+		
+	bundle exec rake import:user
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

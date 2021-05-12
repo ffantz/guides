@@ -1,0 +1,221 @@
+Excel
+
+-Pasta de Excel: arquivo
+-Abas: planilhas (barra inferior esquerda)
+-Zoom: barra inferior direita
+-Layout de página
+
+-Títulos
+-Barra de fórmulas
+-Barra de ferramentas
+
+-Inserção e formatação de dados:
+	-Formato geral: 				textos são automaticamente alinhados à esquerda e números à direita
+	-Formato número: 				representa o número com duas casas decimais
+	-Formato moeda: 				insere R$, por exemplo
+		-É possível alterar a bandeira do formato de moeda; fazer isso manualmente pode fazer o Excel entender a célula como um texto
+		
+	-Formato contábil: 				mesmo de moeda, porém deixa o símbolo à esquerda e o número à direita
+	-Formato data abreviada:		01/01/2019
+	-Formato data completa:			Terça-feira, 1 de janeiro de 2019
+	-Formato hora:					hh:mm:ss
+	-Formato porcentagem:			se formatada previamente (célula), o número inserido já é considerado. Antes de formatar, 0,1 equivale a 10%
+	
+-Abas:
+	-Mover uma aba: 				arrastar com o botão esquerdo ou clicar com o botão direito e selecionar "mudar"
+	-Inserir: 						planilha, gráfico...
+	-Excluir: 						deleta a aba
+	-ctrl + seta: 					mostra a aba da extremidade da seta
+	-Criar uma cópia: 				selecionar a aba e solicitar copiar (criar cópia) ou arrastar com o mouse e pressionar ctrl ao mesmo tempo
+		-É possível criar uma cópia do arquivo em uma nova pasta
+		
+-Mesclagem e sincronização: 				define o texto da primeira de várias colunas selecionadas como título único
+-Quebra de texto automática de texto:		faz um texto inteiro caber em uma célula
+-Inserir linha/coluna:						insere uma nova linha/coluna copiando o formato da anterior selecionada
+
+-Formatação de células:
+	-Formatar > formatar células
+	-É possível aplicar formatações específicas pra parte do conteúdo de uma tabela
+	
+-Fórmulas - operações básicas:
+	-Para começar uma fóruma, o sinal de = deve ser o primeiro caractere da mesma
+	-Fórmulas podem ser feitas com referência, indicando a letra maiúscula da coluna seguido do número da linha para referenciar a célula
+		=(B4+C5)/K19						-> A célula que contém a fórmula é automaticamente atualizada quando o valor muda
+	
+	-Existem funções imbutidas, como soma e multiplicação:
+		=SOMA(coluna1;coluna2)
+		=MULT(coluna1;coluna2)
+		
+	-É possível selecionar intervalos:
+		=SOMA(celula1;celula2)				-> Os valores nessa matriz serão somados
+
+-Referências e transposição de fórmulas:	
+	-Para referenciar células de outras abas, basta colocar o nome da mesma antes das colunas e separar o intervalo por !
+		=SOMA(calculos!D4:D7)
+		
+		-Para valores individuais, deve-se escrever o nome da aba em todos os casos
+			=SOMA(calculos!D4;calculos!D5)
+			
+	-Copiando uma fórmula, a referência é copiada para adaptar a nova linha/coluna
+	-Arrastando uma célula muda apenas o valor, sem copiar a fórmula
+	
+-Colar especial:
+	-Colar:
+		-Colar normal:								cria uma cópia
+		-Colar fórumlas:							não adapta formatações/efeitos
+		-Fórmulas e formatação de números:			mantém formatação
+		-Formatação original:						mantém formatação/efeitos
+		-Sem bordas:								transpõe tudo mas retira bordas
+		-Manter largura original:					cola e mantém as larguras da cópia original, enquanto os outros não
+		-Transpor:									transforma o que era linha em coluna e vice-versa
+		
+	-Valores:
+		-Somente valores:							copia só os valores, sem formatação
+		-Valores e formatação:						copia formatação mas sem efeitos
+		-Valores e formatação original:				copia os valores e formatação, mas fórmulas não
+		
+	-Outras:
+		-Só formatação:								copia formatação, sem valores
+		-Vínculo:									cria uma espécie de referência à célula original
+		-Imagem:									copia o intervalo selecionado como imagem
+		-Imagem com vínculo:						copia o intervalo como imagem mas se o original for modificado, a imagem também muda
+		
+-Autopreenchimento e reconhecimento de padrões:
+	-Escrevendo valores, é possível preencher automaticamente os próximos com sequências pré definidas
+		Domingo, Segunda-feira, etc...
+		Janeiro, Fevereiro, etc...
+		
+	-O autopreenchimento consiste em escrever um valor em uma célula e ao arrastá-la para completar as outras, o Excel preencher com valores seguindo um padrão
+		-Números por exemplo criam sequências dependendo da uma ou mais células selecionadas para o padrão
+		
+	-É possível criar listas personalizadas, em opções > avançado > editar listas personalizadas, devendo ser criadas no padrão item1, item2, item3, etc...
+	-O autopreenchimento pode ser reconhecido com alguns padrões, como nome.sobrenome@servidormail
+		-Ao preencher as tabelas utilizando o padrão nome, ele sugere preencher as outras com todo nome antes do . e assim por diante
+		
+-Trancamento:
+	-Refência absoluta:								referencia uma célula e ao transpor a fórmula para outras linhas, o valor não é modificado se a célula tiver uama referência fixa
+		=SOMA(E4, E5, $E$9)							-> Ao transpor a fórmula para a linha de baixo, a célula E9 se mantém fixa, enquanto os outros valores se tornam referências dinâmicas
+		
+-Manipulação de texto:
+	-É possível concatenar o texto de duas células, basta colocálos dentro de uma fórmula e usar o &
+		="carta:"	="valete"	=A1&A2				-> Produz "carta:valete"
+		="carta: "&"valete"							-> carta: valete
+		="Estoque total: "&estoque!A3&" produtos"	-> Estoque total: 15 produtos (de forma dinâmica)
+		
+-Fórmulas lógicas:
+	-Retornam VERDADEIRO ou FALSO
+		=E()											-> Todas as expressões separadas por ; devem ser verdadeiras
+		=OU()											-> Ao menos uma expressão deve ser verdadeira
+		-Sinais:
+			<=, <, >, >=, =, <> (diferente)
+
+-Formatação condicional:
+	-É possível formatar as células de acordo com valores condicionais, como maior que, menor que, entre 2 valores, etc
+	-Formatação condicional sobrepõe efeitos anteriores
+	-É possível limpar as formatações selecionadas
+	-É possível aplicar novas regras
+	-Barra de dados:
+		-Gera um mini gráfico em relação aos valores existentes
+		
+	-Escala de cores:
+		-Preenche as cores da escala de acordo com a progressão dos itens
+		
+	-Formatar apenas células que contenham:
+		-Formata células que cumprem uma dada condição
+		
+	=OU(E(K9<10);A5<>11)								-> Fórmulas aninhadas
+	
+-Funções de contagem:
+	=CONT.NÚM											-> Conta o número de células com números num dado intervalo (data, moeda, números, etc)
+	=CONT.Valores										-> Conta o número de células que não estão vazias em um determinado intervalo
+	=CONTAR.VAZIO										-> Conta o número de células vazias em um dado intervalo
+	
+-Se:
+	=SE(condicao;valor_se_verdadeiro;valor_se_falso)
+	
+	-Trabalhando com mais de uma condição:
+		=SE(E(C9>100;C9<200);"Ganha";"Não ganha")
+		
+	-Se dentro de se:
+		-Adicionar os outros "se" na parte de resultado caso falso ou verdadeiro, a depender dos testes
+			=SE(C3<100;0;SE(C<200;500;750))
+
+-Funções de Data:
+	=HOJE()												-> Retorna a data atual
+	=AGORA()											-> Retorna a data e a hora atual
+	=DIA(num_serie)										-> Retorna o dia de uma data "dd/mm/aaaa"
+	=MES(num_serie)
+	=ANO()												=ANO(HOJE())
+	=DATA(ano;mes;dia)
+	=DATA.VALOR("data_texto")							-> Retornao o número de série da data
+	=DIA.DA.SEMANA()									-> Retorna de 1 a 7
+	
+-Filtragem:
+	-Oculta algumas células de acordo com uma regra
+	-Classificação:
+		-A classificação aplica seus filtros a dados que estão do lado, devendo ser selecionado um intervalo caso somente ele deva ser alterado
+		
+	-É possível aplicar filtros com condições diferentes entrelaçadas
+	
+-Trabalhando com tabelas:
+	-Acessar pelo nome:
+		NomeTabela[NomeColuna]
+		
+	-Filtragem inteligente:
+		-Segmentação de dados
+			-Capaz de filtrar os dados de forma mais fácil
+		
+	-Linha de totais:
+		-Possível gerar resultados gerais para as tabelas e colunas
+	
+-Criação de botões:
+	-Inserir forma
+	-Inserir um hiper-link em cada um deles
+	-Neste documento
+	
+-Exibição:
+	-Exibir linhas de grade
+	-Exibir barras de fórmulas
+	-Imagem como plano de fundo
+	
+-Atalhos:
+	ctrl + +								-> Inserir célula/linha
+	ctrl + -								-> Excluir célula/linha
+	ctrl + l								-> Localizar
+	ctrl + shift + l						-> Aplica filtros
+	alt + seta (baixo)						-> Substitui um valor por outro no conjunto de dados
+	
+-Definição de nomes:
+	-Definir nomes para melhorar a navegação
+	
+-Gráficos:
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

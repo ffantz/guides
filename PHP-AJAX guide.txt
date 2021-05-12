@@ -1,0 +1,547 @@
+PHP com AJAX
+
+-AJAX é uma metodologia de programação que comunica o navegador e o servidor sem mudar a url
+-AJAX: Assíncrono Javascript And Xml
+-API XMLHttpRequest
+	-Página HTML
+	-Arquivo txt
+	-Arquivo xml
+	-Arquivo JSON
+	
+-Exemplo padrão da criação de um objeto de requisição XMLHttpRequest:
+	var xmlHttp = null;
+	if(window.XMLHttpRequest){
+		//Navegadores atuais: usa o objeto nativo
+		xmlHttp = new XMLHttpRequest();
+	
+	}else{
+		if(window.ActiveXObject){
+			//Caso contrário, utilizar o controle ActiveX para navegadores desatualizados
+			xmlHttp = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+	
+		}
+	}
+	
+-Realizando uma requisição síncrona:
+	var ajax = new XMLHttpRequest();
+	ajax.open('GET','dados.txt', false);	-> Síncrona / true determina assíncrona
+	ajax.send();
+	console.log(ajax);
+	
+	-Objeto XMLHttpRequest:
+		readyState: 
+			0: requisição não iniciada
+			1: conexão estabelecida com o servidor
+			2: requisição recebida
+			3: processando requisição
+			4: requisição finalizada
+			
+		response: conteúdo do arquivo
+		responseurl: consulta ao arquivo
+		status: 
+			200: ok
+			404: página não encontrada (arquivo dados.txt, nesse exemplo)
+			
+	-Identificar os estados do carregamento:
+		ajax.onreadystatechange = function(){			-> Sempre que o estado mudar
+			if(ajax.status == 200){						-> Caso a página/arquivo tenha sido encontrada
+				if(ajax.readyState == 3){				-> Estado 3
+					console.log("Carregando");
+				
+				}
+					
+				if(ajax.readyState == 4){				-> Estado 3
+					console.log(ajax.responseText);		-> Conteúdo
+				
+				}
+			
+			}else{
+				console.log("Erro na operacao");
+			
+			}	
+			
+		}
+		
+	-Código compatível com todos os navegadores:
+		var ajax;
+		if(window.XMLHttpRequest){
+			ajax = new XMLHttpRequest();
+		
+		}else{
+			ajax = new ActiveXObject("Microsoft.XMLHTTP");
+		
+		}
+		
+-Requisição simples com jQuery:
+	<div class="curso"></div>	
+		
+	<script src="jquery.js"></script>
+	<script>
+		$('div.curso:first').load('dados.txt');		-> Seleciona o elemento div que possui classe curso, o primeiro deles
+	</script>										-> Selecionar o id basta usar #nome_id
+	
+-Carregar variável a partir de um arquivo externo:
+	<script>
+		$.ajax({							-> Inicia o serviço
+			url:'nome.php'					-> Carrega o arquivo externo "nome.php"
+		}).then(sucesso, falha);			-> Gera dois resultados: primeiro parâmetro é o que será executado no caso de sucesso; o segundo é o caso de falha
+		
+		function sucesso(valor){
+			$('div#nome').html(valor);		-> Altera a div específica, na parte de html
+		
+		}
+			
+		function falha(){
+			$('div#nome').html("Erro");		-> Altera a div específica, na parte de html
+			
+		}
+		
+    </script>
+	
+	$.ajax({
+		url:'nome.php'				
+	}).done(function(valor){			-> Caso de sucesso
+		$('div#nome').html(valor);
+				
+	}).fail(function(){					-> Caso de falha
+		$('div#nome').html("Falha no carregamento");
+				
+	}).always(function(){				-> Independente, todos os casos
+		$('div#nome').html("Mensagem automatica");
+				
+	})
+	
+-XML:
+	-Estruturar e descrever informações
+	-Comunicação entre sistemas diferentes
+	-Carregar um arquivo XML:
+		$.ajax({
+			url:'_xml/produtos.xml'
+			
+		}).then(sucesso, (parâmetro opcional para caso de falha)); 
+		
+		function sucesso(arquivo){
+			console.log($(arquivo).find('produto').find('nomeproduto').text());	-> Método find procura um elemento dentro do arquivo
+			//Procura pelo elemento "nomeproduto" dentro de um elemento "produto", mostrando na forma de texto
+		}
+		
+	-Listar os elementos dinamicamente:
+		function sucesso(arquivo){
+			var elemento;
+			elemento = "<ul>";
+			
+			$(arquivo).find('produto').each(function(){			-> Cria um loop iterando em todos os elementos (each)
+				var nome = $(this).find('nomeproduto').text();	-> Busca o elemento no objeto atual 
+				
+				elemento += "<li class='nome'>" + nome + "</li>";		-> Estrutura com classes para aplicação de serviços
+				elemento += "<li class='preco'>" + preco + "</li>";
+				
+			});
+			
+			elemento += "</ul>";
+			
+			$('div#listagem').html(elemento);					-> Insere a estrutura "elemento" 
+			
+		}
+		
+	-Carregar informações a partir de um evento:
+		$('button#botao').click(function(){					-> Gerencia o clique em um botão (chamando o evento)
+			$('div#listagem').css('display','block');
+			carregarDados();
+					
+		});
+		
+-JSON:
+	-Javascript Object Notation
+	-Padrão utilizado na web
+	-É um formato mais leve que XML
+	-Carregamento para um arquivo PHP, com listagem dinâmica de dados:
+		<script>
+			$('button#botao').click(function(){
+				$('div#listagem').css('display', 'block');
+				carregarDados();
+				
+			});
+		
+			function carregarDados(){
+				$.getJSON('_json/produtos.json', function(data){		-> Carregamento do arquivo JSON, passando seus dados para o objeto data
+					var elemento;
+					elemento = "<ul>";
+					$.each(data, function(i, valor){										-> Para cada elemento do objeto data, abre uma função com um iterador e seus atributos
+						elemento += "<li class='nome'>" + valor.nomeproduto + "</li>";		-> "valor.nomeproduto" é o objeto sendo acessado
+						elemento += "<li class='preco'>" + valor.precounitario + "</li>";
+						
+					});
+					elemento += "</ul>";
+					$('div#listagem').html(elemento);
+					
+				});
+			}
+        </script>
+		
+	-Criar um arquivo JSON dinâmico com PHP através de um banco de dados:
+		-Facilita a atualização do arquivo, já que se o banco muda, as informações no arquivo também são modificados
+		-Recebendo os dados do banco:
+			<?php
+				$conecta = mysqli_connect("localhost", "root", "", "udemy");
+
+				$selecao = "SELECT nomeproduto, precounitario, imagempequena FROM produtos";
+				$produtos = mysqli_query($conecta, $selecao);
+				
+				$retorno = array();
+				while($linha = mysqli_fetch_object($produtos)){
+					$retorno[] = $linha;							-> Inserção do objeto dentro de um array
+				
+				}
+				
+				echo json_encode($retorno);							-> Converte os dados para a estrutura de um objeto JSON dinâmico
+				
+				mysqli_close($conecta);
+				
+			?>
+	
+	-Preparar o arquivo para consulta em outros domínios:
+		-Basta incluir o comando no início do arquivo:
+			
+			//Configurações gerais:
+			header("Access-Control-Allow-Origin:*");	-> Faz com que todos os domínios consigam acessar
+			
+	-Consulta ao arquivo JSON:
+		-Basta modificar o carregamento de dados para o arquivo.php que possui o json_encode
+		-O tratamento das informações é feito da mesma maneira
+		
+	-Preparar o arquivo para uso do CallBack:
+		-Consiste em preparar o arquivo para ser lido em páginas remotas
+		-Elementos e informações retornadas por CallBack não necessitam de parseJSON
+		
+		//Preparar o arquivo para callback
+		$callback = isset($_GET['callback']) ? $_GET['callback'] : false; 
+		
+		/*
+			Consulta no banco de dados
+		*/
+		
+		echo ($callback ? $callback . '(' : '') . json_encode($retorno) . ($callback? ')' : '');
+		
+		-Página que recebe os dados:
+			<!doctype html>
+			<html>
+				<head>
+					<meta charset="UTF-8">
+					<title>PHP com AJAX</title>
+					<script>
+						function retornarProdutos(data){		-> Nome da função no parâmetro callback da URL
+							console.log(data[0].nomeproduto);
+							
+						}
+					</script>
+				</head>
+
+				<body>
+					//URL da página PHP que envia os dados via CallBack
+					<script src="http://localhost/udemy/php_ajax/unidade_07/gerar_json.php?callback=retornarProdutos"></script>
+				</body>
+			</html>
+	
+-Inserção no banco de dados com AJAX:
+	-O formulário não contém os atributos action e method, devido serem especificados pelo AJAX
+	<script>
+		$('#formulario_transportadora').submit(function(e){
+			e.preventDefault(); 		-> Impede que uma action do formulário seja ativada
+			var formulario = $(this);	-> Joga o objeto formulário para a variável
+			var retorno = inserirFormulario(formulario);
+				
+		});
+		
+		//PHP da consulta:
+		$operacao_insercao = mysqli_query($conecta, $inserir);					-> Consulta
+		$retorno = array();														-> Cria um array com informações para o retorno
+		
+		if($operacao_insercao){													-> Inserção ocorreu
+			$retorno["sucesso"] = true;											-> Define valor para o array criado
+			$retorno["mensagem"] = "Transportadora inserida com sucesso.";		-> Define valor para o array criado
+			
+		}else{
+			$retorno["sucesso"] = false;
+			$retorno["mensagem"] = "Falha na inserção.";
+			
+		}
+		
+		echo json_encode($retorno);												-> Converte os dados para estrutura JSON dinâmica
+		
+		//Página que possui o formulário
+		function inserirFormulario(dados){
+			$.ajax({
+				type:"POST",							-> Método de envio
+				data:dados.serialize(),					-> A função serialize identifica os campos do formulário e seus valores, no formato campo=valor&campo2=valor2, como parâmetro de URL
+				url:"inserir_transportadora.php",		-> Arquivo carregado com informações de retorno/envio
+				async:false								-> Síncrono ou assíncrono (esperar ou não uma execução antes de ir para o próximo comando)
+				
+			}).then(sucesso, falha);
+				
+				function sucesso(data){
+					$sucesso = $.parseJSON(data)["sucesso"];		-> Busca informações no array de retorno
+					$mensagem = $.parseJSON(data)["mensagem"];		-> Busca informações no array de retorno
+					
+					$('#mensagem').show();							-> Mostra o elemento que estava com display: none
+					
+					if($sucesso){
+						$('#mensagem p').html($mensagem);			-> Mostra a informação resgatada da página de envio
+						
+					}else{
+						$('#mensagem p').html($mensagem);			-> Essa falha ocorre no momento do PHP/SQL
+						
+					}
+					
+				}
+				
+				function falha(){									-> Executa essa falha quando não consegue comunicar com a outra página
+					console.log("Falha");
+					
+				}
+			
+		}
+    </script>
+	
+-Alteração de dados via AJAX:
+	-Mesmo método anterior (mesmo código PHP e tratamento de mensagens e informações de retorno)
+	-Uso das funções done, fail e always na página principal:
+		<script>
+            $('#formulario_transportadora').submit(function(e) {		-> Define evento de envio (clique no botão de envio)
+                e.preventDefault();										-> Impede o action do formulário
+                var formulario = $(this);								-> Pega o objeto com as informações do formulário
+                var retorno = alterarFormulario(formulario)				-> Chama a função que trata o formulário e atribui seu retorno para a variável retorno
+            });
+            
+            function alterarFormulario(dados) {
+				$.ajax({			
+					type:"POST",										-> Define o método de envio dos dados como POST
+					data:dados.serialize(),								-> Expande os dados do formulário na forma do PHP
+					url:"alterar_transportadora.php",					-> Define o arquivo de envio e carregamento de informações
+					async:false											-> Define que será síncrona a execução (esperar ou não uma execução antes de ir para o próximo comando)
+					
+				}).done(function(data){									-> Caso de sucesso
+					$sucesso = $.parseJSON(data)["sucesso"];			-> Variável de sucesso recebe a mensagem enviada via JSON pela página PHP através do objeto que possui
+					$mensagem = $.parseJSON(data)["mensagem"];			// a chamada de retorno
+					
+					if($sucesso){
+						$('#mensagem p').html($mensagem);
+						
+					}else{
+						$('#mensagem p').html($mensagem);				-> Falha resultante da comunicação do PHP com MySQL (problema na instrução ao banco)
+						
+					}
+					
+				}).fail(function(){
+					$('#mensagem p').html("Erro no sistema, tente mais tarde.");	-> Falha na comunicação com a página de envio
+					
+				}).always(function(){
+					$('#mensagem').show();								-> Ação sempre executada
+					
+				});
+            }
+        </script>
+		
+-Excluir elementos da página atual e do banco de dados:
+	-Página atual:
+		-É necessário remover o item da página ao solicitar sua exclusão:
+		<script>
+			$('#janela_transportadoras ul li a.excluir').click(function(e){	-> Garante que será executada ao clicar apenas no link de exclusão
+				e.preventDefault();											-> Impede que a URL mude
+				$(this).parent().parent().fadeOut();						-> Aplica o efeito que retira o elemento da lista
+				
+			});
+        </script>
+	
+	-Buscando o ID na página atual para excluir na página com o banco:
+		-No formulário:
+			<li><a href="" class="excluir" title="<?php echo $linha["transportadoraID"]; ?>">Excluir</a></li>	-> Adicionar o atributo title com valor vindo do banco (ID)
+		
+		-No script:
+			var id = $(this).attr("title");		-> Retorna o valor do atributo título do elemento atual (elemento a, de onde originou o clique e entrou na função)
+	
+	-Função completa:
+		<script>
+			$('#janela_transportadoras ul li a.excluir').click(function(e){	-> Garante que será executada ao clicar apenas no link de exclusão
+				e.preventDefault();											-> Impede que a URL mude
+				var id = $(this).attr("title");								-> Busca o ID do objeto atual/clicado
+				var elemento = $(this).parent().parent();					-> Define elemento com o elemento ul clicado
+				
+				$.ajax({
+					type:"POST",
+					data:"transportadoraID=" + id,							-> Define o que será enviado para a página na url
+					url:"exclusao.php",
+					async:false												-> Define que é necessário esperar esse comando ser executado para prosseguir
+					
+				}).done(function(data){
+					$sucesso = $.parseJSON(data)["sucesso"];				-> Trabalha os dados recebidos via JSON
+					
+					if($sucesso){
+						$(elemento).fadeOut();								-> Oculta o elemento clidado e definido anteriormente
+						
+					}else{
+						console.log("erro no sistema");				
+						
+					}
+					
+				}).fail(function(){
+					
+					
+				});
+				
+			});
+        </script>
+	
+-Criação de listas aninhadas dinamicamente:
+	-A primeira lista é criada dinamicamente com retorno de um banco de dados
+	-A segunda lista exibe um conteúdo específico para cada item selecionado da lista anterior
+		<main>
+            <div id="janela_formulario">
+                <form id="pesquisarProdutos">
+                    <label for="categorias">Categorias</label>		-> Define a primeira lista
+                    <select id="categorias">
+                    </select>
+					
+                    <label for="produtos">Produtos</label>			-> Define a primeira lista
+                    <select id="produtos">
+                    </select>
+                </form>
+            </div>
+        </main>
+        
+        
+        <script src="_js/jquery.js"></script>
+        <script>
+			function retornarCategorias(data){			-> Função executada pelo CallBackall
+				var categorias = "";
+				$.each(data, function(chave, valor){	-> Para cada item do objeto data, vindo do callback
+					categorias += '<option value="' + valor.categoriaID + '">' + valor.nomecategoria + '</option>';		-> Monta a lista
+					
+				});
+				
+				$('#categorias').html(categorias);		-> Exibe a lista
+				
+			}
+			
+			$('#categorias').change(function(e){		-> Evento chamado quando ocorre alguma modificação na lista - escolha de uma opção diferente
+				var categoriaID = $(this).val();		-> Define para a variável o valor do objeto atual - o ID do item
+				
+				$.ajax({
+					type:"GET",							-> Método GET
+					data:"categoriaID=" + categoriaID,	-> Informação a ser enviada
+					url:"http://localhost/udemy/php_ajax/unidade_11/retornar_produtos.php",	-> Página de destino
+					async:false
+					
+				}).done(function(data){
+					var produtos = "";
+					$.each($.parseJSON(data), function(chave, valor){		-> Para cada item do objeto/array recebido pela página de envio/carregamento
+						produtos += '<option value="' + valor.produtoID + '">' + valor.nomeproduto + '</option>';	-> Monta a estrutura da lista
+						
+					});
+					$('#produtos').html(produtos);		-> Altera o conteúdo da div
+					
+				});
+				
+			});
+		
+        </script>
+        <script src="http://localhost/udemy/php_ajax/unidade_11/retornar_categorias.php?callback=retornarCategorias"></script>	-> Define o CallBack através da URL com a pesquisa
+	
+-Utilizar serviço de CEP:
+	<script>
+		var cep = "32340-450";		-> Define um site
+		$.ajax({
+			type:"GET",				-> Tipo "GET" para fazer a comunicação com a página via parâmetro
+			url:"http://viacep.com.br/ws/" + cep + "/json/",	-> URL do site capaz de buscar informações sobre o CEP
+			async: false
+				
+		}).done(function(data){
+			console.log(data);
+				
+		}).fail(function(){
+			console.log("Erro");
+				
+		});
+    </script>
+	
+	-Aplicar o serviço em um formulário real:		
+		<script>
+			$('#cep').blur(function(e){				-> Evento blur: disparado quando o usuário sai da caixa de texto
+				var cep = $('#cep').val();			-> Pega o CEP digitado pelo usuário
+				var url = "http://viacep.com.br/ws/" + cep + "/json/";	-> Insere na URL
+				
+				//Validação do CEP:
+				var validacep = /^[0-9]{5}-?[0-9]{3}$/;	-> Monta um padrão de teste: significa que a variável CEP deve ter 5 caracteres de 0 a 9 antes do - e 3 depois
+				if(validacep.test(cep)){
+					pesquisarCEP(url);
+					$('#mensagem').hide();
+					
+				}else{
+					$('#mensagem').show();
+					$('#mensagem p').html("CEP inválido");
+					$('#bairro').val("");
+					$('#endereco').val("");
+					$('#cidade').val("");
+					$('#estado').val("");
+					
+				}
+				
+				
+			});
+			
+			function pesquisarCEP(endereco){
+				$.ajax({
+					type:"GET",
+					url:endereco,
+					async:false
+					
+				}).done(function(data){
+					$('#bairro').val(data.bairro);			-> Preenche o formulário com os dados do objeto JSON retornado pela consulta
+					$('#endereco').val(data.logradouro);
+					$('#cidade').val(data.localidade);
+					$('#estado').val(data.uf);
+					
+				}).fail(function(){
+					console.log("Erro");
+					
+				});
+				
+			}
+        </script>
+	
+-Utilizando serviço de previsão do tempo:
+	API OpenWeatherMap: fb8d02f7461e97e248b2dc4c2ab26dca
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

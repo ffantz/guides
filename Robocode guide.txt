@@ -1,0 +1,129 @@
+Robocode
+
+Heading (mapa)
+
+								 x/2
+(0, battlefield_height)			0deg		(battlefield_width, battlefield_height)
+								  |
+			(x,y)				  |					 (x,y)
+			 1,2				  |					  2,2
+								  |
+								  |
+y/2			270deg				--+--				90deg				y/2
+								  |
+								  |
+			(x,y)				  |					 (x,y)
+			 1,1				  |					  2,1		
+								  |
+(0,0)							180deg		(battlefield_width, 0)
+								 x/2
+
+turnRight(double degree), turnLeft(double degree): vira o robô degree graus para a direita e esquerda, respectivamente
+
+ahead(double distance), back(double distance): movimenta o robô distance pixels pra frente e pra tras, respectivamente
+
+turnGunRight(double degree), turnGunLeft(double degree): vira o canhão degree graus, para a direita e esquerda, respectivamente
+
+setAdjustGunForRobotTurn(boolean flag): vira o canhão junto com o veículo se verdadeiro
+
+setAdjustRadarForRobotTurn(boolean flag): vira o radar junto com o veículo se verdadeiro
+
+setAdjustRadarForGunTurn(boolean flag): vira o radar junto com o canhão se verdadeiro
+
+onScannedRobot(ScannedRobotEvent e): método chamado quando um robô for detectado pelo radar
+
+onHitByBullet(HitByBulletEvent e): método chamado quando atingido por uma bala
+
+onHitRobot(HitRobotEvent e): método chamado quando seu robô esbarra com outro
+
+onHitWall(HitWallEvent e): método chamado quando seu robô atinge uma parede
+
+getX(), getY(): coordenada atual do robô
+
+getHeading() getGunHeading(), getRadarHeading(): direção atual das partes do robô
+
+getBattleFieldWidth(), getBattleFieldHeight(): dimensões do campo de batalha
+
+getName(): retorna o nome do robô adversário escaneado (String)
+
+getBearing: retorna o ângulo do robô adversário em relação ao seu (double)
+
+getBearingRadians: retorna o ângulo em radianos do robô adversário em relação ao seu (double)
+
+getDistance(): retorna a distância do robô adversário em relação ao seu (double)
+
+getEnergy(): retorna a energia do robô adversário (double)
+
+getVelocity(): retorna a velocidade do robô escaneado (double)
+
+getSentryBorderSize(): retorna o tamanho da Sentry Border do mapa
+
+
+
+
+
+*************** Referências ***************
+Getting typeof in Java
+https://stackoverflow.com/questions/1641619/getting-typeof-in-java
+
+Robocode Documentation
+http://robocode.sourceforge.net/docs/robocode/
+
+Robocode - Funções
+http://www.gsigma.ufsc.br/~popov/aulas/robocode/funcoes.html
+
+Robocode - Eventos
+http://www.gsigma.ufsc.br/~popov/aulas/robocode/eventos.html
+
+Robocode - Métodos
+http://www.gsigma.ufsc.br/~popov/aulas/robocode/metodos.html
+
+Secrets from Robocode masters - Radar Sweep
+https://www.ibm.com/developerworks/library/j-radar/index.html
+
+Manter outro robô na mira
+https://wiki.portugal-a-programar.pt/dev_geral:java:robocode:manteremmira
+
+Verifica distância em relação à parede
+https://pt.stackoverflow.com/questions/129707/qual-a-fun%C3%A7%C3%A3o-para-ver-a-dist%C3%A2ncia-de-tanque-%C3%A0-parede-no-robocode
+
+Targeting - Robocode tutorial 
+https://www.youtube.com/watch?v=4TUwwjP4KNk
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
