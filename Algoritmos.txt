@@ -1,0 +1,37 @@
+Algoritmos: séries de comandos/instruções
+
+- Exemplo:
+    - Algoritmo cubo mágico
+        - Escolha do lado
+        - Cruz inicial
+        - Inserção de quinas
+        - Segunda camada
+        - Cruz última camada
+        - Acertar as peças da cruz
+        - Posicionar as quinas
+        - Girar as quinas
+        - Completo
+
+- Lógica:
+    - Condicional (estrutura condicional):
+        - Se a lâmpada acendeu
+            - !
+        - Se a lâmpada não acendeu
+            - Trocar a lâmpada
+
+    - Loops (estrutura de repetição):
+        - Exemplo da lâmpada
+            - Enquanto lâmpada queimada:
+                - Subir na escada
+                - Remover lâmpada queimada
+                - Instalar lâmpada nova
+                - Testar
+
+    - Fluxo
+
+- Variáveis:
+- Tabela verdade:
+    E
+        Todas as condições devem ser verdadeiras
+    Ou
+        Alguma condição deve ser verdadeira
