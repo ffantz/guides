@@ -10,6 +10,7 @@ w: varinha magica
 l: laço poligonal
 u: formas geometricas
 s: carimbo
+p: pen tool
 [: diminui pincel
 ]: aumenta pincel
 
@@ -66,3 +67,8 @@ ferramenta caneta:
 -clarear uma imagem:
 	-duplicar a camada
 	-ajustar o blending da camada para "screen" (divisão)
+	
+- Pen tool: p
+	- Botão direito -> criar seleção
+	- Máscara
+	- Selecionar e mascarar (refinar)
