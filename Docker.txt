@@ -1,0 +1,163 @@
+Docker
+
+- Estrutura base:
+    - Namespaces:
+        - Processos pais e filhos (árvore/containers)
+
+    - Containers: processos com subprocessos rodando
+    - Cgroups: controlador de recursos computacionais, definindo limites para o processo
+
+    - File System: OFL (overlay file system)
+        - Define esquema de imagens e snapshots salvando apenas as mudanças em cada uma, ao invés de todas as dependências.
+        - Cria camadas individuais
+
+    - Dockerfile: imagem base, roda comandos, expõe portas
+    - Imagens imutáveis, mas com camadas de leitura e escrita
+        - Modificações necessitam de build e push
+
+    - Docker host:
+        - Volumes: containers são imutáveis; quando morre, tudo se perde
+        - Network: comunicação entre os containers
+        - Cache: registros do repositório e dependências
+        - Daemon API
+
+    - Docker Client:
+        - Containers
+        - Run, pull, push
+        - Volumes
+        - Network
+
+- Instalação:
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get update
+sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+- Caso tenha problemas de permissão pra rodar comandos
+sudo groupadd docker
+sudo usermod -aG docker $USER
+# reiniciar o sistema caso necessário
+newgrp docker
+sudo docker pull hello-world
+sudo docker run hello-world
+###
+
+docker ps: lista os containers rodando/ativos
+docker ps -a: lista os containers que já rodaram
+
+- Parâmetros sempre devem ser especificados após o run
+docker run -it ubuntu bash
+    - Mesmo de -i -t
+        -i: interativo
+        -t: tty, deixando digitar no terminal
+
+    - ubuntu: nome da imagem;
+        Quando não especificado versão, é o mesmo que usar latest
+            ubuntu:latest
+
+    - bash: nome da função a utilizar
+
+- Sem especificar nome, o docker gera aleatórios que podem ser usados com comando start e stop
+docker start|stop name
+
+--rm automaticamente remove ao sair do container
+
+docker run -it --rm ubuntu bash
+
+- Um container ter portas ativas (exemplo: docker run nginx -> libera a porta 80) não significa que será acessível externamente
+- Outro container conseguiria, fora não devido sermos o host
+
+-p publica a porta que será publicada
+
+docker run -p 8080:80 nginx -> ao acessar a porta 8080 da máquina, conseguirei acessar a porta 80 do container
+
+-d executa um detach na porta, liberando o terminal e deixando um hash do processo
+
+- Removendo container
+
+docker rm id|name
+
+-f força o kill do container que ainda está executando
+
+docker rm -f id|name
+
+docker run -d --name name image
+    - Especifica o name para o nome do container da imagem image
+
+exec executa comandos dentro do container especificado
+    docker exec nginx ls
+        docker exec container command
+
+    docker exec -it nginx bash
+        - Abre um terminal interativo, sem "matar" o bash, permitindo escrita
+
+- Tudo que for gravado dentro do container será perdido, ele é imutável
+- É possível montar uma parte do disco local dentro da imagem do container
+
+docker run -d --name nginx -p 8080:80 -v ~/var/www/html/fullcycle/teste:/usr/share/nginx/html
+    -v indica volume;
+    - O primeiro caminho indica o volume da máquina local
+    - O segundo caminho indica o destino na imagem
+
+    -v é um comando antigo, utilizando --mount hoje
+    -v cria pastas/arquivos inexistentes se passados no path, mount da erro
+
+docker run -d --name nginx -p 8080:80 --mount type=bind,source="$(pwd)"/html,target=/usr/share/nginx/html nginx
+
+- É possível criar volumes com docker, especificando nome e driver
+
+docker volume create name
+
+docker volume inspect name
+    - Exibe informações, bem como data de criação e local do volume na máquina
+
+- É possível vincular os volumes com o mount para dentro dos containers
+
+docker run --name nginx -d --mount type=volume,source=volumeName,target=/app nginx
+    - Observe que o type do mount muda de bind pra volume
+
+- Utilizando volumes, ele é compartilhado entre containers
+- Utilizando -v, basta especificar o nome do volume diretamente
+
+docker run --name nginx -d -v volumeName:/app nginx
+
+- Docker hub centralizam repositórios e imagens do docker
+
+docker pull image
+    - Baixa a imagem para o computador sem necessariamente rodar o container
+
+docker images
+    - Lista as imagens baixadas
+
+docker rmi image:tag
+    - Remove a imagem na tag específica
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
