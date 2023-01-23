@@ -144,6 +144,86 @@ docker images
 docker rmi image:tag
     - Remove a imagem na tag específica
 
+- Dockerfile: criação de imagens
+    - Parte de uma imagem
+
+FROM: baseImage
+
+RUN: command
+
+    -y confirma a instalação
+
+docker build -t ffantz/nginx-vim:latest
+    -t define a tag
+    - O próximo parâmetro é o nome da imagem criada
+
+WORKDIR: /path
+    - Define o diretório base que será gerado para trabalhar dentro da imagem
+    - Ao entrar na imagem, é o diretório padrão
+
+- É possível definir mais de um comando no run separados por linha, basta colocar uma \ no final de cada linha
+- É possível copiar um arquivo que esteja dentro do computador para dentro do container
+
+USER: user
+    - Define o usuário padrão (precisa existir dentro da imagem)
+
+docker rm $(docker ps -a -q) -f
+    -q retorna somente os ids dos containers ativos e inativos
+
+- Comandos especificados ao rodar a imagem sobrescrevem o comando especificado em CMD no Dockerfile, independente de qual seja
+- A tag ENTRYPOINT executa um comando fixo, que não pode ser sobrescrito. CMD entra como algo variável
+
+- É possível criar variáveis de ambiente para a imagem com a tag ENV no Dockerfile
+- É possível validar o Dockerfile das imagens através do repositório no dockerhub
+
+EXPOSE 80
+    - Define a porta a ser disponibilizada na imagem
+
+exec "$@" permite que comandos sejam executados após o fim do script sh
+
+docker login
+    - Loga no dockerhub
+
+docker push image
+    - Sobe a imagem para o dockerhub
+
+- Tipos de network:
+    - Bridge: usados para comunicar containers
+    - Host: mescla a network do docker com a network do host do docker
+    - Overlay: incomum, permite a comunicação entre dockers de máquinas diferentes
+    - Maclan: seta um MacAdress pro container
+    - None: isolado, não define nenhuma rede
+
+docker network ls
+    - Lista as redes
+
+docker network prune
+    - Remove as redes que não estão sendo utilizadas
+
+docker network inspect networkName
+
+docker attach containerName
+    - Anexa o container no comando, utilizado para entrar quando o container é gerado com o parâmetro -d
+
+docker network create --driver bridge minharede
+    - Cria uma rede no driver especificado
+
+docker run -dit --name ubuntu1 --network minharede
+    - Quando criados em redes específicas, os containers conseguem se identificar por nome, mesmo que o driver bridge seja utilizado.
+    - Sem especificar, enxergam apenas o ip.
+    - Rede a parte
+
+docker network connect minharede ubuntu3
+    - Conecta um container numa rede específica
+
+docker run -d --name nginx --network host nginx
+    - Mescla as redes, permite acessar a porta 80 do nginx na própria porta 80 da máquina.
+    - Só funciona com linux
+
+curl http://host.docker.internal:port
+    - Executado de dentro de um container para uma porta específica da própria máquina
+
+
 
 
 
