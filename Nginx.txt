@@ -1,0 +1,41 @@
+Nginx
+
+- Trabalhando com proxy reverso:
+    - Basta usar na location que servirá de proxy a diretiva proxy_pass com o ip ou host que deverá ser redirecionado.
+    - Dessa forma, o host final é mascarado pelo primeiro
+
+- Container Nginx funcionando como proxy reverso:
+    server {
+        listen 80;
+        index index.php index.html;
+        root /var/www/html;
+
+        add_header X-Frame-Options "SAMEORIGIN";
+        add_header X-XSS-Protection "1; mode=block";
+        add_header X-Content-Type-Options "nosniff";
+
+        charset utf-8;
+
+        location ~ \.php$ {
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_pass laravel:9000;
+            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+            include fastcgi_params;
+        }
+
+        location / {
+            try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        location = /favicon.ico { access_log off; log_not_found off; }
+        location = /robots.txt  { access_log off; log_not_found off; }
+
+        error_page 404 /index.php;
+
+        location ~ /\.(?!well-known).* {
+            deny all;
+        }
+    }
+
+    - Este arquivo base demonstra como um container com Nginx pode servir de proxy reverso, redirecionando para o nome do container (ou ip) e porta que está executando a aplicação
+

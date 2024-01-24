@@ -102,6 +102,7 @@ exec executa comandos dentro do container especificado
 
     docker exec -it nginx bash
         - Abre um terminal interativo, sem "matar" o bash, permitindo escrita
+        - Serve para entrar em qualquer container em execução
 
 - Tudo que for gravado dentro do container será perdido, ele é imutável
 - É possível montar uma parte do disco local dentro da imagem do container
@@ -171,7 +172,10 @@ docker rm $(docker ps -a -q) -f
     -q retorna somente os ids dos containers ativos e inativos
 
 - Comandos especificados ao rodar a imagem sobrescrevem o comando especificado em CMD no Dockerfile, independente de qual seja
-- A tag ENTRYPOINT executa um comando fixo, que não pode ser sobrescrito. CMD entra como algo variável
+- A tag ENTRYPOINT executa um comando fixo, que não pode ser sobrescrito. CMD entra como algo variável (parâmetro do ENTRYPOINT)
+    ENTRYPOINT [ "echo", "Hello" ]
+    CMD [ "World" ]
+        -> executa hello  world (world vem como parâmetro)
 
 - É possível criar variáveis de ambiente para a imagem com a tag ENV no Dockerfile
 - É possível validar o Dockerfile das imagens através do repositório no dockerhub
@@ -223,13 +227,51 @@ docker run -d --name nginx --network host nginx
 curl http://host.docker.internal:port
     - Executado de dentro de um container para uma porta específica da própria máquina
 
+- Combinando ENTRYPOINT e CMD
+    docker run --rm -d --name laravel -p 8001:8001 wesletwillians/laravel --host=0.0.0.0 --port=8001
+    - A parte final é substituída pelo CMD no dockerfile da imagem em questão
 
+    ENTRYPOINT [ "php","laravel/artisan","serve" ]
+    CMD [ "--host=0.0.0.0" ]
 
+- Rodando uma linguagem de dentro de um container e possibilitando interação local
+    - Executado para possibilidar trabalhar em um projeto sem necessariamente instalar as bibliotecas de forma local
+    docker run --rm -it -v $(pwd)/:/usr/src/app -p 3000:3000 node:15 bash
 
+- Rodando build a partir de um dockerfile específico:
+    docker build - t <nome/imagem> . -f <nome dockerfile>
 
+- Multistage Building:
+    - Build do Dockerfile em etapas
+    - No FROM do estágio, é possível adicionar um "AS" para dar um nome pra ele
+    - No próximo FROM, utilizar um COPY --from=<nome_estagio>
 
+    FROM php7.4-cli AS builder
+    ...
 
+    FROM php7.4-fpm-alpine
+    COPY --from=builder <caminho> .
 
+- Utilizando docker-compose:
+    - É basicamente um tradutor dos comandos brutos do docker em forma de script
+    docker-compose up/down
+
+    - Pode-se utilizar um build dentro de cada service do docker-compose para especificar o contexto e o dockerfile
+    - Pode-se utilizar -d para desanexar o processo do terminal e --build para atualizar o dockerfile quando houver mudanças no mesmo
+
+- Trabalhando com banco de dados
+    - Ao utilizar uma imagem de mysql para compartilhar o banco de dados, utilizar
+    command: --innodb-use-native-aio=0
+
+    volumes:
+      - ./mysql:/var/lib/mysql
+
+    - O comando anterior compartilha uma pasta local com o container do docker, para que os dados nunca sejam perdidos
+
+- Dependências entre containers:
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 20s docker-entrypoint.sh
+
+    - O dockerize testa a conexão no determinado timeout e só quando tem sucesso executa o próximo comando
 
 
 

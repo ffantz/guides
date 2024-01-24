@@ -1,0 +1,27 @@
+SOLID
+
+- S: (SRP) Single Responibility Principle
+- O: (OCP) Open-closed Principle
+- L: (LSP) Liskov Substitution Principle
+- I: (ISP) Interface Segregation Principle
+- D: (DIP) Dependency Inversion Principle
+
+- SRP:
+    - Princípio da responsabilidade única
+        - Dentro de uma classe, ela deve fazer uma única coisa
+        - Deve ter apenas um motivo para mudar (mais de um significa que ela já não faz uma única coisa)
+
+- OCP:
+    - Toda classe deve ser aberta pra extensão mas fechada para modificação
+    - Utilizar classes abstratas
+
+- LSP:
+    - Subclasses podem substituir pela classe pai
+
+- ISP:
+    - Uma classe não é obrigada a implementar uma interface que não utilizará
+    - Por muitas vezes convém separar uma interface em mais de uma para ter implementações mais objetivas
+
+- DIP:
+    - Depender de abstrações e não de implementações
+    - Inverter as dependências

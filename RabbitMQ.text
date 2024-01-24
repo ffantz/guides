@@ -1,0 +1,61 @@
+RabbitMQ
+
+- Message Broker, atuando entre remetente e destinatário de uma mensagem
+- Implementa os protocolos AMQP, MQTT, STOMP e HTTP
+- Desenvolvido em Erlang
+- Processo de desacoplamento entre serviços
+- Rápido e poderoso (processamento cai direto na memória)
+- Padrão de mercado
+
+- Por baixo dos panos, o cliente se conecta em uma única fila/conexão TCP com o servidor
+    - Isso acontece para evitar gargalos, já que a primeira conexão TCP é mais lenta
+    - Dentro da conexão única, são criados channels para diferenciar as subconexões
+        - Multiplex connections
+        - 1 Thread por channel
+
+- Publisher:
+    - Publica mensagens
+    - Não publica diretamente em uma fila, utiliza uma exchange
+
+- Exchange:
+    - Intermediador decidindo qual queue utilizar
+
+- Queue:
+    - Armazena mensagens do publicador para o consumidor ficar lendo
+
+- Consumer:
+    - Consome mensagens
+
+- Tipos de Exchange:
+    - Direct: envia especificamente para uma queue (utiliza routing keys)
+    - Fanout: envia a mensagem para todas as queues que estão de certa forma relacionadas a essa exchange
+    - Topic: personalizada com regras, encaminha para queue especificas de acordo com as regras definidas
+    - Headers: no header da mensagem é especificado a queue para ser entregue (pouco utilizado)
+
+- Bind: processo de relacionar uma fila a um exchange
+    - Filas podem estar relacionadas a vários exchanges
+    - Routing keys são criadas para relacionar a fila até uma exchange
+
+- Para Topic Exchange, a routing key funciona como se fosse uma expressão regular
+
+- Queues:
+    - FIFO
+    - Propriedades:
+        - Durable: se fica somente em memória ou é persistida no disco após o restart do broker
+        - Auto-delete: removida automaticamente quando o consumidor para de ouvir a fila
+        - Expiry: tempo de expiraçãoa partir de quanto tempo que não chega nenhuma mensagem ou não tem nenhum cliente consumindo
+        - Message TTL (time-to-leave): tempo de vida da mensagem
+        - Overflow: comportamento quando a fila estiver cheia
+            - Drop head: remove a mais antiga e entra a nova
+            - Reject publish: não permite publicação de mensagens até que o limite permita
+        - Exclusive: somente o canal que criou pode acessar
+        - Max length/bytes: quantidade de mensagens ou tamanho das mensagens máximas permitido
+    - Chamado de "declarar" o processo de "criação" de filas
+
+- Dead Letter Queues
+    - Algumas mensagens não são entregues por algum motivo (não foi lida ou entregue)
+    - São encaminhadas para uma exchange específica que roteia as mensagens para uma dead letter queue
+
+- Lazy Queues:
+    - Mensagens armazenadas em disco por conta de limites de memória
+    - Acontece para não impactar na perfomance do processo principal
