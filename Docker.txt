@@ -258,10 +258,14 @@ curl http://host.docker.internal:port
 
     - Pode-se utilizar um build dentro de cada service do docker-compose para especificar o contexto e o dockerfile
     - Pode-se utilizar -d para desanexar o processo do terminal e --build para atualizar o dockerfile quando houver mudanças no mesmo
+    - Utilizando docker exec -it name command conseguimos entrar no container
 
 - Trabalhando com banco de dados
     - Ao utilizar uma imagem de mysql para compartilhar o banco de dados, utilizar
     command: --innodb-use-native-aio=0
+    tty: true
+
+    - O tty permite interação dentro do container (-t no parâmetro direto)
 
     volumes:
       - ./mysql:/var/lib/mysql
