@@ -1,0 +1,40 @@
+Arquitetura de Software
+
+- Arquitetura tecnológica e corporativa
+- Arquitetura de solução
+- Arquitetura de software
+
+- Características Arquiteturais
+- Características Operacionais
+- Características Estruturais
+- Características Cross cutting
+
+- Performance
+- Cache e Edge Computing
+
+- Escalabilidade
+- Proxy reverso
+
+- Resiliência:
+    - Health Check
+    - Rate Limit
+    - Circuit Breaker
+    - API Gateway
+    - Service Mesh:
+        - Controla tráfego de rede
+        - Evita implementações de proteção pelo próprio sistema
+        - mTLS (criptografia)
+        - Retry, timeout, fault injection
+
+    - Trabalhar de forma assíncrona
+        - Evita perda de dados
+        - Não há perda de dados no envio de uma transação se o server estiver fora
+        - Servidor pode processar a transação em seu tempo quando estiver online
+        - Entender com profundidade o message broker/sistema de stream
+
+    - Retry:
+        - Experimentar Jitter ou algum algoritmo de ruído
+
+    - Kafka:
+        - Brokers recebem as mensagens (Leader e Followers)
+        - Ack: none (0), Leader (1) ou ALL (-1)
