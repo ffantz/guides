@@ -1,0 +1,30 @@
+TDD
+
+- Test-Driven Development
+
+- Red, Green and Refactor
+    - Escrever um teste que falhe
+    - Fazer o teste funcionar
+    - Refatorar
+
+- Testes automatizados:
+    - Arrange
+    - Act
+    - Assert-
+
+BDD
+
+- Behavior-Driven Development
+    - Guiado ao comportamento
+
+- Gherkin:
+    - Orientado a cenários de testes
+
+    - Scenario: cenario
+        - Given: em um certo contexto
+        - When: quando algo específico acontece
+        - Then: ação
+        - And: algo extra
+        - But: mas não nisso
+
+    - Na prática é o mesmo que o TDD, mas em alto nível
